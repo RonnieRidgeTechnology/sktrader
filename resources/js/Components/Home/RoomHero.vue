@@ -16,6 +16,7 @@ const slides = computed(() => {
 });
 const hasSlides = computed(() => slides.value.length > 0);
 const currentIndex = ref(0);
+const currentSlide = computed(() => (slides.value.length ? slides.value[currentIndex.value] : null));
 const INTERVAL_MS = 4500;
 let intervalId = null;
 
@@ -44,12 +45,12 @@ const topCategories = computed(() => {
 
 <template>
   <section
-    class="room-hero relative flex min-h-[100vh] min-h-[100dvh] flex-col justify-end overflow-hidden bg-luxe-obsidian"
+    class="room-hero relative flex min-h-[100vh] min-h-[100dvh] flex-col overflow-hidden bg-luxe-obsidian"
     aria-label="Hero"
     @mouseenter="stopAutoPlay"
     @mouseleave="startAutoPlay"
   >
-    <!-- Background: cinematic (images or gradient) -->
+    <!-- Background: cinematic + grain -->
     <div class="absolute inset-0 bg-luxe-radial">
       <template v-if="hasSlides">
         <div
@@ -67,65 +68,123 @@ const topCategories = computed(() => {
         </div>
       </template>
       <div v-else class="absolute inset-0 bg-gradient-to-br from-luxe-carbon via-luxe-obsidian to-black" />
-      <div class="absolute inset-0 z-20 bg-gradient-to-t from-black/75 via-black/35 to-black/25" aria-hidden="true" />
-      <div class="absolute inset-0 z-30 bg-[radial-gradient(900px_500px_at_30%_40%,rgba(255,255,255,0.08),transparent_60%)]" aria-hidden="true" />
+      <div class="absolute inset-0 z-20 bg-gradient-to-b from-black/55 via-black/45 to-black/70" aria-hidden="true" />
+      <div class="absolute inset-0 z-30 bg-[radial-gradient(900px_500px_at_20%_20%,rgba(199,164,93,0.18),transparent_60%)]" aria-hidden="true" />
+      <div class="absolute inset-0 z-30 opacity-[0.08] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2260%22%20height%3D%2260%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.8%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%2260%22%20height%3D%2260%22%20filter%3D%22url(%23n)%22%20opacity%3D%221%22/%3E%3C/svg%3E')]" aria-hidden="true" />
     </div>
 
-    <!-- Content -->
-    <div class="relative z-40 px-4 pb-[clamp(2rem,8vw,5rem)] pt-24 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-7xl">
-        <p class="luxe-kicker">
-          Curated luxury · Limited drops · Secure checkout
-        </p>
-        <h1 class="luxe-title mt-4 max-w-3xl text-[clamp(2.4rem,5.2vw,4.6rem)] font-semibold leading-[1.02]">
-          {{ headline }}
-        </h1>
-        <p class="mt-5 max-w-xl text-lg text-luxe-pearl/85 sm:text-xl">
-          {{ subheading }}
-        </p>
-        <div class="mt-10 flex flex-wrap gap-3">
-          <Link :href="route('products')" class="luxe-btn luxe-btn-primary">
-            Explore the collection
-            <span class="ml-1">→</span>
-          </Link>
-          <a :href="whatsappLink" target="_blank" rel="noopener noreferrer" class="luxe-btn luxe-btn-ghost">
-            WhatsApp concierge
-          </a>
-        </div>
+    <!-- Content: split editorial (very different layout) -->
+    <div class="relative z-40 flex flex-1 items-center">
+      <div class="luxe-container py-24 sm:py-28">
+        <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <!-- Left: copy in glass panel -->
+          <div class="lg:col-span-6">
+            <div class="luxe-surface-strong rounded-5xl p-7 sm:p-10">
+              <p class="luxe-kicker">Curated luxury · Limited drops · Secure checkout</p>
+              <h1 class="luxe-title mt-5 text-[clamp(2.2rem,4.6vw,4rem)] font-semibold leading-[1.03]">
+                {{ headline }}
+              </h1>
+              <p class="mt-5 max-w-xl text-base text-luxe-pearl/80 sm:text-lg">
+                {{ subheading }}
+              </p>
 
-        <!-- Category gateways -->
-        <div v-if="topCategories.length" class="mt-12 grid gap-3 sm:grid-cols-3">
-          <Link
-            v-for="c in topCategories"
-            :key="c.slug"
-            :href="route('products', { category: c.slug })"
-            class="luxe-surface rounded-3xl p-5 transition hover:bg-white/10"
-          >
-            <p class="luxe-kicker">Category</p>
-            <p class="mt-2 font-display text-xl font-semibold tracking-tight text-luxe-pearl">{{ c.label }}</p>
-            <p class="mt-2 text-sm text-luxe-mist/80">Shop now →</p>
-          </Link>
+              <div class="mt-8 flex flex-wrap gap-3">
+                <Link :href="route('products')" class="luxe-btn luxe-btn-primary">
+                  Shop now
+                  <span class="ml-1">→</span>
+                </Link>
+                <a :href="whatsappLink" target="_blank" rel="noopener noreferrer" class="luxe-btn luxe-btn-ghost">
+                  WhatsApp concierge
+                </a>
+              </div>
+
+              <div v-if="topCategories.length" class="mt-8 flex flex-wrap gap-2">
+                <Link
+                  v-for="c in topCategories"
+                  :key="c.slug"
+                  :href="route('products', { category: c.slug })"
+                  class="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-sm font-semibold text-luxe-pearl/90 transition hover:bg-white/10"
+                >
+                  <span class="h-1.5 w-1.5 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>{{ c.label }}</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: "product lens" frame (uses current slide) -->
+          <div class="lg:col-span-6">
+            <div class="relative mx-auto max-w-xl">
+              <div class="pointer-events-none absolute -inset-10 rounded-[3rem] bg-[radial-gradient(closest-side,rgba(199,164,93,0.22),transparent_70%)] blur-2xl" aria-hidden="true" />
+
+              <div class="relative overflow-hidden rounded-5xl border border-white/12 bg-black/30 shadow-luxe-lg backdrop-blur-2xl">
+                <div class="absolute inset-0 bg-[radial-gradient(800px_480px_at_70%_20%,rgba(255,255,255,0.10),transparent_60%)]" aria-hidden="true" />
+                <div class="p-4 sm:p-5">
+                  <div class="flex items-center justify-between gap-3">
+                    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-luxe-mist">
+                      Featured visual
+                    </p>
+                    <div class="flex items-center gap-1.5">
+                      <span class="h-1.5 w-1.5 rounded-full bg-luxe-emerald" aria-hidden="true" />
+                      <span class="text-xs font-semibold text-luxe-pearl/80">Live</span>
+                    </div>
+                  </div>
+
+                  <div class="mt-4 overflow-hidden rounded-4xl border border-white/10 bg-black/40">
+                    <img
+                      v-if="currentSlide"
+                      :src="currentSlide"
+                      alt=""
+                      class="h-[320px] w-full object-cover sm:h-[420px]"
+                      loading="eager"
+                    />
+                    <div v-else class="flex h-[320px] items-center justify-center sm:h-[420px]">
+                      <p class="text-sm text-luxe-mist/80">Add hero images in Admin to show visuals here.</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                    <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
+                      <p class="luxe-kicker">Secure checkout</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/80">Fast ordering, clear steps, premium experience.</p>
+                    </div>
+                    <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
+                      <p class="luxe-kicker">Premium support</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/80">Concierge help for scent, size, and routine picks.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subtle "scroll cue" -->
+              <div class="mt-8 flex justify-center">
+                <div class="h-10 w-6 rounded-full border border-white/15 bg-white/5 p-1">
+                  <div class="h-2 w-2 animate-bounce rounded-full bg-luxe-gold" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Slide nav (only if multiple) -->
     <template v-if="slides.length > 1">
-      <div class="absolute bottom-6 left-1/2 z-40 flex -translate-x-1/2 gap-2" role="tablist" aria-label="Slides">
+      <div class="absolute right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-2 md:flex" role="tablist" aria-label="Slides">
         <button
           v-for="(_, i) in slides"
           :key="i"
           type="button"
           :aria-label="`Slide ${i + 1}`"
           :aria-selected="i === currentIndex"
-          class="h-1 w-8 transition-all duration-300"
-          :class="i === currentIndex ? 'bg-luxe-gold' : 'bg-white/30 hover:bg-white/45'"
+          class="h-10 w-1.5 rounded-full transition-all duration-300"
+          :class="i === currentIndex ? 'bg-luxe-gold' : 'bg-white/25 hover:bg-white/40'"
           @click="goTo(i)"
         />
       </div>
       <button
         type="button"
-        class="absolute left-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-3xl border border-white/15 bg-white/5 text-white backdrop-blur transition hover:bg-white/10 md:left-8"
+        class="absolute left-4 top-1/2 z-40 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-3xl border border-white/15 bg-white/5 text-white backdrop-blur transition hover:bg-white/10 md:flex md:left-8"
         aria-label="Previous"
         @click="prev"
       >
@@ -133,7 +192,7 @@ const topCategories = computed(() => {
       </button>
       <button
         type="button"
-        class="absolute right-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-3xl border border-white/15 bg-white/5 text-white backdrop-blur transition hover:bg-white/10 md:right-8"
+        class="absolute right-4 top-1/2 z-40 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-3xl border border-white/15 bg-white/5 text-white backdrop-blur transition hover:bg-white/10 md:flex md:right-8"
         aria-label="Next"
         @click="next"
       >
