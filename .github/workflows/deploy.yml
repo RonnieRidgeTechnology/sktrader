@@ -29,7 +29,17 @@ jobs:
             echo "Pulling latest code..."
             git fetch --all
             git reset --hard origin/main
-            git clean -fd
+            # IMPORTANT: preserve user uploads between deploys.
+            # Uploaded product images are stored outside git (untracked) under public/media/.
+            # A plain `git clean -fd` would delete them on every deploy.
+            git clean -fd \
+              -e public/media \
+              -e public/media/** \
+              -e storage/app/public \
+              -e storage/app/public/**
+
+            # Ensure media directories exist (some hosts remove empty dirs)
+            mkdir -p public/media/products public/media/products/gallery
 
             echo "Installing PHP dependencies..."
             /opt/cpanel/ea-php82/root/usr/bin/php /usr/local/bin/composer.phar install --no-dev --optimize-autoloader
