@@ -1,0 +1,51 @@
+# name: Deploy Laravel + Vue + Inertia
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       # 1. Checkout code
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       # 2. Setup SSH Agent with our deploy key
+#       - name: Setup SSH
+#         uses: webfactory/ssh-agent@v0.9.1
+#         with:
+#           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+#       # 3. Deploy to server
+#       - name: Deploy to Server
+#         run: |
+#           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+#             cd ${{ secrets.DEPLOY_PATH }}
+
+#             echo "Pulling latest code..."
+#             git fetch --all
+#             git reset --hard origin/main
+#             git clean -fd
+
+#             echo "Installing PHP dependencies..."
+#             /opt/cpanel/ea-php82/root/usr/bin/php /usr/local/bin/composer.phar install --no-dev --optimize-autoloader
+
+#             echo "Installing Node dependencies..."
+#             npm install --legacy-peer-deps
+#             npm run build
+
+#             echo "Running migrations & caching..."
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan migrate --force
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan config:clear
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan route:clear
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan view:clear
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan config:cache
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan route:cache
+#             /opt/cpanel/ea-php82/root/usr/bin/php artisan view:cache
+
+#             echo "Deployment completed successfully!"
+#           EOF

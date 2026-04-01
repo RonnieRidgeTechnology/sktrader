@@ -1,0 +1,2 @@
+# Keeps public/media in git so uploads (products, categories, settings) have a writable directory.
+# Uploaded files are stored here; add them to .gitignore if you don't want to commit assets.

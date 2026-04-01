@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Admin panel: premium table styles (use with .admin-table, .admin-th, .admin-td, .admin-row, etc.) */
+@layer components {
+  .admin-table { border-collapse: collapse; }
+  .admin-th {
+    @apply px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400;
+    background: linear-gradient(to bottom, rgb(250 250 250), rgb(245 245 245));
+  }
+  .dark .admin-th {
+    background: linear-gradient(to bottom, rgb(39 39 42 / 0.6), rgb(24 24 27 / 0.5));
+  }
+  .admin-th-first { @apply rounded-tl-xl pl-6; }
+  .admin-th-last { @apply rounded-tr-xl pr-6 text-right; }
+  .admin-td { @apply px-6 py-4 text-sm; }
+  .admin-td-first { @apply pl-6; }
+  .admin-td-last { @apply pr-6; }
+  .admin-row { @apply bg-white dark:bg-zinc-900; }
+  .admin-row:hover { @apply bg-zinc-50/90 dark:bg-zinc-800/60; }
+  .admin-row:hover .admin-td-first { border-left: 3px solid rgb(251 191 36); }
+  .dark .admin-row:hover .admin-td-first { border-left-color: rgb(245 158 11); }
+  .admin-action { @apply inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-medium transition; }
+  .admin-action-edit { @apply text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white; }
+  .admin-action-delete { @apply text-zinc-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400; }
+  .admin-action-divider { @apply w-px self-stretch bg-zinc-200 dark:bg-zinc-600; min-height: 1.25rem; }
+  .status-badge { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium; }
+  .status-badge-active { @apply bg-emerald-50 text-emerald-700 dark:bg-emerald-900/35 dark:text-emerald-400; }
+  .status-badge-inactive { @apply bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400; }
+  .status-badge-warning { @apply bg-amber-50 text-amber-700 dark:bg-amber-900/35 dark:text-amber-400; }
+  .status-badge-info { @apply bg-sky-50 text-sky-700 dark:bg-sky-900/35 dark:text-sky-400; }
+  .status-badge-success { @apply bg-emerald-50 text-emerald-700 dark:bg-emerald-900/35 dark:text-emerald-400; }
+  .status-badge-danger { @apply bg-red-50 text-red-700 dark:bg-red-900/35 dark:text-red-400; }
+  .status-badge-neutral { @apply bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400; }
+  .slug-pill { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+}
