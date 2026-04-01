@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
   images: { type: Array, default: () => [] },
-  tagline: { type: String, default: 'Lusaka showroom · Nationwide delivery' },
+  tagline: { type: String, default: 'Watches · Perfumes · Serums' },
 });
 
 const cells = computed(() => {
@@ -21,29 +21,27 @@ const cells = computed(() => {
 </script>
 
 <template>
-  <section class="bento-section bg-[#0f0e0d] px-4 py-16 sm:px-6 sm:py-24 md:px-8 lg:px-12" aria-label="Lookbook">
-    <div class="mx-auto max-w-7xl">
-      <p class="mb-10 text-center text-xs font-medium uppercase tracking-[0.3em] text-white/60">
-        The collection
-      </p>
+  <section class="bento-section bg-luxe-obsidian" aria-label="Lookbook">
+    <div class="luxe-container py-16 sm:py-24">
+      <p class="luxe-kicker text-center">The collection</p>
       <div
-        class="bento-grid grid auto-rows-[minmax(140px,1fr)] grid-cols-4 gap-2 sm:gap-3 md:auto-rows-[minmax(180px,1fr)]"
+        class="bento-grid mt-10 grid auto-rows-[minmax(140px,1fr)] grid-cols-4 gap-2 sm:gap-3 md:auto-rows-[minmax(180px,1fr)]"
       >
         <template v-for="(cell, idx) in cells" :key="idx">
           <!-- Text cell -->
           <div
             v-if="cell.isText"
-            class="group flex flex-col justify-end border border-white/15 bg-white/5 p-4 backdrop-blur-sm transition hover:bg-white/10 sm:p-6"
+            class="group luxe-surface flex flex-col justify-end rounded-3xl p-4 transition hover:bg-white/10 sm:p-6"
             :style="{ gridRow: cell.gridRow, gridColumn: cell.gridCol }"
           >
-            <p class="font-editorial text-lg font-semibold text-white sm:text-xl">
+            <p class="luxe-title text-lg font-semibold sm:text-xl">
               {{ tagline }}
             </p>
             <Link
               :href="route('products')"
-              class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-white/80 underline-offset-4 transition hover:text-white"
+              class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-luxe-pearl/85 transition hover:text-luxe-pearl"
             >
-              View all pieces
+              Explore all products
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </Link>
           </div>
@@ -51,7 +49,7 @@ const cells = computed(() => {
           <Link
             v-else-if="cell.image"
             :href="route('products')"
-            class="group relative block overflow-hidden border border-white/10 transition hover:border-white/25"
+            class="group relative block overflow-hidden rounded-3xl border border-white/10 transition hover:border-white/25"
             :style="{ gridRow: cell.gridRow, gridColumn: cell.gridCol }"
           >
             <img
@@ -60,15 +58,15 @@ const cells = computed(() => {
               class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
               loading="lazy"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <span class="absolute bottom-3 left-3 text-xs font-medium uppercase tracking-wider text-white/90 opacity-0 transition-opacity group-hover:opacity-100">
-              View collection
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <span class="absolute bottom-4 left-4 text-xs font-semibold uppercase tracking-[0.25em] text-white/90 opacity-0 transition-opacity group-hover:opacity-100">
+              Shop now
             </span>
           </Link>
           <!-- Placeholder -->
           <div
             v-else
-            class="flex items-center justify-center border border-white/10 bg-white/5"
+            class="luxe-surface flex items-center justify-center rounded-3xl"
             :style="{ gridRow: cell.gridRow, gridColumn: cell.gridCol }"
           >
             <span class="text-xs text-white/40">—</span>
