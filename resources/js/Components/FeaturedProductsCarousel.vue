@@ -13,6 +13,7 @@ const props = defineProps({
 });
 
 const isEditorial = computed(() => props.theme === 'editorial');
+const isLuxe = computed(() => props.theme === 'luxe');
 const viewportRef = ref(null);
 const itemsPerPage = ref(4);
 const currentIndex = ref(0);
@@ -122,18 +123,23 @@ onUnmounted(() => {
 <template>
   <section
     class="relative overflow-hidden border-t py-[50px]"
-    :class="isEditorial ? 'border-editorial-ink/10 bg-editorial-paper' : 'border-zinc-200/80 bg-gradient-to-b from-zinc-50 via-white to-zinc-50 dark:border-zinc-800 dark:from-zinc-900/50 dark:via-zinc-950 dark:to-zinc-900/50'"
+    :class="isEditorial
+      ? 'border-editorial-ink/10 bg-editorial-paper'
+      : isLuxe
+        ? 'border-white/10 bg-luxe-obsidian'
+        : 'border-zinc-200/80 bg-gradient-to-b from-zinc-50 via-white to-zinc-50 dark:border-zinc-800 dark:from-zinc-900/50 dark:via-zinc-950 dark:to-zinc-900/50'"
     aria-labelledby="featured-products-heading"
   >
+    <div v-if="isLuxe" class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-60" aria-hidden="true" />
     <div class="relative mx-auto max-w-7xl px-4 pt-16 pb-6 sm:px-6 sm:pt-20 sm:pb-8 lg:px-8 lg:pt-24 lg:pb-8">
       <div class="mx-auto max-w-2xl text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.25em]" :class="isEditorial ? 'text-editorial-coral' : 'text-amber-600 dark:text-amber-400'">
+        <p class="text-sm font-semibold uppercase tracking-[0.25em]" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-mist' : 'text-amber-600 dark:text-amber-400'">
           {{ eyebrow }}
         </p>
-        <h2 id="featured-products-heading" class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl" :class="isEditorial ? 'font-editorial text-editorial-ink' : 'text-zinc-900 dark:text-white'">
+        <h2 id="featured-products-heading" class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl" :class="isEditorial ? 'font-editorial text-editorial-ink' : isLuxe ? 'font-display text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
           {{ title }}
         </h2>
-        <p class="mt-4 text-lg" :class="isEditorial ? 'text-editorial-slate' : 'text-zinc-600 dark:text-zinc-400'">
+        <p class="mt-4 text-lg" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-pearl/75' : 'text-zinc-600 dark:text-zinc-400'">
           {{ subtitle }}
         </p>
       </div>
@@ -147,7 +153,11 @@ onUnmounted(() => {
             type="button"
             :disabled="!canPrev"
             class="carousel-arrow order-1 hidden h-10 w-10 shrink-0 items-center justify-center border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:flex sm:h-12 sm:w-12"
-            :class="isEditorial ? 'rounded-sm border-editorial-ink/30 bg-editorial-cream text-editorial-ink hover:border-editorial-coral hover:bg-editorial-coral/10 focus:ring-editorial-coral focus:ring-offset-editorial-paper' : 'rounded-full border-zinc-200 bg-white text-zinc-700 shadow-lg shadow-zinc-200/50 hover:border-amber-400 hover:bg-amber-50 hover:text-amber-700 hover:shadow-amber-200/40 focus:ring-amber-500 focus:ring-offset-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:shadow-zinc-950 dark:hover:border-amber-500/60 dark:hover:bg-amber-950/30 dark:hover:text-amber-400'"
+            :class="isEditorial
+              ? 'rounded-sm border-editorial-ink/30 bg-editorial-cream text-editorial-ink hover:border-editorial-coral hover:bg-editorial-coral/10 focus:ring-editorial-coral focus:ring-offset-editorial-paper'
+              : isLuxe
+                ? 'rounded-3xl border-white/15 bg-white/5 text-luxe-pearl backdrop-blur hover:bg-white/10 focus:ring-luxe-gold/70 focus:ring-offset-black'
+                : 'rounded-full border-zinc-200 bg-white text-zinc-700 shadow-lg shadow-zinc-200/50 hover:border-amber-400 hover:bg-amber-50 hover:text-amber-700 hover:shadow-amber-200/40 focus:ring-amber-500 focus:ring-offset-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:shadow-zinc-950 dark:hover:border-amber-500/60 dark:hover:bg-amber-950/30 dark:hover:text-amber-400'"
             aria-label="Previous products"
             @click="goPrev"
           >
@@ -172,15 +182,19 @@ onUnmounted(() => {
                 <Link
                   :href="route('products.show', product.slug)"
                   class="group relative flex h-full min-h-[320px] w-full flex-col overflow-hidden bg-white transition-all duration-300 sm:min-h-[360px]"
-                  :class="isEditorial ? 'rounded-sm border-2 border-editorial-ink/20 hover:-translate-y-1 hover:border-editorial-coral hover:shadow-lg' : 'rounded-2xl shadow-lg shadow-zinc-200/60 ring-1 ring-zinc-200/80 hover:-translate-y-1 hover:shadow-xl hover:shadow-zinc-300/50 hover:ring-amber-500/30 dark:bg-zinc-900/90 dark:shadow-zinc-950 dark:ring-zinc-700/80 dark:hover:shadow-2xl dark:hover:ring-amber-500/20'"
+                  :class="isEditorial
+                    ? 'rounded-sm border-2 border-editorial-ink/20 hover:-translate-y-1 hover:border-editorial-coral hover:shadow-lg'
+                    : isLuxe
+                      ? 'rounded-4xl border border-white/10 bg-white/5 shadow-luxe backdrop-blur hover:-translate-y-1 hover:bg-white/10'
+                      : 'rounded-2xl shadow-lg shadow-zinc-200/60 ring-1 ring-zinc-200/80 hover:-translate-y-1 hover:shadow-xl hover:shadow-zinc-300/50 hover:ring-amber-500/30 dark:bg-zinc-900/90 dark:shadow-zinc-950 dark:ring-zinc-700/80 dark:hover:shadow-2xl dark:hover:ring-amber-500/20'"
                 >
                   <span
                     class="absolute right-3 top-3 z-10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider shadow-sm"
-                    :class="isEditorial ? 'rounded-sm bg-editorial-coral text-white' : 'rounded-full bg-amber-500 text-zinc-900'"
+                    :class="isEditorial ? 'rounded-sm bg-editorial-coral text-white' : isLuxe ? 'rounded-full bg-luxe-gold text-black' : 'rounded-full bg-amber-500 text-zinc-900'"
                   >
                     Featured
                   </span>
-                  <div class="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                  <div class="relative aspect-[4/3] w-full overflow-hidden" :class="isLuxe ? 'bg-black/40' : 'bg-zinc-100 dark:bg-zinc-800'">
                     <img
                       v-if="product.image_url || product.image"
                       :src="product.image_url || storageUrl(product.image)"
@@ -204,21 +218,21 @@ onUnmounted(() => {
                     <span
                       v-if="product.category"
                       class="text-[11px] font-semibold uppercase tracking-[0.2em]"
-                      :class="isEditorial ? 'text-editorial-coral' : 'text-amber-700 dark:text-amber-300'"
+                      :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-mist' : 'text-amber-700 dark:text-amber-300'"
                     >
                       {{ product.category.parent ? `${product.category.parent.name} › ${product.category.name}` : product.category.name }}
                     </span>
-                    <h3 class="mt-1.5 text-base font-semibold leading-snug tracking-tight sm:mt-2 sm:text-lg" :class="isEditorial ? 'font-editorial text-editorial-ink' : 'text-zinc-900 dark:text-white'">
+                    <h3 class="mt-1.5 text-base font-semibold leading-snug tracking-tight sm:mt-2 sm:text-lg" :class="isEditorial ? 'font-editorial text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
                       {{ product.name }}
                     </h3>
                     <p
                       v-if="product.short_description"
                       class="mt-1.5 line-clamp-2 text-sm leading-relaxed sm:mt-2"
-                      :class="isEditorial ? 'text-editorial-slate' : 'text-zinc-600 dark:text-zinc-400'"
+                      :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-pearl/75' : 'text-zinc-600 dark:text-zinc-400'"
                     >
                       {{ product.short_description }}
                     </p>
-                    <span class="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-semibold sm:pt-4" :class="isEditorial ? 'text-editorial-coral' : 'text-amber-700 dark:text-amber-300'">
+                    <span class="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-semibold sm:pt-4" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-gold' : 'text-amber-700 dark:text-amber-300'">
                       View product
                       <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -235,7 +249,11 @@ onUnmounted(() => {
             type="button"
             :disabled="!canNext"
             class="carousel-arrow order-3 hidden h-10 w-10 shrink-0 items-center justify-center border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:flex sm:h-12 sm:w-12"
-            :class="isEditorial ? 'rounded-sm border-editorial-ink/30 bg-editorial-cream text-editorial-ink hover:border-editorial-coral hover:bg-editorial-coral/10 focus:ring-editorial-coral focus:ring-offset-editorial-paper' : 'rounded-full border-zinc-200 bg-white text-zinc-700 shadow-lg shadow-zinc-200/50 hover:border-amber-400 hover:bg-amber-50 hover:text-amber-700 hover:shadow-amber-200/40 focus:ring-amber-500 focus:ring-offset-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:shadow-zinc-950 dark:hover:border-amber-500/60 dark:hover:bg-amber-950/30 dark:hover:text-amber-400'"
+            :class="isEditorial
+              ? 'rounded-sm border-editorial-ink/30 bg-editorial-cream text-editorial-ink hover:border-editorial-coral hover:bg-editorial-coral/10 focus:ring-editorial-coral focus:ring-offset-editorial-paper'
+              : isLuxe
+                ? 'rounded-3xl border-white/15 bg-white/5 text-luxe-pearl backdrop-blur hover:bg-white/10 focus:ring-luxe-gold/70 focus:ring-offset-black'
+                : 'rounded-full border-zinc-200 bg-white text-zinc-700 shadow-lg shadow-zinc-200/50 hover:border-amber-400 hover:bg-amber-50 hover:text-amber-700 hover:shadow-amber-200/40 focus:ring-amber-500 focus:ring-offset-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:shadow-zinc-950 dark:hover:border-amber-500/60 dark:hover:bg-amber-950/30 dark:hover:text-amber-400'"
             aria-label="Next products"
             @click="goNext"
           >

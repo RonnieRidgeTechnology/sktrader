@@ -5,11 +5,13 @@ import { usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import RoomHero from '@/Components/Home/RoomHero.vue';
 import BentoGrid from '@/Components/Home/BentoGrid.vue';
+import CategoriesShowcase from '@/Components/Home/CategoriesShowcase.vue';
 import WhyPillars from '@/Components/Home/WhyPillars.vue';
 import ReelsStrip from '@/Components/Home/ReelsStrip.vue';
 import QuoteBlock from '@/Components/Home/QuoteBlock.vue';
 import DeliveryLine from '@/Components/Home/DeliveryLine.vue';
 import FinalCta from '@/Components/Home/FinalCta.vue';
+import FeaturedProductsCarousel from '@/Components/FeaturedProductsCarousel.vue';
 import { computed } from 'vue';
 
 const page = usePage();
@@ -42,6 +44,12 @@ const luxeCategoryGateways = computed(() => {
   const rest = parents.filter((p) => !chosen.some((c) => c.id === p.id));
   const final = [...chosen, ...rest].slice(0, 3);
   return final.map((c) => ({ label: c.name, slug: c.slug }));
+});
+
+const homeCategoryShowcase = computed(() => {
+  const list = navCategories.value || [];
+  const parents = list.filter((c) => !c.parent_id);
+  return parents.slice(0, 8).map((c) => ({ label: c.name, slug: c.slug }));
 });
 
 const defaultRegions = [
@@ -80,25 +88,18 @@ const pageSeoProps = usePageSeo(null, {
         :categories="luxeCategoryGateways"
       />
 
-      <!-- Trust strip -->
-      <section class="border-y border-white/10 bg-black/40">
-        <div class="luxe-container py-10">
-          <div class="grid gap-4 sm:grid-cols-3">
-            <div class="luxe-surface rounded-3xl p-6">
-              <p class="luxe-kicker">Authenticity</p>
-              <p class="mt-2 text-base text-luxe-pearl/90">Carefully sourced products with quality-first selection.</p>
-            </div>
-            <div class="luxe-surface rounded-3xl p-6">
-              <p class="luxe-kicker">Shipping</p>
-              <p class="mt-2 text-base text-luxe-pearl/90">Fast dispatch and tracked delivery where available.</p>
-            </div>
-            <div class="luxe-surface rounded-3xl p-6">
-              <p class="luxe-kicker">Support</p>
-              <p class="mt-2 text-base text-luxe-pearl/90">Concierge-style help via WhatsApp for quick answers.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- Categories (modern) -->
+      <CategoriesShowcase :categories="homeCategoryShowcase" />
+
+      <!-- Featured products carousel (auto-slide, 4 visible on desktop, shifts 1 at a time) -->
+      <FeaturedProductsCarousel
+        v-if="featuredProducts.length > 0"
+        theme="luxe"
+        :products="featuredProducts"
+        eyebrow="Featured"
+        title="Featured products"
+        subtitle="Auto-sliding highlights — 4 at a time, shifting one-by-one."
+      />
 
       <!-- 2. Bento lookbook -->
       <BentoGrid :images="bentoImages" :tagline="tagline" />
