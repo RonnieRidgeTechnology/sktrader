@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { Package, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import { storageUrl } from '@/utils/storageUrl';
+import { inject } from 'vue';
 
 const props = defineProps({
   theme: { type: String, default: '' },
@@ -17,6 +18,8 @@ const isLuxe = computed(() => props.theme === 'luxe');
 const viewportRef = ref(null);
 const itemsPerPage = ref(4);
 const currentIndex = ref(0);
+const addingProductId = ref(null);
+const openCartDrawer = inject('openCartDrawer', null);
 
 const list = computed(() => (Array.isArray(props.products) ? props.products : []));
 
@@ -53,6 +56,28 @@ function updateResponsive() {
   const w = viewportRef.value.offsetWidth;
   itemsPerPage.value = getItemsPerPage(w);
   currentIndex.value = Math.min(currentIndex.value, maxIndex.value);
+}
+
+function formatPrice(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  try {
+    return new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(n);
+  } catch (_) {
+    return `ZMW ${n.toFixed(2)}`;
+  }
+}
+
+function addToCart(productId, e) {
+  if (e) e.preventDefault();
+  if (e) e.stopPropagation();
+  if (addingProductId.value !== null) return;
+  addingProductId.value = productId;
+  router.post(route('cart.add'), { product_id: productId, quantity: 1 }, {
+    preserveScroll: true,
+    onFinish: () => { addingProductId.value = null; },
+    onSuccess: () => { openCartDrawer?.(); },
+  });
 }
 
 const translatePercent = computed(() => {
@@ -232,12 +257,37 @@ onUnmounted(() => {
                     >
                       {{ product.short_description }}
                     </p>
-                    <span class="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-semibold sm:pt-4" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-gold' : 'text-amber-700 dark:text-amber-300'">
-                      View product
-                      <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </span>
+
+                    <div class="mt-auto pt-4">
+                      <div class="flex items-end justify-between gap-3">
+                        <div class="min-w-0">
+                          <p class="text-xs font-semibold uppercase tracking-[0.22em]" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-mist' : 'text-zinc-500 dark:text-zinc-400'">
+                            Price
+                          </p>
+                          <p class="mt-1 truncate text-base font-semibold" :class="isEditorial ? 'text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
+                            {{ formatPrice(product.price) || '—' }}
+                          </p>
+                        </div>
+
+                        <button
+                          type="button"
+                          class="shrink-0"
+                          :class="isLuxe ? 'luxe-btn luxe-btn-primary min-h-[44px] px-4 py-2.5 text-sm' : 'inline-flex min-h-[44px] items-center justify-center rounded-2xl bg-black px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-900'"
+                          :disabled="addingProductId === product.id"
+                          @click="(e) => addToCart(product.id, e)"
+                        >
+                          <span v-if="addingProductId === product.id">Adding…</span>
+                          <span v-else>Add to cart</span>
+                        </button>
+                      </div>
+
+                      <span class="mt-4 inline-flex items-center gap-2 text-sm font-semibold" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-gold' : 'text-amber-700 dark:text-amber-300'">
+                        View product
+                        <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </div>
                   </div>
                 </Link>
               </div>

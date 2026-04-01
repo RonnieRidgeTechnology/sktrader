@@ -111,7 +111,7 @@ Route::get('/', function () {
             ->where('status', true)
             ->where('is_featured', true)
             ->orderBy('name')
-            ->get(['id', 'category_id', 'name', 'slug', 'short_description', 'image'])
+            ->get(['id', 'category_id', 'name', 'slug', 'short_description', 'image', 'price'])
             ->map(function ($product) {
                 $path = $product->image ? preg_replace('#^/?(storage/|public/|media/)?#', '', trim(str_replace('\\', '/', $product->image))) : null;
                 $arr = $product->toArray();
