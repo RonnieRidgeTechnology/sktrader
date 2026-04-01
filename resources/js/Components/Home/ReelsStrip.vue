@@ -79,21 +79,31 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="reels-strip bg-[#0f0e0d] py-16 sm:py-24" aria-label="Showroom">
-    <p class="mb-10 text-center text-xs font-medium uppercase tracking-[0.3em] text-white/60">
-      Our showroom & collections
-    </p>
+  <section class="reels-strip bg-luxe-obsidian" aria-label="Video reels">
+    <div class="luxe-container py-16 sm:py-24">
+      <div class="flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end">
+        <div class="text-center sm:text-left">
+          <p class="luxe-kicker">Reels</p>
+          <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">A closer look</h2>
+          <p class="mt-3 max-w-xl text-sm text-luxe-pearl/75 sm:text-base">
+            Quick clips to preview finishes, textures, packaging, and what arrives at your door.
+          </p>
+        </div>
+        <p class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist/80">Auto-scroll · Hover to pause</p>
+      </div>
     <div
       ref="scrollRef"
-      class="reels-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 sm:gap-6 sm:px-6 md:px-8 lg:px-12"
+      class="reels-scroll mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 sm:gap-6"
       style="scrollbar-width: none;"
+      @mouseenter="stopAutoSlide"
+      @mouseleave="startAutoSlide"
     >
       <div class="mx-auto flex max-w-7xl flex-shrink-0 gap-4 sm:gap-6">
         <button
           v-for="(item, index) in videos"
           :key="index"
           type="button"
-          class="reel-card group relative flex min-w-[280px] max-w-[320px] flex-shrink-0 snap-center flex-col overflow-hidden border border-white/10 transition hover:border-white/25 sm:min-w-[320px]"
+          class="reel-card group relative flex min-w-[280px] max-w-[340px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-luxe transition hover:border-white/25 hover:bg-white/10 sm:min-w-[320px]"
           @click="openModal(item)"
         >
           <div class="relative aspect-video w-full bg-[#1a1918]">
@@ -117,19 +127,19 @@ onUnmounted(() => {
               <Play class="h-12 w-12" />
             </div>
             <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-              <span class="flex h-16 w-16 items-center justify-center border-2 border-white bg-white/90 text-[#0f0e0d]">
+              <span class="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur">
                 <Play class="h-8 w-8" fill="currentColor" stroke="none" />
               </span>
             </div>
           </div>
-          <div v-if="item.title" class="border-t border-white/10 bg-[#1a1918] px-4 py-3">
-            <p class="text-sm font-medium text-white">{{ item.title }}</p>
+          <div v-if="item.title" class="border-t border-white/10 px-4 py-3">
+            <p class="text-sm font-semibold text-luxe-pearl">{{ item.title }}</p>
           </div>
         </button>
       </div>
     </div>
-    <p v-if="!videos || videos.length === 0" class="text-center text-sm text-white/40">
-      Showroom videos will appear here.
+    <p v-if="!videos || videos.length === 0" class="mt-10 text-center text-sm text-luxe-mist/80">
+      Video reels will appear here.
     </p>
 
     <!-- Modal -->
@@ -152,13 +162,13 @@ onUnmounted(() => {
           <div class="relative w-full max-w-4xl" @click.stop>
             <button
               type="button"
-              class="absolute -top-12 right-0 flex h-10 w-10 items-center justify-center text-white transition hover:text-white/80"
+              class="absolute -top-12 right-0 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur transition hover:bg-white/10"
               aria-label="Close"
               @click="closeModal"
             >
               <X class="h-6 w-6" />
             </button>
-            <div class="aspect-video w-full overflow-hidden border border-white/20 bg-black">
+            <div class="aspect-video w-full overflow-hidden rounded-3xl border border-white/15 bg-black shadow-luxe-lg">
               <iframe
                 v-if="embedUrl(selected)"
                 :src="embedUrl(selected, true)"
@@ -181,6 +191,7 @@ onUnmounted(() => {
         </div>
       </Transition>
     </Teleport>
+    </div>
   </section>
 </template>
 

@@ -17,20 +17,20 @@ const props = defineProps({
   },
   section: { type: Object, default: null },
 });
-const eyebrow = computed(() => props.section?.eyebrow || 'We deliver across Zambia');
-const headline = computed(() => props.section?.headline || 'From our showroom in Lusaka to your home — nationwide.');
+const eyebrow = computed(() => props.section?.eyebrow || 'Delivery');
+const headline = computed(() => props.section?.headline || 'Carefully packed. Delivered with confidence.');
+const subline = computed(() => props.section?.subline || 'We dispatch quickly and share updates where available.');
 const footer = computed(() => props.section?.footer || ' for delivery details and lead times.');
 </script>
 
 <template>
-  <section class="delivery-line relative overflow-hidden border-t border-[#1c1917]/10 px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-12" aria-label="Delivery">
-    <!-- Background: gradient -->
-    <div class="absolute inset-0 bg-gradient-to-b from-[#faf8f5] via-[#f5f2ed] to-[#efeae4]" aria-hidden="true" />
+  <section class="delivery-line relative overflow-hidden border-t border-white/10 bg-luxe-obsidian" aria-label="Delivery">
+    <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-60" aria-hidden="true" />
 
     <!-- Explanatory vectors: Zambia delivery concept -->
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
       <!-- Simplified Zambia outline with Lusaka hub and delivery routes to regions -->
-      <div class="delivery-map absolute h-full w-full max-h-[420px] max-w-[420px] text-[#1c1917]/[0.08] sm:max-h-[500px] sm:max-w-[500px]">
+      <div class="delivery-map absolute h-full w-full max-h-[420px] max-w-[420px] text-white/[0.06] sm:max-h-[500px] sm:max-w-[500px]">
         <svg viewBox="0 0 200 240" fill="none" class="h-full w-full" preserveAspectRatio="xMidYMid meet">
           <!-- Simplified Zambia shape (stylized outline) -->
           <path
@@ -41,7 +41,7 @@ const footer = computed(() => props.section?.footer || ' for delivery details an
           />
           <!-- Lusaka (hub) - center -->
           <circle cx="100" cy="115" r="6" fill="currentColor" />
-          <circle cx="100" cy="115" r="3" fill="#f5f2ed" />
+          <circle cx="100" cy="115" r="3" fill="rgba(199,164,93,0.55)" />
           <!-- Delivery routes (dotted lines from Lusaka to regions) -->
           <line x1="100" y1="115" x2="145" y2="95" stroke="currentColor" stroke-width="0.8" stroke-dasharray="4 3" />
           <line x1="100" y1="115" x2="155" y2="130" stroke="currentColor" stroke-width="0.8" stroke-dasharray="4 3" />
@@ -61,7 +61,7 @@ const footer = computed(() => props.section?.footer || ' for delivery details an
     </div>
 
     <!-- Left: Delivery truck vector (explanatory - we ship) -->
-    <div class="delivery-truck-left absolute left-4 top-1/2 hidden -translate-y-1/2 text-[#1c1917]/[0.09] md:block" style="width: 160px;" aria-hidden="true">
+    <div class="delivery-truck-left absolute left-4 top-1/2 hidden -translate-y-1/2 text-white/[0.07] md:block" style="width: 160px;" aria-hidden="true">
       <svg viewBox="0 0 80 50" fill="none" stroke="currentColor" stroke-width="1" class="h-full w-full">
         <path d="M5 35 L5 42 Q5 47 12 47 L25 47 L28 35 L55 35 L58 47 L68 47 Q75 47 75 42 L75 35" />
         <path d="M28 35 L28 15 L55 15 L55 35" />
@@ -74,7 +74,7 @@ const footer = computed(() => props.section?.footer || ' for delivery details an
     </div>
 
     <!-- Right: Package / door-to-door concept -->
-    <div class="delivery-door absolute right-4 top-1/2 hidden -translate-y-1/2 text-[#1c1917]/[0.09] md:block" style="width: 140px;" aria-hidden="true">
+    <div class="delivery-door absolute right-4 top-1/2 hidden -translate-y-1/2 text-white/[0.07] md:block" style="width: 140px;" aria-hidden="true">
       <svg viewBox="0 0 60 70" fill="none" stroke="currentColor" stroke-width="1" class="h-full w-full">
         <!-- House / destination -->
         <path d="M30 8 L55 28 L55 62 L5 62 L5 28 Z" />
@@ -87,32 +87,35 @@ const footer = computed(() => props.section?.footer || ' for delivery details an
       <p class="mt-1 text-center text-[10px] font-medium uppercase tracking-wider opacity-80">Your home</p>
     </div>
 
-    <div class="relative mx-auto max-w-4xl text-center">
-      <div class="inline-flex items-center justify-center gap-2 rounded-none border border-[#c2410c]/20 bg-white/80 px-4 py-2 shadow-sm">
-        <MapPin class="h-5 w-5 text-[#c2410c]" stroke-width="2" aria-hidden="true" />
-        <span class="text-xs font-semibold uppercase tracking-[0.25em] text-[#c2410c]">{{ eyebrow }}</span>
+    <div class="luxe-container relative py-16 sm:py-20">
+      <div class="mx-auto max-w-4xl text-center">
+        <div class="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-2 shadow-luxe backdrop-blur">
+          <MapPin class="h-5 w-5 text-luxe-gold" stroke-width="2" aria-hidden="true" />
+          <span class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist">{{ eyebrow }}</span>
+        </div>
+        <p class="luxe-title mt-6 text-2xl font-semibold leading-snug sm:text-3xl">
+          {{ headline }}
+        </p>
+        <p class="mt-3 text-sm text-luxe-pearl/75 sm:text-base">
+          {{ subline }}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <span
+            v-for="r in regions"
+            :key="r.name"
+            class="rounded-full border border-white/12 bg-white/5 px-4 py-2.5 text-sm font-semibold text-luxe-pearl/90 shadow-luxe transition hover:bg-white/10"
+          >
+            {{ r.name }}
+          </span>
+        </div>
+        <p class="mt-8 text-sm text-luxe-pearl/75">
+          <Link :href="route('contact')" class="font-semibold text-luxe-gold underline-offset-4 hover:underline">
+            Contact us
+          </Link>
+          {{ footer }}
+        </p>
       </div>
-      <p class="font-editorial mt-5 text-2xl font-semibold leading-snug text-[#1c1917] sm:text-3xl">
-        {{ headline }}
-      </p>
-      <p class="mt-3 text-sm text-[#44403c]">
-        Lusaka as our hub — we deliver to all major regions across the country.
-      </p>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <span
-          v-for="r in regions"
-          :key="r.name"
-          class="rounded-none border border-[#1c1917]/20 bg-white px-4 py-2.5 text-sm font-medium text-[#1c1917] shadow-[0_1px_2px_0_rgba(28,25,23,0.05)] transition hover:border-[#c2410c]/40 hover:shadow-md"
-        >
-          {{ r.name }}
-        </span>
-      </div>
-      <p class="mt-8 text-sm text-[#44403c]">
-        <Link :href="route('contact')" class="font-medium text-[#1c1917] underline-offset-4 hover:underline">
-          Contact us
-        </Link>
-        {{ footer }}
-      </p>
     </div>
   </section>
 </template>
