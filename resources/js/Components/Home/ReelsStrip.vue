@@ -106,7 +106,7 @@ onUnmounted(() => {
           class="reel-card group relative flex min-w-[280px] max-w-[340px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-luxe transition hover:border-white/25 hover:bg-white/10 sm:min-w-[320px]"
           @click="openModal(item)"
         >
-          <div class="relative aspect-video w-full bg-[#1a1918]">
+          <div class="relative w-full bg-[#1a1918] h-40 sm:h-44">
             <img
               v-if="item.youtubeId"
               :src="`https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`"

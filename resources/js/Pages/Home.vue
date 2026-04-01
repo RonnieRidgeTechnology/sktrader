@@ -4,7 +4,6 @@ import { usePageSeo } from '@/composables/usePageSeo';
 import { usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import RoomHero from '@/Components/Home/RoomHero.vue';
-import BentoGrid from '@/Components/Home/BentoGrid.vue';
 import CategoriesShowcase from '@/Components/Home/CategoriesShowcase.vue';
 import WhyPillars from '@/Components/Home/WhyPillars.vue';
 import ReelsStrip from '@/Components/Home/ReelsStrip.vue';
@@ -18,7 +17,6 @@ const page = usePage();
 const heroHeadline = page.props.heroHeadline ?? 'Luxury essentials, curated.';
 const heroSubheading = page.props.heroSubheading ?? 'Watches, perfumes, and skin care serums — premium picks, delivered with care.';
 const heroSliderImages = page.props.heroSliderImages ?? [];
-const heroGalleryImages = page.props.heroGalleryImages ?? [];
 const featuredProducts = page.props.featuredProducts ?? [];
 const videoReels = page.props.videoReels ?? [];
 const testimonials = page.props.testimonials ?? [];
@@ -64,9 +62,6 @@ const regions = (homeSections.delivery_line?.regions || []).length
   ? homeSections.delivery_line.regions.map((name) => ({ name: String(name) }))
   : defaultRegions;
 
-const bentoImages = [...(heroSliderImages || []), ...(heroGalleryImages || [])].filter(Boolean);
-const tagline = zuaaz.tagline || 'Watches · Perfumes · Serums';
-
 const pageSeoProps = usePageSeo(null, {
   title: 'Watches, Perfumes & Skin Care Serums | SK Traders',
   description: 'Shop curated watches, perfumes, and skin care serums at SK Traders. Premium picks, careful packing, and concierge-style support.',
@@ -101,22 +96,19 @@ const pageSeoProps = usePageSeo(null, {
         subtitle="Auto-sliding highlights — 4 at a time, shifting one-by-one."
       />
 
-      <!-- 2. Bento lookbook -->
-      <BentoGrid :images="bentoImages" :tagline="tagline" />
-
-      <!-- 3. Why us – three pillars -->
+      <!-- 2. Why us – three pillars -->
       <WhyPillars :section="homeSections.why_pillars" />
 
-      <!-- 4. Reels – horizontal strip -->
+      <!-- 3. Reels – horizontal strip -->
       <ReelsStrip :videos="videoReels" />
 
-      <!-- 5. One big quote -->
+      <!-- 4. One big quote -->
       <QuoteBlock :testimonials="testimonials" />
 
-      <!-- 6. Delivery line -->
+      <!-- 5. Delivery line -->
       <DeliveryLine :regions="regions" :section="homeSections.delivery_line" />
 
-      <!-- 7. Final CTA -->
+      <!-- 6. Final CTA -->
       <FinalCta :section="homeSections.final_cta" />
     </div>
   </AppLayout>
