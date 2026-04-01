@@ -41,8 +41,8 @@ const steps = computed(() => {
 });
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Why Choose Us | Atlantic Garden Furniture',
-  description: 'Quality sofas and furniture, showroom in Lusaka, nationwide delivery, warranty and friendly service. Atlantic Garden Furniture Zambia.',
+  title: 'Why Choose Us | SK Traders',
+  description: 'Quality sofas and furniture, showroom in Lusaka, nationwide delivery, warranty and friendly service. SK Traders Zambia.',
 });
 </script>
 

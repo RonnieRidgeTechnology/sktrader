@@ -12,7 +12,7 @@ const pageTitle = computed(() => pc.value.title || 'Manufacturing Policy');
 const content = computed(() => (pc.value.content || '').trim());
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Delivery & Returns | Atlantic Garden Furniture',
+  title: 'Delivery & Returns | SK Traders',
   description: content.value ? String(content.value).slice(0, 160) : 'Delivery and returns policy.',
 });
 </script>

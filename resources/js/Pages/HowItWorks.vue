@@ -10,7 +10,7 @@ const props = defineProps({ title: { type: String, default: 'How It Works' }, pa
 const pc = props.pageContent || {};
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'How It Works | Atlantic Garden Furniture',
+  title: 'How It Works | SK Traders',
   description: 'From browsing to delivery: visit our showroom or order online. We deliver sofas and furniture across Zambia.',
 });
 </script>

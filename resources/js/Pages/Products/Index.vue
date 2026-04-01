@@ -117,8 +117,8 @@ function addToCart(productId, e) {
 }
 
 const seoDefaults = computed(() => ({
-  title: props.title || 'Furniture & Sofas | Atlantic Garden Furniture Zambia',
-  description: 'Browse our furniture and sofas. Filter by category or get in touch for any product. Atlantic Garden Furniture – Zambia.',
+  title: props.title || 'Furniture & Sofas | SK Traders Zambia',
+  description: 'Browse our furniture and sofas. Filter by category or get in touch for any product. SK Traders – Zambia.',
 }));
 const pageSeoProps = usePageSeo(null, seoDefaults);
 </script>

@@ -69,7 +69,7 @@ const steps = computed(() => {
   });
 });
 const pageSeoProps = usePageSeo(null, {
-  title: 'Our Quality | Atlantic Garden Furniture',
+  title: 'Our Quality | SK Traders',
   description: 'We choose durable materials and solid construction. Quality sofas and furniture for your home in Zambia.',
 });
 </script>

@@ -43,7 +43,7 @@ useJsonLd(() => ({
 }));
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'FAQ | Atlantic Garden Furniture',
+  title: 'FAQ | SK Traders',
   description: 'Frequently asked questions about our furniture, delivery in Zambia, payment and warranty.',
 });
 </script>

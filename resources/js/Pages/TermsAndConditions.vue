@@ -12,7 +12,7 @@ const pageTitle = computed(() => pc.value.title || 'Terms & Conditions');
 const content = computed(() => (pc.value.content || '').trim());
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Terms & Conditions | Atlantic Garden Furniture',
+  title: 'Terms & Conditions | SK Traders',
   description: content.value ? String(content.value).slice(0, 160) : 'Terms and conditions for purchasing furniture.',
 });
 </script>
@@ -29,7 +29,7 @@ const pageSeoProps = usePageSeo(null, {
       <div v-else class="prose prose-zinc max-w-none space-y-6 text-editorial-slate">
         <section>
           <h2 class="font-editorial text-lg font-semibold text-editorial-ink">Scope</h2>
-          <p>These terms apply to all purchases and enquiries made with Atlantic Garden Furniture. By placing an order or sending an enquiry, you agree to these terms unless otherwise agreed in writing.</p>
+          <p>These terms apply to all purchases and enquiries made with SK Traders. By placing an order or sending an enquiry, you agree to these terms unless otherwise agreed in writing.</p>
         </section>
         <section>
           <h2 class="font-editorial text-lg font-semibold text-editorial-ink">Quotes & orders</h2>

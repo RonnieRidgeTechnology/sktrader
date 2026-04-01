@@ -20,8 +20,8 @@ const whatsappSecondaryLink = () => {
 };
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Contact Us | Atlantic Garden Furniture',
-  description: 'Contact Atlantic Garden Furniture for sofas and furniture in Zambia. Visit our Lusaka showroom or send an enquiry.',
+  title: 'Contact Us | SK Traders',
+  description: 'Contact SK Traders for sofas and furniture in Zambia. Visit our Lusaka showroom or send an enquiry.',
 });
 </script>
 

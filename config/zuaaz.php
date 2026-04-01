@@ -2,7 +2,7 @@
 
 return [
 
-    'name' => env('APP_NAME', 'Atlantic Garden Furniture'),
+    'name' => env('APP_NAME', 'SK Traders'),
     'tagline' => 'Quality Sofas & Furniture for Every Home in Zambia',
 
     'whatsapp' => [

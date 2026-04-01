@@ -1,4 +1,4 @@
-# Atlantic garden Furniture Website – Task List
+# SK Traders Website – Task List
 
 **Tagline:** Your Brand. Our Production.  
 **Type:** B2B Manufacturing Website (No Retail / No E-commerce)
@@ -120,7 +120,7 @@
 - [ ] Redirect to thank-you page and show success message
 
 ### Auto-reply email
-- [ ] Subject: “Thank you for contacting Atlantic garden Furniture”
+- [ ] Subject: “Thank you for contacting SK Traders”
 - [ ] Content: We have received your inquiry. Our team will respond within 24 hours.
 - [ ] Queue emails and retry failed sends
 
@@ -156,7 +156,7 @@
 - [ ] Schema markup (Organization + FAQ where applicable)
 
 ### Homepage example
-- [ ] Title: “Private Label Gym Gear Manufacturer | Sportswear Manufacturer Pakistan | Atlantic garden Furniture”
+- [ ] Title: “Private Label Gym Gear Manufacturer | Sportswear Manufacturer Pakistan | SK Traders”
 - [ ] Meta description includes: B2B Gym Gear Manufacturer, Private Label Fitness Brand Supplier, OEM Gym Equipment Manufacturer
 
 ### Technical

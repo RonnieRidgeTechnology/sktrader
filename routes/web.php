@@ -36,7 +36,7 @@ Route::get('/llms.txt', [\App\Http\Controllers\LlmsTxtController::class, 'index'
 
 /*
 |--------------------------------------------------------------------------
-| Public routes (Atlantic garden Furniture website)
+| Public routes (SK Traders website)
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {

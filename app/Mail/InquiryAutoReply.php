@@ -22,10 +22,10 @@ class InquiryAutoReply extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thank you for contacting Atlantic Garden Furniture',
+            subject: 'Thank you for contacting SK Traders',
             from: new Address(
                 config('mail.from.address'),
-                Setting::get('site_name') ?: config('zuaaz.name', 'Atlantic Garden Furniture')
+                Setting::get('site_name') ?: config('zuaaz.name', 'SK Traders')
             ),
         );
     }

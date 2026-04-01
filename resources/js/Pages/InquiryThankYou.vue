@@ -12,7 +12,7 @@ const message = computed(() => pc.value.message || 'We have received your messag
 
 <template>
   <AppLayout>
-    <SeoHead title="Thank You | Atlantic Garden Furniture" :description="message.slice(0, 160)" :noindex="true" />
+    <SeoHead title="Thank You | SK Traders" :description="message.slice(0, 160)" :noindex="true" />
     <div class="mx-auto max-w-2xl bg-editorial-cream px-4 py-24 text-center sm:px-6 lg:px-8">
       <h1 class="font-editorial text-3xl font-bold tracking-tight text-editorial-ink sm:text-4xl">{{ heading }}</h1>
       <p class="mt-4 text-lg text-editorial-slate">

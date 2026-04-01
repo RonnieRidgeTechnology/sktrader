@@ -15,7 +15,7 @@ return [
                 ['key' => 'meet_owner_heading', 'label' => '"Meet the owner" heading', 'type' => 'text', 'placeholder' => 'Meet the owner'],
                 ['key' => 'owner_name', 'label' => 'Owner name', 'type' => 'text', 'placeholder' => 'Mary Daka'],
                 ['key' => 'owner_image', 'label' => 'Owner photo', 'type' => 'image', 'help' => 'Photo shown in the Meet the owner section.'],
-                ['key' => 'owner_title', 'label' => 'Owner job title (under name)', 'type' => 'text', 'placeholder' => 'Owner, Atlantic Garden Furniture'],
+                ['key' => 'owner_title', 'label' => 'Owner job title (under name)', 'type' => 'text', 'placeholder' => 'Owner, SK Traders'],
                 ['key' => 'owner_bio', 'label' => 'Owner short bio', 'type' => 'textarea', 'rows' => 3],
                 ['key' => 'stats_showroom_title', 'label' => 'Stats: Showroom title', 'type' => 'text', 'placeholder' => 'Lusaka showroom'],
                 ['key' => 'stats_showroom_desc', 'label' => 'Stats: Showroom description', 'type' => 'text', 'placeholder' => 'Visit us to see and try our furniture'],

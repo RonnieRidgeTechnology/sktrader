@@ -24,7 +24,7 @@ const logoUrl = computed(() => usePage().props.zuaaz?.header_logo_url || '/image
       >
         <img
           :src="logoUrl"
-          alt="Atlantic Garden Furniture"
+          alt="SK Traders"
           class="h-10 w-auto sm:h-12 brightness-0 invert"
         />
       </Link>

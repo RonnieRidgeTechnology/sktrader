@@ -14,8 +14,8 @@ const props = defineProps({ title: { type: String, default: 'Custom Furniture' }
 const pc = props.pageContent || {};
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Custom Furniture | Atlantic Garden Furniture',
-  description: 'Custom and made-to-order furniture in Zambia. Atlantic Garden Furniture can help with bespoke sofas and pieces for your space.',
+  title: 'Custom Furniture | SK Traders',
+  description: 'Custom and made-to-order furniture in Zambia. SK Traders can help with bespoke sofas and pieces for your space.',
 });
 </script>
 

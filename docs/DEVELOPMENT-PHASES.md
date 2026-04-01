@@ -1,4 +1,4 @@
-# Atlantic garden Furniture Website – Development Phases
+# SK Traders Website – Development Phases
 
 **Tagline:** Your Brand. Our Production.  
 **Type:** B2B Manufacturing Website (No Retail / No E-commerce)
@@ -37,7 +37,7 @@ Tasks from [TASKS.md](./TASKS.md) are grouped into **5 development phases**. Com
 | 2.3 | **Quality Control:** Static content (pre-production sampling, in-process inspection, final QC, packaging verification) |
 | 2.4 | **Contact:** Display email, website, WhatsApp, Instagram, corporate office, manufacturing location; embed same form as inquiry |
 | 2.5 | **Inquiry system:** Table `inquiries`; form (name, company, email, WhatsApp, country, product interest, quantity, message, logo upload); validation; store in DB; redirect to thank-you + success message |
-| 2.6 | **Email:** SMTP in `.env`; queue; send to info@zuaazgear.com; auto-reply to client (“Thank you for contacting Atlantic garden Furniture”, “We have received your inquiry. Our team will respond within 24 hours.”); retry failed |
+| 2.6 | **Email:** SMTP in `.env`; queue; send to info@zuaazgear.com; auto-reply to client (“Thank you for contacting SK Traders”, “We have received your inquiry. Our team will respond within 24 hours.”); retry failed |
 | 2.7 | **Security (form):** CSRF, file upload validation, rate limiting, honeypot or reCAPTCHA |
 | 2.8 | **SEO (public):** Per-page meta title, description, keywords; Open Graph; canonical; Organization + FAQ schema; homepage title/description as per PRD; image alt tags |
 

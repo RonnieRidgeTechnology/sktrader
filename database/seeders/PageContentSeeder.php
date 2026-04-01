@@ -12,7 +12,7 @@ class PageContentSeeder extends Seeder
         $defaults = [
             'about' => [
                 'hero_title' => 'About Us',
-                'hero_subtitle' => 'Atlantic Garden Furniture is a furniture store in Zambia, specialising in sofas and living room furniture for homes and businesses.',
+                'hero_subtitle' => 'SK Traders is a furniture store in Zambia, specialising in sofas and living room furniture for homes and businesses.',
                 'intro' => 'Based in **Lusaka**, we bring you a curated range of **sofas**, **armchairs**, and **living room furniture** to suit every style and budget. We focus on comfort, durability, and value so you can create the home you love. Whether you are furnishing your first home or upgrading your space, we are here to help.',
                 'owner_name' => 'Mary Daka',
                 'owner_image' => 'page-content/about/owner.png',

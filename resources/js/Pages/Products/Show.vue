@@ -139,8 +139,8 @@ useJsonLd(() => {
 <template>
   <AppLayout>
     <SeoHead
-      :title="product.name + ' | Atlantic Garden Furniture Zambia'"
-      :description="(product.short_description || product.description || product.name + ' – quality furniture from Atlantic Garden Furniture, Zambia.').slice(0, 160)"
+      :title="product.name + ' | SK Traders Zambia'"
+      :description="(product.short_description || product.description || product.name + ' – quality furniture from SK Traders, Zambia.').slice(0, 160)"
       :canonical="canonicalUrl"
       :image="product.image_url || undefined"
     />

@@ -9,10 +9,10 @@
     </style>
 </head>
 <body>
-    <h1>Thank you for contacting Atlantic Garden Furniture</h1>
+    <h1>Thank you for contacting SK Traders</h1>
     <p>Hi {{ $inquiry->name }},</p>
     <p>We have received your inquiry. Our team will respond within 24 hours.</p>
     <p>If you have any urgent questions, you can reach us on WhatsApp: {{ config('zuaaz.whatsapp.primary') }}.</p>
-    <p>Best regards,<br>{{ config('zuaaz.name', 'Atlantic Garden Furniture') }}</p>
+    <p>Best regards,<br>{{ config('zuaaz.name', 'SK Traders') }}</p>
 </body>
 </html>

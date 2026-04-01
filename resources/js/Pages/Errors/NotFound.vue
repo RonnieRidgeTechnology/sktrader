@@ -7,7 +7,7 @@ import { Home, ArrowLeft } from 'lucide-vue-next';
 
 <template>
   <AppLayout>
-    <SeoHead title="Page Not Found (404) | Atlantic Garden Furniture" description="The page you are looking for could not be found." :noindex="true" />
+    <SeoHead title="Page Not Found (404) | SK Traders" description="The page you are looking for could not be found." :noindex="true" />
 
     <section class="min-h-[70vh] flex flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">

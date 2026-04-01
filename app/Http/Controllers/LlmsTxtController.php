@@ -13,7 +13,7 @@ class LlmsTxtController extends Controller
     public function index(): Response
     {
         $base = rtrim(config('app.url'), '/');
-        $name = config('zuaaz.name', 'Atlantic Garden Furniture');
+        $name = config('zuaaz.name', 'SK Traders');
         $tagline = config('zuaaz.tagline', 'Quality Sofas & Furniture for Every Home in Zambia');
         $email = config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com');
         $website = config('zuaaz.contact.website', 'www.atlanticgardenfurniture.com');
@@ -21,7 +21,7 @@ class LlmsTxtController extends Controller
         $body = "# {$name}\n\n"
             . "{$tagline}\n\n"
             . "## Overview\n\n"
-            . "Atlantic Garden Furniture is a furniture store in Zambia, specialising in sofas and living room furniture. We have a showroom in Lusaka and deliver nationwide. Quality pieces for every home.\n\n"
+            . "SK Traders is a furniture store in Zambia, specialising in sofas and living room furniture. We have a showroom in Lusaka and deliver nationwide. Quality pieces for every home.\n\n"
             . "## Main pages\n\n"
             . "- Home: {$base}/\n"
             . "- About: {$base}/about\n"

@@ -23,7 +23,7 @@ const heroImageUrl = computed(() => {
 const heroTitle = computed(() => c.value.hero_title || 'About Us');
 const heroSubtitle = computed(() =>
   c.value.hero_subtitle ||
-  'Atlantic Garden Furniture is a furniture store in Zambia, specialising in sofas and living room furniture for homes and businesses.'
+  'SK Traders is a furniture store in Zambia, specialising in sofas and living room furniture for homes and businesses.'
 );
 
 const ownerName = computed(() => c.value.owner_name || 'Mary Daka');
@@ -44,8 +44,8 @@ const intro = computed(() =>
 const heroEyebrow = computed(() => c.value.hero_eyebrow || 'Who we are');
 const storyHeading = computed(() => c.value.story_heading || 'Our story');
 const meetOwnerHeading = computed(() => c.value.meet_owner_heading || 'Meet the owner');
-const ownerTitle = computed(() => c.value.owner_title || 'Owner, Atlantic Garden Furniture');
-const ownerBio = computed(() => c.value.owner_bio || 'Atlantic Garden Furniture is a furniture store specialising in sofas and living room furniture. We serve customers from our Lusaka showroom and deliver nationwide across Zambia.');
+const ownerTitle = computed(() => c.value.owner_title || 'Owner, SK Traders');
+const ownerBio = computed(() => c.value.owner_bio || 'SK Traders is a furniture store specialising in sofas and living room furniture. We serve customers from our Lusaka showroom and deliver nationwide across Zambia.');
 const statsShowroomTitle = computed(() => c.value.stats_showroom_title || 'Lusaka showroom');
 const statsShowroomDesc = computed(() => c.value.stats_showroom_desc || 'Visit us to see and try our furniture');
 const statsDeliveryTitle = computed(() => c.value.stats_delivery_title || 'Nationwide delivery');
@@ -88,8 +88,8 @@ function renderIntro(html) {
 }
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'About Us | Atlantic Garden Furniture',
-  description: (props.pageContent?.hero_subtitle || 'Atlantic Garden Furniture – your trusted furniture store in Zambia. Quality sofas and living room furniture in Lusaka and nationwide.').slice(0, 160),
+  title: 'About Us | SK Traders',
+  description: (props.pageContent?.hero_subtitle || 'SK Traders – your trusted furniture store in Zambia. Quality sofas and living room furniture in Lusaka and nationwide.').slice(0, 160),
 });
 </script>
 

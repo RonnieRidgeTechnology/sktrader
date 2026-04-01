@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Z Concept background – stylized angular Z from Atlantic garden Furniture logo.
+ * Z Concept background – stylized angular Z from SK Traders logo.
  * Sharp diagonals, interlocking/layered. Use as subtle watermark in sections.
  */
 import { computed, ref } from 'vue';

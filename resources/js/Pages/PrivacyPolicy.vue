@@ -14,8 +14,8 @@ const content = computed(() => (pc.value.content || '').trim());
 const email = page.props.zuaaz?.contact?.email || 'info@atlanticgardenfurniture.com';
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Privacy Policy | Atlantic Garden Furniture',
-  description: content.value ? String(content.value).slice(0, 160) : 'Privacy policy for Atlantic Garden Furniture.',
+  title: 'Privacy Policy | SK Traders',
+  description: content.value ? String(content.value).slice(0, 160) : 'Privacy policy for SK Traders.',
 });
 </script>
 

@@ -1,4 +1,4 @@
-# Phase 1 – Atlantic garden Furniture (Complete)
+# Phase 1 – SK Traders (Complete)
 
 ## What’s included
 

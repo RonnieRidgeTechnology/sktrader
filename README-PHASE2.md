@@ -28,7 +28,7 @@
 
 ### Email
 - **To admin:** `InquiryReceivedNotification` → `config('zuaaz.contact.email')` (default info@zuaazgear.com), queued
-- **To client:** `InquiryAutoReply` – subject “Thank you for contacting Atlantic garden Furniture”, body “We have received your inquiry. Our team will respond within 24 hours.”, queued
+- **To client:** `InquiryAutoReply` – subject “Thank you for contacting SK Traders”, body “We have received your inquiry. Our team will respond within 24 hours.”, queued
 - **Config:** Set `MAIL_MAILER`, `MAIL_HOST`, etc. in `.env`; use `QUEUE_CONNECTION=database` and run `php artisan queue:work` to send
 
 ### Security
@@ -39,7 +39,7 @@
 
 ### SEO
 - **Per-page:** `<title>` and `<meta name="description">` (and keywords on Home) via Inertia `Head`
-- **Homepage title:** “Private Label Gym Gear Manufacturer | Sportswear Manufacturer Pakistan | Atlantic garden Furniture”
+- **Homepage title:** “Private Label Gym Gear Manufacturer | Sportswear Manufacturer Pakistan | SK Traders”
 - **Organization schema:** JSON-LD in `app.blade.php` (name, url, email, address, sameAs)
 - **Image alt:** Use in components where images are added later
 

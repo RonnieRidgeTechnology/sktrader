@@ -39,7 +39,7 @@ const steps = computed(() => {
 });
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Our Collections | Atlantic Garden Furniture',
+  title: 'Our Collections | SK Traders',
   description: 'Browse our furniture collections: sofas, living room, bedroom and office furniture. Quality pieces for every home in Zambia.',
 });
 </script>

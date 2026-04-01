@@ -78,9 +78,9 @@ const bentoImages = [...(heroSliderImages || []), ...(heroGalleryImages || [])].
 const tagline = zuaaz.tagline || 'Lusaka showroom · Nationwide delivery';
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Sofas & Furniture Store Zambia | Atlantic Garden Furniture Lusaka',
-  description: 'Quality sofas and furniture in Zambia. Atlantic Garden Furniture offers living room sofas, armchairs and home furniture. Visit us in Lusaka or order nationwide.',
-  keywords: 'sofas Zambia, furniture store Lusaka, living room furniture, Atlantic Garden Furniture, furniture delivery Zambia',
+  title: 'Sofas & Furniture Store Zambia | SK Traders Lusaka',
+  description: 'Quality sofas and furniture in Zambia. SK Traders offers living room sofas, armchairs and home furniture. Visit us in Lusaka or order nationwide.',
+  keywords: 'sofas Zambia, furniture store Lusaka, living room furniture, SK Traders, furniture delivery Zambia',
 });
 </script>
 

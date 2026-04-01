@@ -20,7 +20,7 @@ const props = defineProps({
 
 const page = usePage();
 const appUrl = page.props.appUrl || (typeof window !== 'undefined' ? window.location.origin : '');
-const siteName = page.props.zuaaz?.name || 'Atlantic Garden Furniture';
+const siteName = page.props.zuaaz?.name || 'SK Traders';
 const defaultImage = page.props.seoDefaultOgImage || `${appUrl}/images/logo.png`;
 const defaultTitle = page.props.seoDefaultMetaTitle || siteName;
 const defaultDescription = page.props.seoDefaultMetaDescription || '';

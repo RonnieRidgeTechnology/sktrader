@@ -278,7 +278,7 @@ const sectionClass =
             <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">Footer</h2>
             <div class="mt-4">
               <label :class="labelClass">Copyright text (e.g. © 2025 Your Company)</label>
-              <input v-model="form.footer_copyright" type="text" :class="inputClass" placeholder="© 2025 Atlantic garden Furniture" />
+              <input v-model="form.footer_copyright" type="text" :class="inputClass" placeholder="© 2025 SK Traders" />
             </div>
           </section>
           <section :class="sectionClass">
@@ -334,7 +334,7 @@ const sectionClass =
             <div class="mt-4 space-y-4">
               <div>
                 <label :class="labelClass">Global meta title</label>
-                <input v-model="form.meta_title_default" type="text" :class="inputClass" placeholder="e.g. Atlantic Garden Furniture – Sofas & Furniture Zambia" maxlength="70" />
+                <input v-model="form.meta_title_default" type="text" :class="inputClass" placeholder="e.g. SK Traders – Sofas & Furniture Zambia" maxlength="70" />
                 <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Recommended under 60 characters for search results.</p>
               </div>
               <div>

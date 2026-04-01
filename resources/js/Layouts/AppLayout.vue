@@ -161,15 +161,15 @@ function isCategoryActive(slug) {
     >
       <div class="mx-auto flex h-14 min-h-0 w-full max-w-7xl items-center justify-between gap-2 px-3 sm:h-16 sm:gap-4 sm:px-6 lg:px-8">
         <!-- Logo -->
-        <Link :href="route('home')" class="flex min-w-0 shrink items-center gap-2 transition-opacity hover:opacity-90 sm:gap-3" aria-label="Atlantic Garden Furniture – Home">
+        <Link :href="route('home')" class="flex min-w-0 shrink items-center gap-2 transition-opacity hover:opacity-90 sm:gap-3" aria-label="SK Traders – Home">
           <img
             :src="zuaaz.header_logo_url || '/images/logo.png'"
-            alt="Atlantic Garden Furniture – Sofas & furniture store Zambia"
+            alt="SK Traders – Sofas & furniture store Zambia"
             class="h-7 w-auto max-w-[120px] object-contain dark:invert-0 sm:h-9 sm:max-w-none invert"
             width="120"
             height="36"
           />
-          <span class="sr-only">{{ zuaaz.name || 'Atlantic Garden Furniture' }}</span>
+          <span class="sr-only">{{ zuaaz.name || 'SK Traders' }}</span>
         </Link>
 
         <!-- Desktop Nav: Home, About, each category, Contact -->
@@ -345,7 +345,7 @@ function isCategoryActive(slug) {
           <!-- Brand + Social -->
           <div class="min-w-0 lg:col-span-4">
             <Link :href="route('home')" class="inline-block transition-opacity hover:opacity-90">
-              <img :src="zuaaz.footer_logo_url || '/images/logo.png'" alt="Atlantic Garden Furniture – Sofas & furniture Zambia" class="h-[80px] w-auto invert" width="110" height="80" />
+              <img :src="zuaaz.footer_logo_url || '/images/logo.png'" alt="SK Traders – Sofas & furniture Zambia" class="h-[80px] w-auto invert" width="110" height="80" />
             </Link>
             <p class="mt-4 max-w-xs text-base leading-relaxed text-[#f5f2ed]/90">
               {{ zuaaz.tagline }}

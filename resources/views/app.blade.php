@@ -41,9 +41,9 @@
                 [
                     '@type' => 'Organization',
                     '@id' => rtrim(config('app.url'), '/') . '/#organization',
-                    'name' => config('zuaaz.name', 'Atlantic Garden Furniture'),
+                    'name' => config('zuaaz.name', 'SK Traders'),
                     'url' => config('app.url'),
-                    'description' => 'Quality sofas and furniture store in Zambia. Atlantic Garden Furniture – Lusaka showroom and nationwide delivery.',
+                    'description' => 'Quality sofas and furniture store in Zambia. SK Traders – Lusaka showroom and nationwide delivery.',
                     'email' => config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com'),
                     'address' => [
                         '@type' => 'PostalAddress',
@@ -63,7 +63,7 @@
                     '@type' => 'WebSite',
                     '@id' => rtrim(config('app.url'), '/') . '/#website',
                     'url' => config('app.url'),
-                    'name' => config('zuaaz.name', 'Atlantic Garden Furniture'),
+                    'name' => config('zuaaz.name', 'SK Traders'),
                     'description' => 'Quality sofas and furniture in Zambia. Lusaka showroom, nationwide delivery.',
                     'publisher' => ['@id' => rtrim(config('app.url'), '/') . '/#organization'],
                     'potentialAction' => [

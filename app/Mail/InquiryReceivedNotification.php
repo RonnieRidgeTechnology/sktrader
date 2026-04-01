@@ -20,7 +20,7 @@ class InquiryReceivedNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Inquiry from ' . $this->inquiry->name . ' – Atlantic Garden Furniture',
+            subject: 'New Inquiry from ' . $this->inquiry->name . ' – SK Traders',
             replyTo: [$this->inquiry->email],
         );
     }
