@@ -28,7 +28,7 @@
             })();
         </script>
 
-        <!-- Fonts: Open Sans (default), Fraunces (editorial home) -->
+        <!-- Fonts: Open Sans (default), Fraunces (display) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">

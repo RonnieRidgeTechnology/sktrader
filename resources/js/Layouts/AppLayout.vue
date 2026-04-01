@@ -5,22 +5,18 @@ import QuoteRequestModal from '@/Components/QuoteRequestModal.vue';
 import CartDrawer from '@/Components/CartDrawer.vue';
 import {
   Building2,
-  Briefcase,
-  Package,
-  Award,
-  ListOrdered,
   HelpCircle,
   Mail,
-  Factory,
   Shield,
   FileCheck,
   FileText,
-  MapPin,
   Instagram,
   Facebook,
   Linkedin,
   Twitter,
   ShoppingCart,
+  Search,
+  Sparkles,
 } from 'lucide-vue-next';
 
 const showQuoteModal = ref(false);
@@ -41,10 +37,7 @@ const THEME_KEY = 'theme';
 
 const footerExploreLinks = [
   { label: 'About', route: 'about', icon: Building2 },
-  { label: 'Collections', route: 'services', icon: Briefcase },
-  { label: 'Furniture', route: 'products', icon: Package },
-  { label: 'Why Choose Us', route: 'why-choose-us', icon: Award },
-  { label: 'How It Works', route: 'how-it-works', icon: ListOrdered },
+  { label: 'All Products', route: 'products', icon: Sparkles },
   { label: 'FAQ', route: 'faq', icon: HelpCircle },
   { label: 'Contact', route: 'contact', icon: Mail },
 ];
@@ -99,6 +92,16 @@ const whatsappPrimary = computed(() => {
 });
 
 const navOpen = ref(false);
+const searchOpen = ref(false);
+const searchQuery = ref('');
+
+function openSearch() {
+  searchOpen.value = true;
+}
+function closeSearch() {
+  searchOpen.value = false;
+  searchQuery.value = '';
+}
 
 const newsletterForm = useForm({ email: '' });
 const newsletterSuccess = computed(() => usePage().props.flash?.newsletter_success ?? null);
@@ -131,16 +134,14 @@ const categoryNavItems = computed(() => {
 
 // Nav: Home, About, each category as its own link, Contact
 const navLinks = computed(() => {
-  const fixed = [
-    { label: 'Home', route: 'home' },
-    { label: 'About', route: 'about' },
-  ];
+  const fixed = [{ label: 'Home', route: 'home' }];
   const categoryLinks = categoryNavItems.value.map((item) => ({
     label: item.label,
     route: 'products',
     categorySlug: item.categorySlug,
   }));
-  return [...fixed, ...categoryLinks, { label: 'Contact', route: 'contact' }];
+  // Keep top nav concise: if many categories exist, we still show them but styling is compact.
+  return [...fixed, ...categoryLinks, { label: 'About', route: 'about' }, { label: 'Contact', route: 'contact' }];
 });
 
 const currentCategorySlug = computed(() => usePage().props.filterCategory ?? null);
@@ -154,109 +155,91 @@ function isCategoryActive(slug) {
 </script>
 
 <template>
-  <div class="min-h-screen min-w-0 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-sans antialiased selection:bg-amber-200/50 dark:selection:bg-amber-500/30">
-    <!-- Sticky Header - Premium -->
+  <div class="min-h-screen min-w-0 bg-luxe-obsidian text-luxe-pearl font-sans antialiased selection:bg-luxe-gold/30">
+    <!-- Sticky Header - Luxe -->
     <header
-      class="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-sm"
+      class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-2xl"
     >
-      <div class="mx-auto flex h-14 min-h-0 w-full max-w-7xl items-center justify-between gap-2 px-3 sm:h-16 sm:gap-4 sm:px-6 lg:px-8">
+      <div class="luxe-container flex h-16 items-center justify-between gap-3">
         <!-- Logo -->
-        <Link :href="route('home')" class="flex min-w-0 shrink items-center gap-2 transition-opacity hover:opacity-90 sm:gap-3" aria-label="SK Traders – Home">
+        <Link :href="route('home')" class="group flex min-w-0 shrink items-center gap-3" aria-label="SK Traders – Home">
           <img
             :src="zuaaz.header_logo_url || '/images/logo.png'"
-            alt="SK Traders – Sofas & furniture store Zambia"
-            class="h-7 w-auto max-w-[120px] object-contain dark:invert-0 sm:h-9 sm:max-w-none invert"
-            width="120"
-            height="36"
+            alt="SK Traders"
+            class="h-9 w-auto object-contain opacity-95 transition group-hover:opacity-100"
+            width="130"
+            height="40"
           />
-          <span class="sr-only">{{ zuaaz.name || 'SK Traders' }}</span>
+          <div class="hidden min-w-0 sm:block">
+            <p class="luxe-kicker leading-none">SK Traders</p>
+            <p class="mt-1 truncate text-xs text-luxe-mist/80">Watches · Perfumes · Serums</p>
+          </div>
         </Link>
 
-        <!-- Desktop Nav: Home, About, each category, Contact -->
-        <nav class="hidden flex-1 items-center justify-center gap-1 md:flex lg:gap-2">
+        <!-- Desktop Nav -->
+        <nav class="hidden flex-1 items-center justify-center gap-1.5 lg:flex">
           <template v-for="(link, index) in navLinks" :key="link.categorySlug ? link.categorySlug : link.route + '-' + index">
             <Link
               v-if="link.categorySlug"
               :href="route('products', { category: link.categorySlug })"
-              class="rounded-none px-2.5 py-2.5 text-sm font-medium uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-white"
-              :class="isCategoryActive(link.categorySlug) ? 'font-semibold text-zinc-900 dark:text-white ring-2 ring-amber-400/30 dark:ring-amber-500/20' : 'text-zinc-600 dark:text-zinc-400'"
+              class="rounded-2xl px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] transition"
+              :class="isCategoryActive(link.categorySlug) ? 'bg-white/10 text-luxe-pearl' : 'text-luxe-mist hover:bg-white/5 hover:text-luxe-pearl'"
             >
               {{ link.label }}
             </Link>
             <Link
               v-else-if="route().current(link.route)"
               :href="route(link.route)"
-              class="rounded-none px-2.5 py-2.5 text-sm font-semibold uppercase tracking-wider text-zinc-900 dark:text-white ring-2 ring-amber-400/30 dark:ring-amber-500/20"
+              class="rounded-2xl bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-luxe-pearl"
             >
               {{ link.label }}
             </Link>
             <Link
               v-else
               :href="route(link.route)"
-              class="rounded-none px-2.5 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-600 dark:text-zinc-400 transition-all duration-200 hover:scale-[1.02] hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-white"
+              class="rounded-2xl px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist transition hover:bg-white/5 hover:text-luxe-pearl"
             >
               {{ link.label }}
             </Link>
           </template>
         </nav>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Theme toggle -->
-          <button
-            type="button"
-            @click="toggleTheme"
-            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-            class="rounded-none p-2.5 text-zinc-600 transition-all duration-200 hover:scale-105 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white"
-          >
-            <!-- Sun icon (show in dark mode = click to go light) -->
-            <svg v-if="isDark" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <!-- Moon icon (show in light mode = click to go dark) -->
-            <svg v-else class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
+        <div class="flex items-center gap-2">
+          <button type="button" class="luxe-btn-icon" aria-label="Search" @click="openSearch">
+            <Search class="h-5 w-5" stroke-width="2" />
           </button>
-          <button
-            type="button"
-            class="relative flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-none p-2.5 text-zinc-600 transition-all duration-200 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white"
-            :aria-label="`Cart${cartCount ? ` (${cartCount} items)` : ''}`"
-            @click="openCartDrawer"
-          >
+          <button type="button" class="luxe-btn-icon relative" :aria-label="`Cart${cartCount ? ` (${cartCount} items)` : ''}`" @click="openCartDrawer">
             <ShoppingCart class="h-5 w-5" stroke-width="2" />
-            <span
-              v-if="cartCount > 0"
-              class="absolute -right-0.5 -top-0.5 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-editorial-coral px-1.5 text-[10px] font-bold text-white"
-            >
+            <span v-if="cartCount > 0" class="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-luxe-gold px-1.5 text-[10px] font-bold text-black">
               {{ cartCount > 99 ? '99+' : cartCount }}
             </span>
           </button>
           <Link
             v-if="authUser"
             :href="route('account.dashboard')"
-            class="hidden shrink-0 rounded-none border-2 border-editorial-ink/20 bg-white px-4 py-2.5 text-sm font-semibold text-editorial-ink transition-all duration-200 hover:border-editorial-coral hover:bg-editorial-paper dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:border-editorial-coral dark:hover:bg-zinc-700 sm:inline-flex"
+            class="hidden lg:inline-flex luxe-btn luxe-btn-ghost"
           >
             My Account
           </Link>
           <Link
             v-else
             :href="route('login')"
-            class="hidden shrink-0 rounded-none border-2 border-editorial-ink/20 bg-white px-4 py-2.5 text-sm font-semibold text-editorial-ink transition-all duration-200 hover:border-editorial-coral hover:bg-editorial-paper dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:border-editorial-coral dark:hover:bg-zinc-700 sm:inline-flex"
+            class="hidden lg:inline-flex luxe-btn luxe-btn-ghost"
           >
             Sign In
           </Link>
           <button
             type="button"
-            class="hidden shrink-0 rounded-none border-2 border-zinc-900 bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-premium transition-all duration-200 hover:scale-[1.02] hover:bg-zinc-800 hover:border-zinc-800 dark:border-amber-500 dark:bg-amber-500 dark:text-zinc-900 dark:hover:bg-amber-400 dark:hover:border-amber-400 sm:inline-flex"
+            class="hidden lg:inline-flex luxe-btn luxe-btn-primary"
             @click="openQuoteModal()"
           >
             Enquire
           </button>
 
-          <!-- Mobile menu button (min 44px touch target) -->
+          <!-- Mobile menu button -->
           <button
             type="button"
-            class="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-none p-2 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800 md:hidden"
+            class="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl hover:bg-white/10 lg:hidden"
             aria-label="Toggle menu"
             aria-expanded="navOpen"
             @click="navOpen = !navOpen"
@@ -272,16 +255,16 @@ function isCategoryActive(slug) {
       <!-- Mobile menu: scrollable, full width, touch-friendly -->
       <div
         v-show="navOpen"
-        class="max-h-[calc(100vh-3.5rem)] overflow-y-auto overscroll-contain border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 md:hidden"
+        class="max-h-[calc(100vh-4rem)] overflow-y-auto overscroll-contain border-t border-white/10 bg-black/50 backdrop-blur-2xl lg:hidden"
         aria-hidden="!navOpen"
       >
-        <nav class="flex flex-col gap-0.5 px-3 py-3 sm:px-4">
+        <nav class="flex flex-col gap-2 px-4 py-4">
           <template v-for="(link, index) in navLinks" :key="link.categorySlug ? link.categorySlug : link.route + '-' + index">
             <Link
               v-if="link.categorySlug"
               :href="route('products', { category: link.categorySlug })"
-              class="min-h-[44px] rounded-none px-3 py-3 text-sm font-medium uppercase tracking-wider"
-              :class="isCategoryActive(link.categorySlug) ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'"
+              class="min-h-[48px] rounded-2xl px-4 py-3 text-xs font-semibold uppercase tracking-[0.25em]"
+              :class="isCategoryActive(link.categorySlug) ? 'bg-white/10 text-luxe-pearl' : 'text-luxe-mist hover:bg-white/5 hover:text-luxe-pearl'"
               @click="navOpen = false"
             >
               {{ link.label }}
@@ -289,8 +272,8 @@ function isCategoryActive(slug) {
             <Link
               v-else
               :href="route(link.route)"
-              class="min-h-[44px] rounded-none px-3 py-3 text-sm font-medium uppercase tracking-wider"
-              :class="route().current(link.route) ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'"
+              class="min-h-[48px] rounded-2xl px-4 py-3 text-xs font-semibold uppercase tracking-[0.25em]"
+              :class="route().current(link.route) ? 'bg-white/10 text-luxe-pearl' : 'text-luxe-mist hover:bg-white/5 hover:text-luxe-pearl'"
               @click="navOpen = false"
             >
               {{ link.label }}
@@ -299,7 +282,7 @@ function isCategoryActive(slug) {
           <Link
             v-if="authUser"
             :href="route('account.dashboard')"
-            class="mt-2 flex min-h-[48px] w-full items-center justify-center rounded-none border-2 border-editorial-ink/20 bg-white px-4 py-3 text-center text-sm font-semibold text-editorial-ink dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200"
+            class="mt-2 luxe-btn luxe-btn-ghost w-full"
             @click="navOpen = false"
           >
             My Account
@@ -307,14 +290,14 @@ function isCategoryActive(slug) {
           <Link
             v-else
             :href="route('login')"
-            class="mt-2 flex min-h-[48px] w-full items-center justify-center rounded-none border-2 border-editorial-ink/20 bg-white px-4 py-3 text-center text-sm font-semibold text-editorial-ink dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200"
+            class="mt-2 luxe-btn luxe-btn-ghost w-full"
             @click="navOpen = false"
           >
             Sign In
           </Link>
           <button
             type="button"
-            class="mt-2 flex min-h-[48px] w-full items-center justify-center rounded-none border-2 border-zinc-900 bg-zinc-900 px-4 py-3 text-center text-sm font-semibold text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
+            class="mt-2 luxe-btn luxe-btn-primary w-full"
             @click="navOpen = false; openQuoteModal()"
           >
             Enquire
@@ -323,7 +306,36 @@ function isCategoryActive(slug) {
       </div>
     </header>
 
-    <main class="min-w-0 flex-1">
+    <!-- Search overlay (UI-only for now) -->
+    <Teleport to="body">
+      <Transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div v-if="searchOpen" class="fixed inset-0 z-[120] bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Search" @click.self="closeSearch">
+          <div class="luxe-container pt-24">
+            <div class="luxe-surface-strong rounded-3xl p-6 sm:p-8">
+              <div class="flex items-center justify-between gap-3">
+                <p class="luxe-kicker">Search</p>
+                <button type="button" class="luxe-btn-icon" aria-label="Close search" @click="closeSearch">✕</button>
+              </div>
+              <div class="mt-4">
+                <input v-model="searchQuery" type="search" class="luxe-input" placeholder="Search products (coming next)…" />
+                <p class="mt-3 text-sm text-luxe-mist/80">
+                  This is a premium UI shell. In the next pass we can wire it to backend search.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
+
+    <main class="min-w-0 flex-1 bg-luxe-obsidian text-luxe-pearl">
       <slot />
     </main>
 
@@ -337,43 +349,43 @@ function isCategoryActive(slug) {
     <!-- Cart drawer (slides from right on Add to cart / cart icon) -->
     <CartDrawer :open="showCartDrawer" @close="showCartDrawer = false" />
 
-    <!-- Footer – Concept styling (dark, cream text, coral accents) -->
-    <footer class="relative overflow-hidden border-t border-[#1c1917] bg-[#1c1917]">
-      <div class="absolute left-0 right-0 top-0 h-px bg-white/10" aria-hidden="true" />
-      <div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+    <!-- Footer – Luxe -->
+    <footer class="relative overflow-hidden border-t border-white/10 bg-black/60">
+      <div class="absolute inset-0 bg-luxe-radial opacity-60" aria-hidden="true" />
+      <div class="relative luxe-container py-14 sm:py-16">
         <div class="grid gap-10 sm:grid-cols-2 sm:gap-12 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-14">
           <!-- Brand + Social -->
           <div class="min-w-0 lg:col-span-4">
             <Link :href="route('home')" class="inline-block transition-opacity hover:opacity-90">
-              <img :src="zuaaz.footer_logo_url || '/images/logo.png'" alt="SK Traders – Sofas & furniture Zambia" class="h-[80px] w-auto invert" width="110" height="80" />
+              <img :src="zuaaz.footer_logo_url || '/images/logo.png'" alt="SK Traders" class="h-12 w-auto opacity-90" width="140" height="48" />
             </Link>
-            <p class="mt-4 max-w-xs text-base leading-relaxed text-[#f5f2ed]/90">
+            <p class="mt-4 max-w-xs text-base leading-relaxed text-luxe-pearl/90">
               {{ zuaaz.tagline }}
             </p>
-            <p class="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60 sm:max-w-xs">
-              Sofas & furniture · Lusaka showroom · Nationwide delivery · Zambia
+            <p class="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-luxe-mist/80 sm:max-w-xs">
+              Watches · Perfumes · Skincare serums
             </p>
             <div v-if="hasSocialLinks" class="mt-6">
-              <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">Social Media</h3>
+              <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-luxe-mist/80">Social</h3>
               <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2" role="list">
                 <li v-if="zuaaz.contact?.instagram">
-                  <a :href="zuaaz.contact.instagram" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-[#f5f2ed]/90 transition hover:text-[#c2410c]">
-                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white"><Instagram class="h-4 w-4" stroke-width="2" /></span><span>Instagram</span>
+                  <a :href="zuaaz.contact.instagram" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-luxe-pearl/90 transition hover:text-luxe-gold">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl"><Instagram class="h-4 w-4" stroke-width="2" /></span><span>Instagram</span>
                   </a>
                 </li>
                 <li v-if="zuaaz.contact?.facebook">
-                  <a :href="zuaaz.contact.facebook" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-[#f5f2ed]/90 transition hover:text-[#c2410c]">
-                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white"><Facebook class="h-4 w-4" stroke-width="2" /></span><span>Facebook</span>
+                  <a :href="zuaaz.contact.facebook" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-luxe-pearl/90 transition hover:text-luxe-gold">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl"><Facebook class="h-4 w-4" stroke-width="2" /></span><span>Facebook</span>
                   </a>
                 </li>
                 <li v-if="zuaaz.contact?.linkedin">
-                  <a :href="zuaaz.contact.linkedin" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-[#f5f2ed]/90 transition hover:text-[#c2410c]">
-                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white"><Linkedin class="h-4 w-4" stroke-width="2" /></span><span>LinkedIn</span>
+                  <a :href="zuaaz.contact.linkedin" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-luxe-pearl/90 transition hover:text-luxe-gold">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl"><Linkedin class="h-4 w-4" stroke-width="2" /></span><span>LinkedIn</span>
                   </a>
                 </li>
                 <li v-if="zuaaz.contact?.twitter">
-                  <a :href="zuaaz.contact.twitter" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-[#f5f2ed]/90 transition hover:text-[#c2410c]">
-                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white"><Twitter class="h-4 w-4" stroke-width="2" /></span><span>X (Twitter)</span>
+                  <a :href="zuaaz.contact.twitter" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-base text-luxe-pearl/90 transition hover:text-luxe-gold">
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl"><Twitter class="h-4 w-4" stroke-width="2" /></span><span>X (Twitter)</span>
                   </a>
                 </li>
               </ul>
@@ -381,120 +393,60 @@ function isCategoryActive(slug) {
           </div>
           <!-- Explore -->
           <div class="lg:col-span-2">
-            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">Explore</h3>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-luxe-mist/80">Explore</h3>
             <ul class="mt-4 space-y-2.5" role="list">
               <li v-for="item in footerExploreLinks" :key="item.route">
-                <Link :href="route(item.route)" class="inline-flex items-center gap-2.5 text-base text-[#f5f2ed]/90 transition hover:text-[#c2410c] hover:underline">
-                  <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white">
+                <Link :href="route(item.route)" class="inline-flex items-center gap-2.5 text-base text-luxe-pearl/90 transition hover:text-luxe-gold hover:underline">
+                  <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl">
                     <component :is="item.icon" class="h-4 w-4" stroke-width="2" />
                   </span>
                   {{ item.label }}
                 </Link>
               </li>
             </ul>
-          </div>
-          <!-- Visit & Delivery -->
-          <div class="lg:col-span-2">
-            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">Visit &amp; Delivery</h3>
-            <div class="mt-4 space-y-4">
-              <div class="flex gap-3">
-                <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white">
-                  <MapPin class="h-4 w-4" stroke-width="2" />
-                </span>
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-wider text-[#f5f2ed]/60">Showroom</p>
-                  <p class="mt-1 text-base leading-snug text-[#f5f2ed]/90">{{ zuaaz.address?.office || 'Lusaka, Zambia' }}</p>
-                </div>
-              </div>
-              <div v-if="zuaaz.address?.manufacturing" class="flex gap-3">
-                <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white">
-                  <Factory class="h-4 w-4" stroke-width="2" />
-                </span>
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-wider text-[#f5f2ed]/60">Delivery</p>
-                  <p class="mt-1 text-base leading-snug text-[#f5f2ed]/90">{{ zuaaz.address.manufacturing }}</p>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- Legal + Newsletter -->
-          <div class="lg:col-span-4">
-            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">Legal &amp; Policies</h3>
+          <div class="lg:col-span-6">
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-luxe-mist/80">Legal &amp; Policies</h3>
             <ul class="mt-4 space-y-2.5" role="list">
               <li v-for="item in footerLegalLinks" :key="item.route">
-                <Link :href="route(item.route)" class="inline-flex items-center gap-2.5 text-base text-[#f5f2ed]/90 transition hover:text-[#c2410c] hover:underline">
-                  <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white">
+                <Link :href="route(item.route)" class="inline-flex items-center gap-2.5 text-base text-luxe-pearl/90 transition hover:text-luxe-gold hover:underline">
+                  <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl">
                     <component :is="item.icon" class="h-4 w-4" stroke-width="2" />
                   </span>
                   {{ item.label }}
                 </Link>
               </li>
             </ul>
-            <div class="mt-8 border-2 border-white/20 bg-white/5 p-5">
-              <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">Newsletter</h3>
-              <p class="mt-2 text-sm leading-relaxed text-[#f5f2ed]/80">Get updates on new sofas and furniture collections.</p>
+            <div class="mt-8 luxe-surface rounded-3xl p-6">
+              <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-luxe-mist/80">Newsletter</h3>
+              <p class="mt-2 text-sm leading-relaxed text-luxe-pearl/80">Get early access to drops, limited releases, and offers.</p>
               <form @submit.prevent="submitNewsletter" class="mt-4 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-stretch">
                 <div class="relative min-w-0 flex-1">
-                  <input
-                    v-model="newsletterForm.email"
-                    type="email"
-                    required
-                    placeholder="Enter your email"
-                    class="w-full border-2 border-white/20 bg-[#0f0e0d] py-3 pl-4 pr-4 text-sm text-[#f5f2ed] transition placeholder-[#f5f2ed]/50 focus:border-[#c2410c] focus:outline-none focus:ring-2 focus:ring-[#c2410c]/30"
-                  />
+                  <input v-model="newsletterForm.email" type="email" required placeholder="Enter your email" class="luxe-input" />
                 </div>
-                <button
-                  type="submit"
-                  :disabled="newsletterForm.processing"
-                  class="shrink-0 border-2 border-[#c2410c] bg-[#c2410c] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#a83609] focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:ring-offset-2 focus:ring-offset-[#1c1917] disabled:opacity-70"
-                >
+                <button type="submit" :disabled="newsletterForm.processing" class="luxe-btn luxe-btn-primary">
                   {{ newsletterForm.processing ? '…' : 'Subscribe' }}
                 </button>
               </form>
-              <p v-if="newsletterForm.errors.email" class="mt-2 text-sm text-red-400">{{ newsletterForm.errors.email }}</p>
-              <p v-if="newsletterSuccess" class="mt-2 text-sm font-medium text-emerald-400">{{ newsletterSuccess }}</p>
+              <p v-if="newsletterForm.errors.email" class="mt-2 text-sm text-red-300">{{ newsletterForm.errors.email }}</p>
+              <p v-if="newsletterSuccess" class="mt-2 text-sm font-medium text-emerald-300">{{ newsletterSuccess }}</p>
             </div>
           </div>
         </div>
-        <div class="mt-12 border-t border-white/10 pt-8">
-          <div class="text-center sm:text-left">
-            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">We accept</h3>
-            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-[#f5f2ed]/70">
-              We receive payments via PayPal, Visa, card, Mastercard, and mobile wallet — secure checkout on every order.
-            </p>
-            <ul class="mt-5 flex flex-wrap justify-center gap-3 sm:justify-start" role="list">
-              <li v-for="m in footerPaymentMethods" :key="m.label">
-                <figure class="flex w-[5.75rem] flex-col items-center gap-2 rounded-lg border border-white/20 bg-white px-2.5 py-3 shadow-sm">
-                  <img
-                    :src="m.src"
-                    :alt="m.alt"
-                    width="88"
-                    height="44"
-                    class="h-11 w-full max-h-11 object-contain object-center"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <figcaption class="text-center text-[10px] font-semibold uppercase leading-tight tracking-wide text-zinc-800">
-                    {{ m.label }}
-                  </figcaption>
-                </figure>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
-          <p class="text-center text-sm text-[#f5f2ed]/50 sm:text-left">
+        <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
+          <p class="text-center text-sm text-luxe-mist/80 sm:text-left">
             {{ zuaaz.footer_copyright || `© ${new Date().getFullYear()} ${zuaaz.name}. All rights reserved.` }}
           </p>
           <div class="flex flex-wrap justify-center gap-6 text-sm">
-            <Link :href="route('privacy-policy')" class="inline-flex items-center gap-2 text-[#f5f2ed]/70 transition hover:text-[#c2410c]">
-              <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white">
+            <Link :href="route('privacy-policy')" class="inline-flex items-center gap-2 text-luxe-mist transition hover:text-luxe-gold">
+              <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl">
                 <Shield class="h-3.5 w-3.5" stroke-width="2" />
               </span>
               Privacy
             </Link>
-            <Link :href="route('terms-and-conditions')" class="inline-flex items-center gap-2 text-[#f5f2ed]/70 transition hover:text-[#c2410c]">
-              <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white">
+            <Link :href="route('terms-and-conditions')" class="inline-flex items-center gap-2 text-luxe-mist transition hover:text-luxe-gold">
+              <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl">
                 <FileText class="h-3.5 w-3.5" stroke-width="2" />
               </span>
               Terms
@@ -504,13 +456,13 @@ function isCategoryActive(slug) {
       </div>
     </footer>
 
-    <!-- Floating WhatsApp - Premium (safe area for notched phones) -->
+    <!-- Floating WhatsApp -->
     <a
       v-if="zuaaz.whatsapp?.enabled !== false"
       :href="whatsappPrimary"
       target="_blank"
       rel="noopener noreferrer"
-      class="fixed z-50 flex h-14 w-14 shrink-0 items-center justify-center rounded-none bg-[#128C7E] text-white shadow-lg transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#128C7E] focus:ring-offset-2 sm:hover:scale-110"
+      class="fixed z-50 flex h-14 w-14 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/10 text-white shadow-luxe backdrop-blur-xl transition-all duration-200 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-luxe-gold/70 focus:ring-offset-2 focus:ring-offset-black"
       style="bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); right: max(1rem, env(safe-area-inset-right, 1rem));"
       aria-label="Chat on WhatsApp"
     >
