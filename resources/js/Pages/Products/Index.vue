@@ -61,7 +61,11 @@ watch(
 );
 
 function setFilter(slug) {
-  router.get(route('products'), slug ? { category: slug } : {}, { preserveState: true });
+  if (!slug) {
+    router.get(route('products'), {}, { preserveState: true });
+    return;
+  }
+  router.get(route('category.show', { slug }), {}, { preserveState: true });
 }
 
 function productImageUrl(product) {
@@ -119,6 +123,7 @@ function addToCart(productId, e) {
 const seoDefaults = computed(() => ({
   title: props.title || 'All Products | SK Traders',
   description: 'Shop curated watches, perfumes, and skin care serums. Filter by category and checkout in minutes with SK Traders.',
+  canonical: props.filterCategory ? route('category.show', { slug: props.filterCategory }) : route('products'),
 }));
 const pageSeoProps = usePageSeo(null, seoDefaults);
 </script>

@@ -12,6 +12,50 @@ use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    /**
+     * Store a category image. Prefer public/media (disk: media). If not writable, fall back to public storage.
+     * Returns the value to store in DB (either "categories/..." or "storage/categories/...").
+     */
+    private function storeCategoryImage(Request $request): ?string
+    {
+        if (! $request->hasFile('image')) {
+            return null;
+        }
+
+        $file = $request->file('image');
+        if (! $file) {
+            return null;
+        }
+
+        $storedPath = null;
+        $storedDisk = 'media';
+
+        try {
+            if (! Storage::disk('media')->exists('categories')) {
+                Storage::disk('media')->makeDirectory('categories');
+            }
+            $storedPath = $file->store('categories', 'media');
+        } catch (\Throwable $e) {
+            $storedDisk = 'public';
+            if (! Storage::disk('public')->exists('categories')) {
+                Storage::disk('public')->makeDirectory('categories');
+            }
+            $storedPath = $file->store('categories', 'public');
+        }
+
+        if (! $storedPath) {
+            return null;
+        }
+
+        app(ImageOptimizationService::class)->optimizeFile(Storage::disk($storedDisk)->path($storedPath));
+
+        // Persist a path that can be resolved later without knowing the disk.
+        if ($storedDisk === 'public') {
+            return 'storage/' . ltrim(str_replace('\\', '/', $storedPath), '/');
+        }
+        return ltrim(str_replace('\\', '/', $storedPath), '/');
+    }
+
     public function index(Request $request)
     {
         $query = Category::query()->whereNull('parent_id');
@@ -83,9 +127,9 @@ class CategoryController extends Controller
         $parentId = $validated['parent_id'] ?? null;
         $validated['sort_order'] = (int) Category::where('parent_id', $parentId)->max('sort_order') + 1;
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('categories', 'media');
-            app(ImageOptimizationService::class)->optimizeFile(Storage::disk('media')->path($validated['image']));
+        $stored = $this->storeCategoryImage($request);
+        if ($stored) {
+            $validated['image'] = $stored;
         }
 
         $new = Category::create($validated);
@@ -114,9 +158,9 @@ class CategoryController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
         $validated['status'] = $request->boolean('status', true);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('categories', 'media');
-            app(ImageOptimizationService::class)->optimizeFile(Storage::disk('media')->path($validated['image']));
+        $stored = $this->storeCategoryImage($request);
+        if ($stored) {
+            $validated['image'] = $stored;
         }
 
         $category->update($validated);

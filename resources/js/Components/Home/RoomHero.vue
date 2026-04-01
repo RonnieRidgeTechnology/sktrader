@@ -102,7 +102,7 @@ const topCategories = computed(() => {
                 <Link
                   v-for="c in topCategories"
                   :key="c.slug"
-                  :href="route('products', { category: c.slug })"
+                  :href="route('category.show', { slug: c.slug })"
                   class="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-sm font-semibold text-luxe-pearl/90 transition hover:bg-white/10"
                 >
                   <span class="h-1.5 w-1.5 rounded-full bg-luxe-gold" aria-hidden="true" />

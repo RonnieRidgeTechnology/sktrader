@@ -28,9 +28,8 @@ class ProductController extends Controller
         return '/media/' . $path;
     }
 
-    public function index(Request $request)
+    private function renderIndex(?string $categorySlug)
     {
-        $categorySlug = $request->query('category');
         $all = Category::where('status', true)
             ->with('parent:id,name,slug')
             ->orderBy('sort_order')
@@ -66,6 +65,32 @@ class ProductController extends Controller
             'products'   => $products,
             'filterCategory' => $categorySlug,
         ]);
+    }
+
+    public function index(Request $request)
+    {
+        // Backward compatible: redirect query param URLs to clean SEO paths.
+        $categorySlug = $request->query('category');
+        if ($categorySlug && is_string($categorySlug) && trim($categorySlug) !== '') {
+            return redirect()
+                ->route('category.show', ['slug' => trim($categorySlug)])
+                ->setStatusCode(301);
+        }
+
+        return $this->renderIndex(null);
+    }
+
+    public function category(string $slug)
+    {
+        $slug = trim($slug);
+        if ($slug === '') {
+            return redirect()->route('products');
+        }
+
+        // Validate the category exists and is active; otherwise 404.
+        Category::where('status', true)->where('slug', $slug)->firstOrFail(['id']);
+
+        return $this->renderIndex($slug);
     }
 
     public function show(string $slug)

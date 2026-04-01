@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 import { Sparkles, ArrowUpRight } from 'lucide-vue-next';
 
 const props = defineProps({
-  categories: { type: Array, default: () => [] }, // [{ label, slug }]
+  categories: { type: Array, default: () => [] }, // [{ label, slug, imageUrl? }]
   title: { type: String, default: 'Shop by category' },
   subtitle: { type: String, default: 'Explore watches, perfumes, and serums — curated picks with premium presentation.' },
 });
@@ -31,10 +31,14 @@ const list = computed(() => (Array.isArray(props.categories) ? props.categories 
         <Link
           v-for="c in list"
           :key="c.slug"
-          :href="route('products', { category: c.slug })"
+          :href="route('category.show', { slug: c.slug })"
           class="group luxe-surface relative overflow-hidden rounded-4xl p-6 transition hover:bg-white/10"
         >
-          <div class="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-luxe-gold/10 blur-2xl" aria-hidden="true" />
+          <div v-if="c.imageUrl" class="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
+            <img :src="c.imageUrl" alt="" class="h-full w-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
+          </div>
+          <div v-else class="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-luxe-gold/10 blur-2xl" aria-hidden="true" />
           <div class="flex items-start justify-between gap-4">
             <div class="min-w-0">
               <p class="luxe-kicker">Category</p>

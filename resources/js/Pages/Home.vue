@@ -47,7 +47,7 @@ const luxeCategoryGateways = computed(() => {
 const homeCategoryShowcase = computed(() => {
   const list = navCategories.value || [];
   const parents = list.filter((c) => !c.parent_id);
-  return parents.slice(0, 8).map((c) => ({ label: c.name, slug: c.slug }));
+  return parents.slice(0, 8).map((c) => ({ label: c.name, slug: c.slug, imageUrl: c.image_url || null }));
 });
 
 const defaultRegions = [

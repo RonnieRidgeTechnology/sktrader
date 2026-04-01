@@ -68,7 +68,7 @@
                     'publisher' => ['@id' => rtrim(config('app.url'), '/') . '/#organization'],
                     'potentialAction' => [
                         '@type' => 'SearchAction',
-                        'target' => ['@type' => 'EntryPoint', 'urlTemplate' => rtrim(config('app.url'), '/') . '/products?category={search_term_string}'],
+                        'target' => ['@type' => 'EntryPoint', 'urlTemplate' => rtrim(config('app.url'), '/') . '/category/{search_term_string}'],
                         'query-input' => 'required name=search_term_string',
                     ],
                 ],

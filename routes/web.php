@@ -151,6 +151,7 @@ Route::get('/', function () {
 Route::get('/about', fn () => Inertia::render('About', ['title' => 'About Us', 'pageContent' => PageContent::getForPage('about')]))->name('about');
 Route::get('/services', fn () => Inertia::render('Services', ['title' => 'Our Services', 'pageContent' => PageContent::getForPage('services')]))->name('services');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::get('/category/{slug}', [ProductController::class, 'category'])->name('category.show');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');

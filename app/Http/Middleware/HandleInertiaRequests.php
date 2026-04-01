@@ -32,7 +32,7 @@ class HandleInertiaRequests extends Middleware
             $all = Category::where('status', true)
                 ->orderBy('sort_order')
                 ->orderBy('name')
-                ->get(['id', 'name', 'slug', 'parent_id']);
+                ->get(['id', 'name', 'slug', 'parent_id', 'image']);
             $byParent = $all->groupBy('parent_id');
             $topLevel = $byParent->get(null, collect())->values();
             $flat = collect();
@@ -40,7 +40,21 @@ class HandleInertiaRequests extends Middleware
                 $flat->push($parent);
                 $flat = $flat->merge($byParent->get($parent->id, collect()));
             }
-            $navCategories = $flat->values()->all();
+            $navCategories = $flat->values()->map(function ($c) {
+                $img = $c->image;
+                $url = null;
+                if ($img && is_string($img)) {
+                    $img = str_replace('\\', '/', trim($img));
+                    if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://') || str_starts_with($img, '/')) {
+                        $url = $img;
+                    } elseif (str_starts_with($img, 'storage/')) {
+                        $url = '/' . ltrim($img, '/');
+                    } else {
+                        $url = '/media/' . ltrim(preg_replace('#^/?(public/|media/)?#', '', $img), '/');
+                    }
+                }
+                return array_merge($c->toArray(), ['image_url' => $url]);
+            })->all();
         }
 
         $appUrl = rtrim(config('app.url'), '/');

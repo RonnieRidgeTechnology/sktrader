@@ -147,10 +147,10 @@ const navLinks = computed(() => {
 const currentCategorySlug = computed(() => usePage().props.filterCategory ?? null);
 
 function isProductsActive() {
-  return route().current() === 'products' || route().current() === 'products.show';
+  return route().current() === 'products' || route().current() === 'category.show' || route().current() === 'products.show';
 }
 function isCategoryActive(slug) {
-  return route().current() === 'products' && currentCategorySlug.value === slug;
+  return (route().current() === 'products' || route().current() === 'category.show') && currentCategorySlug.value === slug;
 }
 </script>
 
@@ -181,7 +181,7 @@ function isCategoryActive(slug) {
           <template v-for="(link, index) in navLinks" :key="link.categorySlug ? link.categorySlug : link.route + '-' + index">
             <Link
               v-if="link.categorySlug"
-              :href="route('products', { category: link.categorySlug })"
+              :href="route('category.show', { slug: link.categorySlug })"
               class="rounded-2xl px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] transition"
               :class="isCategoryActive(link.categorySlug) ? 'bg-white/10 text-luxe-pearl' : 'text-luxe-mist hover:bg-white/5 hover:text-luxe-pearl'"
             >
@@ -262,7 +262,7 @@ function isCategoryActive(slug) {
           <template v-for="(link, index) in navLinks" :key="link.categorySlug ? link.categorySlug : link.route + '-' + index">
             <Link
               v-if="link.categorySlug"
-              :href="route('products', { category: link.categorySlug })"
+              :href="route('category.show', { slug: link.categorySlug })"
               class="min-h-[48px] rounded-2xl px-4 py-3 text-xs font-semibold uppercase tracking-[0.25em]"
               :class="isCategoryActive(link.categorySlug) ? 'bg-white/10 text-luxe-pearl' : 'text-luxe-mist hover:bg-white/5 hover:text-luxe-pearl'"
               @click="navOpen = false"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,17 @@ class SitemapController extends Controller
             ['loc' => $base . '/terms-and-conditions', 'changefreq' => 'yearly', 'priority' => '0.4'],
             ['loc' => $base . '/manufacturing-policy', 'changefreq' => 'yearly', 'priority' => '0.4'],
         ];
+
+        $categories = Category::where('status', true)->get(['slug', 'updated_at']);
+        foreach ($categories as $category) {
+            if (! $category->slug) continue;
+            $urls[] = [
+                'loc'        => $base . '/category/' . $category->slug,
+                'changefreq' => 'weekly',
+                'priority'   => '0.8',
+                'lastmod'    => $category->updated_at?->toW3cString(),
+            ];
+        }
 
         $products = Product::where('status', true)->get(['slug', 'updated_at']);
         foreach ($products as $product) {
