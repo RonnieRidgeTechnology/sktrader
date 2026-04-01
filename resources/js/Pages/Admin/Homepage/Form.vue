@@ -52,15 +52,15 @@ const whoWeWorkWithData = computed(() => props.section?.data?.items ?? []);
 
 const d = computed(() => props.section?.data ?? {});
 const journeySteps = computed(() => (d.value.steps || []).length >= 5 ? d.value.steps : [
-  { title: 'Browse or visit', line: 'Online or at our Lusaka showroom.' },
-  { title: 'Choose your piece', line: 'Sofas and furniture for your space.' },
+  { title: 'Discover', line: 'Browse curated watches, perfumes, and serums.' },
+  { title: 'Choose', line: 'Pick your style and preferences.' },
   { title: 'Confirm order', line: 'We arrange payment and delivery.' },
   { title: 'We prepare', line: 'Quality checks and careful packing.' },
   { title: 'Delivery', line: 'To your door across Zambia.' },
 ]);
 const whyPillars = computed(() => (d.value.pillars || []).length >= 3 ? d.value.pillars : [
-  { title: 'Quality first', text: 'Durable materials and solid construction. Sofas and furniture built to last in your home.' },
-  { title: 'Showroom in Lusaka', text: 'Try before you buy. Visit us to see and feel the pieces in person.' },
+  { title: 'Curated selection', text: 'Focused picks across watches, perfumes, and serums — chosen for quality and premium presentation.' },
+  { title: 'Concierge support', text: 'Quick help via WhatsApp — sizes, scent profiles, routine tips, and order updates.' },
   { title: 'Nationwide delivery', text: 'We deliver across Zambia. From Lusaka to your door, we get it there safely.' },
 ]);
 const deliveryRegions = computed(() => Array.isArray(d.value.regions) && d.value.regions.length ? d.value.regions.join('\n') : 'Lusaka\nCopperbelt\nSouthern\nCentral\nNorthern\nNationwide');
@@ -71,8 +71,8 @@ const form = useForm({
   visible: props.section !== undefined && props.section !== null ? props.section.visible : true,
   sort_order: props.section?.sort_order ?? 0,
   _method: 'PUT',
-  headline: heroData.value.headline ?? 'Quality Sofas & Furniture for Every Home',
-  subheading: heroData.value.subheading ?? 'Comfort, Style & Value in Zambia',
+  headline: heroData.value.headline ?? 'Luxury essentials, curated.',
+  subheading: heroData.value.subheading ?? 'Watches, perfumes, and skin care serums — premium picks, delivered with care.',
   body: heroData.value.body ?? '',
   tagline: heroData.value.tagline ?? '',
   cta_primary: heroData.value.cta_primary ?? '',
@@ -406,7 +406,7 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
         <FormCard
           v-if="isHero"
           title="Hero text"
-          description="The two lines shown on the full-screen hero at the top of the home page (e.g. “Living Room · Lusaka”)."
+          description="The two lines shown on the full-screen hero at the top of the home page (e.g. “Curated luxury · Limited drops”)."
         >
           <template #vector>
             <Type class="h-12 w-12" stroke-width="1.5" />
@@ -414,11 +414,11 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
           <div class="space-y-4">
             <div>
               <label :class="labelClass">Headline</label>
-              <input v-model="form.headline" type="text" :class="inputClass" placeholder="Quality Sofas & Furniture for Every Home" />
+              <input v-model="form.headline" type="text" :class="inputClass" placeholder="Luxury essentials, curated." />
             </div>
             <div>
               <label :class="labelClass">Subheading</label>
-              <input v-model="form.subheading" type="text" :class="inputClass" placeholder="Comfort, Style & Value in Zambia" />
+              <input v-model="form.subheading" type="text" :class="inputClass" placeholder="Watches, perfumes, and skin care serums — premium picks, delivered with care." />
             </div>
           </div>
         </FormCard>
@@ -605,7 +605,7 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
           <div class="space-y-4">
             <div>
               <label :class="labelClass">Section heading</label>
-              <input v-model="form.heading" type="text" :class="inputClass" placeholder="Quality sofas, showroom in Lusaka, nationwide delivery." />
+              <input v-model="form.heading" type="text" :class="inputClass" placeholder="Curated luxury essentials, delivered with care." />
             </div>
             <div v-for="i in 3" :key="i" class="rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 dark:border-zinc-700 dark:bg-zinc-800/50">
               <p class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Pillar {{ i }}</p>
@@ -621,7 +621,7 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
           <div class="space-y-4">
             <div>
               <label :class="labelClass">Eyebrow (small label)</label>
-              <input v-model="form.eyebrow" type="text" :class="inputClass" placeholder="Showroom & style" />
+              <input v-model="form.eyebrow" type="text" :class="inputClass" placeholder="Reels" />
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400">Videos are managed in <strong>Admin → Video Reels</strong>.</p>
           </div>
@@ -647,7 +647,7 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
             </div>
             <div>
               <label :class="labelClass">Headline</label>
-              <input v-model="form.delivery_headline" type="text" :class="inputClass" placeholder="From our showroom in Lusaka to your home — nationwide." />
+              <input v-model="form.delivery_headline" type="text" :class="inputClass" placeholder="Carefully packed. Delivered with confidence." />
             </div>
             <div>
               <label :class="labelClass">Regions (one per line or comma-separated)</label>
@@ -674,7 +674,7 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
             </div>
             <div>
               <label :class="labelClass">Secondary button</label>
-              <input v-model="form.secondary_button" type="text" :class="inputClass" placeholder="Visit showroom" />
+              <input v-model="form.secondary_button" type="text" :class="inputClass" placeholder="Contact us" />
             </div>
           </div>
         </FormCard>

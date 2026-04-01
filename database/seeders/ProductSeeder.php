@@ -14,17 +14,15 @@ class ProductSeeder extends Seeder
         $categories = Category::all()->keyBy('slug');
 
         $products = [
-            ['category' => '3-seater-sofas', 'name' => 'Classic 3-Seater Fabric Sofa', 'short' => 'Comfortable 3-seater fabric sofa for your living room.', 'description' => 'A timeless 3-seater sofa in durable fabric. Ideal for living rooms. Available in multiple colours. Quality construction for lasting comfort.'],
-            ['category' => '3-seater-sofas', 'name' => 'Modern 3-Seater Leather Sofa', 'short' => 'Elegant leather 3-seater for a premium look.', 'description' => 'Premium leather 3-seater sofa. Easy to clean and built to last. Perfect for homes and offices in Zambia.'],
-            ['category' => '2-seater-sofas', 'name' => 'Compact 2-Seater Sofa', 'short' => 'Space-saving 2-seater for smaller rooms.', 'description' => 'Ideal for apartments and smaller living spaces. Sturdy frame and comfortable seating.'],
-            ['category' => 'l-shaped-sofas', 'name' => 'L-Shaped Sectional Sofa', 'short' => 'Spacious L-shaped sofa for large living areas.', 'description' => 'Large L-shaped sectional. Plenty of seating for family and guests. Fabric or leather options.'],
-            ['category' => 'corner-sofas', 'name' => 'Corner Sofa with Chaise', 'short' => 'Corner sofa with chaise for maximum comfort.', 'description' => 'Corner sofa with integrated chaise. Perfect for relaxing. Available in various fabrics.'],
-            ['category' => 'fabric-sofas', 'name' => 'Soft Fabric 3-Seater', 'short' => 'Soft, family-friendly fabric sofa.', 'description' => 'Family-friendly fabric sofa. Easy to maintain and comfortable for daily use.'],
-            ['category' => 'leather-sofas', 'name' => 'Executive Leather Sofa', 'short' => 'Executive-style leather sofa for home or office.', 'description' => 'Executive leather sofa. Adds a professional touch to your home or office. Durable and stylish.'],
-            ['category' => 'armchairs', 'name' => 'Accent Armchair', 'short' => 'Stylish armchair for living room or study.', 'description' => 'Single accent armchair. Pairs well with sofas or as a reading chair. Multiple colours.'],
-            ['category' => 'coffee-tables', 'name' => 'Solid Wood Coffee Table', 'short' => 'Sturdy wooden coffee table for your lounge.', 'description' => 'Solid wood coffee table. Practical and stylish. Fits most living room layouts.'],
-            ['category' => 'beds', 'name' => 'Double Bed with Headboard', 'short' => 'Comfortable double bed with padded headboard.', 'description' => 'Double bed with upholstered headboard. Strong frame. Available in different finishes.'],
-            ['category' => 'dining-tables', 'name' => '6-Seater Dining Table', 'short' => 'Dining table seating six.', 'description' => 'Sturdy 6-seater dining table. Ideal for family meals. Wood or laminate top.'],
+            ['category' => 'classic-watches', 'name' => 'Classic Silver Watch', 'short' => 'A clean, timeless watch for everyday wear.', 'description' => 'A refined classic watch with a minimalist dial and a comfortable strap. Designed for daily wear and special occasions.'],
+            ['category' => 'sport-watches', 'name' => 'Sport Chronograph Watch', 'short' => 'Bold chronograph styling with a sport-forward feel.', 'description' => 'A sport chronograph-inspired watch with a confident silhouette and durable materials. Great for an active lifestyle look.'],
+            ['category' => 'luxury-watches', 'name' => 'Luxury Gold-Tone Watch', 'short' => 'A premium statement piece with polished details.', 'description' => 'A gold-tone luxury watch designed to elevate your look. Premium presentation and a clean, high-end finish.'],
+            ['category' => 'fresh-perfumes', 'name' => 'Fresh Citrus Perfume', 'short' => 'Bright, clean, and uplifting — perfect for daily wear.', 'description' => 'A fresh citrus-forward fragrance with crisp, clean energy. Ideal for daytime wear and warm weather.'],
+            ['category' => 'woody-perfumes', 'name' => 'Woody Amber Perfume', 'short' => 'Warm, deep, and elegant — an evening signature.', 'description' => 'A woody amber fragrance with depth and presence. Great for evenings, events, and confident everyday wear.'],
+            ['category' => 'sweet-perfumes', 'name' => 'Sweet Vanilla Perfume', 'short' => 'Smooth sweetness with a cozy finish.', 'description' => 'A sweet vanilla-forward fragrance balanced for wearability. A great gifting pick with crowd-pleasing appeal.'],
+            ['category' => 'hydration-serums', 'name' => 'Hydration Booster Serum', 'short' => 'Routine-friendly hydration for softer, smoother skin.', 'description' => 'A hydration-focused serum designed to support moisture and comfort. Perfect as a daily routine staple.'],
+            ['category' => 'glow-serums', 'name' => 'Glow Radiance Serum', 'short' => 'A glow-focused serum for a fresher look.', 'description' => 'A glow-supporting serum to help your skin look brighter and more even over time.'],
+            ['category' => 'gift-sets', 'name' => 'Gift Set: Perfume + Serum', 'short' => 'A curated duo — gift-ready and premium.', 'description' => 'A curated bundle combining a signature fragrance and a routine-friendly serum. Premium gifting made easy.'],
         ];
 
         foreach ($products as $p) {

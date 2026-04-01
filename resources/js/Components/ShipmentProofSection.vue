@@ -7,7 +7,7 @@ const props = defineProps({
   title: { type: String, default: 'Delivery Across Zambia' },
   subtitle: {
     type: String,
-    default: 'We deliver sofas and furniture to Lusaka, Copperbelt, Southern, Central, Northern and nationwide. Visit our showroom or order from home.',
+    default: 'Careful packing and a smooth delivery flow across Zambia. Contact us for timelines and order updates.',
   },
   regions: {
     type: Array,
@@ -23,10 +23,10 @@ const props = defineProps({
 });
 
 const highlights = [
-  { icon: Truck, label: 'Safe delivery', desc: 'We deliver your furniture with care so it arrives in great condition.' },
-  { icon: MapPin, label: 'Nationwide', desc: 'From our showroom in Lusaka to your home across Zambia.' },
+  { icon: Truck, label: 'Safe delivery', desc: 'Careful packing so your order arrives protected.' },
+  { icon: MapPin, label: 'Nationwide', desc: 'Delivery across Zambia with support when you need it.' },
   { icon: Shield, label: 'Reliable service', desc: 'We work with you to arrange a delivery time that suits you.' },
-  { icon: Package, label: 'Quality packaging', desc: 'Furniture is protected for transport so you receive it in perfect condition.' },
+  { icon: Package, label: 'Quality packaging', desc: 'Premium handling for a clean, gift-ready unboxing experience.' },
 ];
 </script>
 
@@ -43,7 +43,7 @@ const highlights = [
     <div class="relative mx-auto min-w-0 max-w-6xl">
       <div class="text-center">
         <p class="text-xs font-semibold uppercase tracking-[0.2em]" :class="isEditorial ? 'text-editorial-coral' : 'text-amber-700 dark:text-amber-300'">
-          Lusaka & nationwide
+          Nationwide
         </p>
         <h2
           id="worldwide-shipping-heading"
@@ -60,13 +60,13 @@ const highlights = [
       <!-- Hub visual: Lusaka at center, regions we deliver to -->
       <div class="mt-16 flex flex-col items-center lg:mt-20">
         <div class="shipping-hub relative flex max-w-2xl flex-wrap items-center justify-center gap-6 sm:gap-8">
-          <!-- Center: Lusaka showroom -->
+          <!-- Center: Dispatch hub -->
           <div
             class="origin-badge relative z-10 flex flex-col items-center justify-center border-2 px-8 py-6 shadow-lg"
             :class="isEditorial ? 'rounded-sm border-editorial-coral bg-editorial-paper' : 'rounded-none border-2 border-amber-400/60 bg-gradient-to-br from-amber-50 to-amber-100/80 dark:border-amber-500/50 dark:from-amber-950/60 dark:to-amber-900/30'"
           >
-            <span class="text-sm font-bold uppercase tracking-wider" :class="isEditorial ? 'text-editorial-ink' : 'text-amber-800 dark:text-amber-200'">Lusaka</span>
-            <span class="mt-0.5 text-xs font-medium" :class="isEditorial ? 'text-editorial-slate' : 'text-amber-700/80 dark:text-amber-300/80'">Showroom</span>
+            <span class="text-sm font-bold uppercase tracking-wider" :class="isEditorial ? 'text-editorial-ink' : 'text-amber-800 dark:text-amber-200'">Dispatch</span>
+            <span class="mt-0.5 text-xs font-medium" :class="isEditorial ? 'text-editorial-slate' : 'text-amber-700/80 dark:text-amber-300/80'">Hub</span>
           </div>
 
           <div class="absolute left-1/2 top-1/2 hidden h-px w-full max-w-[280px] -translate-x-1/2 -translate-y-1/2 sm:block" aria-hidden="true">

@@ -1,10 +1,10 @@
 <script setup>
-/** Vector: Showroom in Lusaka – building/storefront with door, furniture hint */
+/** Vector: Collections – storefront concept illustration */
 </script>
 
 <template>
   <svg viewBox="0 0 320 240" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <!-- Showroom building (storefront) -->
+    <!-- Storefront building -->
     <g class="animate-float" style="animation-duration: 4s;">
       <!-- Main building -->
       <path d="M 50 180 L 50 80 L 270 80 L 270 180 Z" class="fill-white dark:fill-zinc-700 stroke-editorial-ink/20 dark:stroke-zinc-500" stroke-width="2" />
@@ -19,7 +19,7 @@
       <!-- Step -->
       <rect x="130" y="178" width="60" height="8" rx="2" class="fill-editorial-ink/15 dark:fill-zinc-600 stroke-editorial-ink/10" stroke-width="1" />
     </g>
-    <!-- Small sofa icon (furniture inside) -->
+    <!-- Small icon accent -->
     <g class="animate-float" style="animation-delay: 0.8s; animation-duration: 4s;">
       <rect x="78" y="145" width="28" height="14" rx="3" class="fill-editorial-coral/30 dark:fill-editorial-coral/40 stroke-editorial-coral/60" stroke-width="1.5" />
     </g>

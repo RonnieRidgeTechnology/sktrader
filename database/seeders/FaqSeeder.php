@@ -12,12 +12,12 @@ class FaqSeeder extends Seeder
         $faqs = [
             [
                 'question' => 'Do you deliver across Zambia?',
-                'answer' => 'Yes. We offer nationwide shipping across Zambia. Whether you are in Lusaka, Ndola, Kitwe, Livingstone or elsewhere, we can deliver your furniture safely. Delivery terms and any costs depend on your location and order size—we will confirm this when you order or enquire.',
+                'answer' => 'Yes. We offer delivery across Zambia. Delivery timelines and any costs depend on your location and the items in your order—we will confirm this during checkout or when you enquire.',
                 'sort_order' => 1,
             ],
             [
-                'question' => 'Can I visit your showroom in Lusaka?',
-                'answer' => 'Yes. Our showroom in Lusaka is open for you to view sofas, garden furniture and other pieces in person. You can try before you buy and get advice from our team. We recommend calling or messaging ahead to confirm opening hours.',
+                'question' => 'How can I get help choosing a product?',
+                'answer' => 'Message us on WhatsApp using the button on the website. Tell us what you’re looking for (watch / perfume / serum), your budget range, and preferences (style, scent profile, or skin routine goals). We’ll recommend options quickly.',
                 'sort_order' => 2,
             ],
             [
@@ -26,38 +26,38 @@ class FaqSeeder extends Seeder
                 'sort_order' => 3,
             ],
             [
-                'question' => 'Do you offer warranty on your furniture?',
-                'answer' => 'Yes. We stand by our quality with warranty on our furniture as specified per product. If you need help after your purchase, our after-sales support is here to assist you.',
+                'question' => 'Do you offer warranty or support?',
+                'answer' => 'Support depends on the product category. If you need help after your purchase, contact us and we’ll assist you based on the item and order details.',
                 'sort_order' => 4,
             ],
             [
                 'question' => 'How long does delivery take?',
-                'answer' => 'Delivery times vary by product availability and your location. In Lusaka, delivery is typically within a few days to a week. For other parts of Zambia, it may take a bit longer. We will give you an estimated timeframe when you order.',
+                'answer' => 'Delivery times vary by product availability and your location. We’ll provide an estimated timeframe when you order or when you enquire.',
                 'sort_order' => 5,
             ],
             [
-                'question' => 'What types of furniture do you sell?',
-                'answer' => 'We sell a wide range of furniture including sofas and living room furniture, rattan and garden furniture (UV-resistant outdoor sets, corner sofas, chairs, tables), and other quality pieces for home and garden. From classic to modern styles—there is something for every space.',
+                'question' => 'What products do you sell?',
+                'answer' => 'We curate watches, perfumes, and skin care serums. Availability changes as we add new drops and restock popular items.',
                 'sort_order' => 6,
             ],
             [
-                'question' => 'How can I arrange a viewing or collection?',
-                'answer' => 'You can message us on WhatsApp to arrange a viewing at our showroom or to organise collection. Use the WhatsApp button on our website or product pages—we are happy to help you find the right furniture and arrange a convenient time.',
+                'question' => 'Can I order via WhatsApp?',
+                'answer' => 'Yes. You can chat with us on WhatsApp to confirm availability, ask questions, and place an order if needed.',
                 'sort_order' => 7,
             ],
             [
-                'question' => 'Can I order custom or made-to-order furniture?',
-                'answer' => 'We offer selected custom and made-to-order options. Contact us with your requirements—fabric, size, style—and we will let you know what is possible and provide a quote.',
+                'question' => 'Do you offer gifting or curated bundles?',
+                'answer' => 'Yes. We can help you choose gift-ready picks or create curated bundles (for example: perfume + serum, or a watch + fragrance). Message us and share the occasion and budget.',
                 'sort_order' => 8,
             ],
             [
-                'question' => 'How do I care for rattan or outdoor garden furniture?',
-                'answer' => 'Our UV-resistant rattan and outdoor furniture is built for durability. For best results, keep pieces clean with a soft cloth and mild soap, and avoid leaving them in standing water. We can provide care guidelines with your purchase.',
+                'question' => 'How do I choose a perfume scent profile?',
+                'answer' => 'Tell us the vibe you want (fresh, sweet, woody, spicy) and when you’ll wear it (daily, office, evening). We’ll recommend options that match.',
                 'sort_order' => 9,
             ],
             [
-                'question' => 'Do you have furniture in stock, and how do I check availability?',
-                'answer' => 'Availability varies by product. You can browse our website for current offerings, visit our Lusaka showroom to see and try pieces, or contact us via WhatsApp or phone to check stock for specific items. We will confirm availability when you enquire or order.',
+                'question' => 'How do I check availability?',
+                'answer' => 'Availability varies by product. You can browse our website for current offerings or contact us via WhatsApp to confirm stock for a specific item.',
                 'sort_order' => 10,
             ],
         ];

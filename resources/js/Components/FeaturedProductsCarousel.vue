@@ -9,7 +9,7 @@ const props = defineProps({
   products: { type: Array, default: () => [] },
   title: { type: String, default: 'Featured Products' },
   eyebrow: { type: String, default: 'Curated for you' },
-  subtitle: { type: String, default: 'Handpicked sofas and furniture from our collection. Visit our showroom or order online.' },
+  subtitle: { type: String, default: 'Handpicked watches, perfumes, and serums from our collection. Order online or chat with us on WhatsApp.' },
 });
 
 const isEditorial = computed(() => props.theme === 'editorial');

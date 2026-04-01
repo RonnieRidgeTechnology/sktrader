@@ -14,20 +14,20 @@ class LlmsTxtController extends Controller
     {
         $base = rtrim(config('app.url'), '/');
         $name = config('zuaaz.name', 'SK Traders');
-        $tagline = config('zuaaz.tagline', 'Quality Sofas & Furniture for Every Home in Zambia');
+        $tagline = config('zuaaz.tagline', 'Curated Watches · Perfumes · Skin Care Serums');
         $email = config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com');
         $website = config('zuaaz.contact.website', 'www.atlanticgardenfurniture.com');
 
         $body = "# {$name}\n\n"
             . "{$tagline}\n\n"
             . "## Overview\n\n"
-            . "SK Traders is a furniture store in Zambia, specialising in sofas and living room furniture. We have a showroom in Lusaka and deliver nationwide. Quality pieces for every home.\n\n"
+            . "SK Traders curates premium watches, perfumes, and skin care serums. Shop luxury essentials with a modern storefront, careful packing, and concierge-style support.\n\n"
             . "## Main pages\n\n"
             . "- Home: {$base}/\n"
             . "- About: {$base}/about\n"
             . "- Collections: {$base}/services\n"
-            . "- Furniture: {$base}/products\n"
-            . "- Custom Furniture: {$base}/private-label\n"
+            . "- Products: {$base}/products\n"
+            . "- Premium Orders & Gifting: {$base}/private-label\n"
             . "- How It Works: {$base}/how-it-works\n"
             . "- Why Choose Us: {$base}/why-choose-us\n"
             . "- Our Quality: {$base}/quality\n"

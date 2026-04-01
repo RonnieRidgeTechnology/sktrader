@@ -68,7 +68,7 @@ const form = useForm({
                 type="text"
                 maxlength="70"
                 class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-zinc-900 shadow-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
-                placeholder="e.g. Sofas & Furniture Zambia | SK Traders"
+                placeholder="e.g. Watches, Perfumes & Serums | SK Traders"
               />
               <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Recommended length: 50–60 characters.</p>
               <p v-if="form.errors.meta_title" class="mt-1 text-sm text-red-500">{{ form.errors.meta_title }}</p>

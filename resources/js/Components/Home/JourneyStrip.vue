@@ -3,11 +3,11 @@ import { computed } from 'vue';
 import { Lightbulb, Palette, FileCheck, Factory, Truck } from 'lucide-vue-next';
 
 const defaultSteps = [
-  { icon: Lightbulb, title: 'Browse or visit', line: 'Online or at our Lusaka showroom.' },
-  { icon: Palette, title: 'Choose your piece', line: 'Sofas and furniture for your space.' },
-  { icon: FileCheck, title: 'Confirm order', line: 'We arrange payment and delivery.' },
-  { icon: Factory, title: 'We prepare', line: 'Quality checks and careful packing.' },
-  { icon: Truck, title: 'Delivery', line: 'To your door across Zambia.' },
+  { icon: Lightbulb, title: 'Discover', line: 'Browse curated watches, perfumes, and serums.' },
+  { icon: Palette, title: 'Choose', line: 'Pick your style, scent profile, or routine goal.' },
+  { icon: FileCheck, title: 'Checkout', line: 'Confirm order and delivery details.' },
+  { icon: Factory, title: 'Pack with care', line: 'Premium handling and careful packing.' },
+  { icon: Truck, title: 'Delivery', line: 'Delivered with confidence.' },
 ];
 const icons = [Lightbulb, Palette, FileCheck, Factory, Truck];
 const props = defineProps({ section: { type: Object, default: null } });

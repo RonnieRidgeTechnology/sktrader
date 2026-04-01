@@ -1,10 +1,10 @@
 <script setup>
-/** Vector: Quality sofas – armchair/sofa, checkmark (quality) */
+/** Vector: Quality-first – product checkmark illustration */
 </script>
 
 <template>
   <svg viewBox="0 0 240 180" class="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <!-- Sofa / armchair (front view, simplified) -->
+    <!-- Product silhouette (simplified) -->
     <g class="animate-float" style="animation-duration: 4s;">
       <!-- Seat base -->
       <rect x="55" y="95" width="130" height="45" rx="8" class="fill-editorial-paper dark:fill-zinc-600 stroke-editorial-ink/25 dark:stroke-zinc-500" stroke-width="2" />

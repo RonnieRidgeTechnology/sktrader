@@ -3,7 +3,7 @@
 return [
 
     'name' => env('APP_NAME', 'SK Traders'),
-    'tagline' => 'Quality Sofas & Furniture for Every Home in Zambia',
+    'tagline' => 'Curated Watches · Perfumes · Skin Care Serums',
 
     'whatsapp' => [
         'primary'   => env('WHATSAPP_PRIMARY', '+260970000000'),

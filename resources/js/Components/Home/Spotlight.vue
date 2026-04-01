@@ -160,7 +160,7 @@ const whatsappUrl = computed(() => {
                 Handpicked for your space
               </h2>
               <p class="mt-5 max-w-md text-base leading-relaxed text-[#44403c]">
-                Sofas, armchairs and living room furniture. Visit our showroom in Lusaka or browse online and order for nationwide delivery.
+                Curated watches, perfumes, and skin care serums. Order online or chat with our WhatsApp concierge for quick guidance.
               </p>
               <Link
                 :href="route('products')"

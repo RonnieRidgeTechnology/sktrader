@@ -9,14 +9,14 @@ const props = defineProps({
   points: {
     type: Array,
     default: () => [
-      { icon: 'Package', title: 'Quality sofas', description: 'We stock a wide range of sofas and living room furniture built to last.' },
-      { icon: 'Factory', title: 'Showroom in Lusaka', description: 'Visit us to try sofas and see pieces in person before you buy.' },
-      { icon: 'Globe', title: 'Nationwide delivery', description: 'We deliver across Zambia so you can shop from anywhere.' },
-      { icon: 'Tag', title: 'Fair pricing', description: 'Transparent prices with no hidden costs. Value for money.' },
-      { icon: 'Palette', title: 'Style for every home', description: 'From classic to modern — find the look that suits your space.' },
-      { icon: 'DollarSign', title: 'Flexible options', description: 'Ready-made pieces or custom orders. We work with your needs.' },
-      { icon: 'ShieldCheck', title: 'Warranty & support', description: 'We stand by our quality with warranty and after-sales support.' },
-      { icon: 'Handshake', title: 'Friendly service', description: 'A team that cares about helping you find the right furniture.' },
+      { icon: 'Package', title: 'Curated selection', description: 'Focused picks across watches, perfumes, and serums — chosen for quality and premium presentation.' },
+      { icon: 'Factory', title: 'Concierge support', description: 'Fast help via WhatsApp — sizes, scent profiles, routine tips, and order updates.' },
+      { icon: 'Globe', title: 'Careful delivery', description: 'Careful packing and a reliable delivery flow so your order arrives protected.' },
+      { icon: 'Tag', title: 'Fair pricing', description: 'Transparent pricing and clear product details — no guesswork.' },
+      { icon: 'Palette', title: 'Curated drops', description: 'New arrivals and essentials — designed for daily confidence and elevated gifting.' },
+      { icon: 'DollarSign', title: 'Flexible options', description: 'Single items or curated bundles. We’ll help you choose what fits.' },
+      { icon: 'ShieldCheck', title: 'Support', description: 'If you need help after purchase, contact us and we’ll assist you.' },
+      { icon: 'Handshake', title: 'Friendly service', description: 'A team that cares about helping you find the right product.' },
     ],
   },
 });

@@ -1,5 +1,5 @@
 <script setup>
-/** Vector: CTA "Ready to find your perfect sofa?" – sofa/armchair, theme colors (coral, cream) on dark */
+/** Vector: CTA – premium essentials theme (watches/perfumes/serums) */
 </script>
 
 <template>
@@ -10,7 +10,7 @@
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
   >
-    <!-- Sofa / armchair (front view) – theme: cream (#f5f2ed) + coral (#c2410c) -->
+    <!-- Icon illustration – theme: cream (#f5f2ed) + coral (#c2410c) -->
     <g>
       <!-- Seat base -->
       <rect

@@ -13,48 +13,36 @@ class CategorySeeder extends Seeder
 
         $tree = [
             [
-                'name'     => 'Sofas',
-                'slug'     => 'sofas',
+                'name'     => 'Watches',
+                'slug'     => 'watches',
                 'children' => [
-                    ['name' => '3-Seater Sofas', 'slug' => '3-seater-sofas'],
-                    ['name' => '2-Seater Sofas', 'slug' => '2-seater-sofas'],
-                    ['name' => 'L-Shaped Sofas', 'slug' => 'l-shaped-sofas'],
-                    ['name' => 'Corner Sofas', 'slug' => 'corner-sofas'],
-                    ['name' => 'Fabric Sofas', 'slug' => 'fabric-sofas'],
-                    ['name' => 'Leather Sofas', 'slug' => 'leather-sofas'],
+                    ['name' => 'Classic', 'slug' => 'classic-watches'],
+                    ['name' => 'Sport', 'slug' => 'sport-watches'],
+                    ['name' => 'Luxury', 'slug' => 'luxury-watches'],
+                    ['name' => 'Minimal', 'slug' => 'minimal-watches'],
                 ],
             ],
             [
-                'name'     => 'Living Room',
-                'slug'     => 'living-room',
+                'name'     => 'Perfumes',
+                'slug'     => 'perfumes',
                 'children' => [
-                    ['name' => 'Armchairs', 'slug' => 'armchairs'],
-                    ['name' => 'Coffee Tables', 'slug' => 'coffee-tables'],
-                    ['name' => 'TV Units', 'slug' => 'tv-units'],
-                    ['name' => 'Bookshelves', 'slug' => 'bookshelves'],
+                    ['name' => 'Fresh', 'slug' => 'fresh-perfumes'],
+                    ['name' => 'Woody', 'slug' => 'woody-perfumes'],
+                    ['name' => 'Sweet', 'slug' => 'sweet-perfumes'],
+                    ['name' => 'Spicy', 'slug' => 'spicy-perfumes'],
                 ],
             ],
             [
-                'name'     => 'Bedroom',
-                'slug'     => 'bedroom',
+                'name'     => 'Skin Care Serums',
+                'slug'     => 'skin-care-serums',
                 'children' => [
-                    ['name' => 'Beds', 'slug' => 'beds'],
-                    ['name' => 'Wardrobes', 'slug' => 'wardrobes'],
-                    ['name' => 'Bedside Tables', 'slug' => 'bedside-tables'],
-                    ['name' => 'Dressing Tables', 'slug' => 'dressing-tables'],
+                    ['name' => 'Hydration', 'slug' => 'hydration-serums'],
+                    ['name' => 'Glow', 'slug' => 'glow-serums'],
+                    ['name' => 'Anti-Acne', 'slug' => 'anti-acne-serums'],
+                    ['name' => 'Anti-Aging', 'slug' => 'anti-aging-serums'],
                 ],
             ],
-            [
-                'name'     => 'Dining',
-                'slug'     => 'dining',
-                'children' => [
-                    ['name' => 'Dining Tables', 'slug' => 'dining-tables'],
-                    ['name' => 'Dining Chairs', 'slug' => 'dining-chairs'],
-                    ['name' => 'Dining Sets', 'slug' => 'dining-sets'],
-                ],
-            ],
-            ['name' => 'Office Furniture', 'slug' => 'office-furniture'],
-            ['name' => 'Outdoor Furniture', 'slug' => 'outdoor-furniture'],
+            ['name' => 'Gift Sets', 'slug' => 'gift-sets'],
         ];
 
         foreach ($tree as $item) {

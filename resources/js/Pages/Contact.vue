@@ -119,14 +119,14 @@ const pageSeoProps = usePageSeo(null, {
               </a>
             </div>
 
-            <h2 class="mt-10 text-sm font-semibold uppercase tracking-[0.2em] text-[#44403c]">{{ pc.visit_heading || 'Visit us' }}</h2>
+            <h2 class="mt-10 text-sm font-semibold uppercase tracking-[0.2em] text-[#44403c]">{{ pc.visit_heading || 'Reach us' }}</h2>
             <div class="mt-4 space-y-4">
               <div class="flex gap-4 border-2 border-[#1c1917]/10 bg-white p-5">
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
                   <Building2 class="h-5 w-5" stroke-width="2" />
                 </span>
                 <div>
-                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">Showroom</p>
+                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">Office</p>
                   <p class="mt-1 text-sm text-[#44403c]">{{ zuaaz.address?.office || 'Lusaka, Zambia' }}</p>
                 </div>
               </div>

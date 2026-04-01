@@ -5,8 +5,8 @@ import { Package, Palette, Ship } from 'lucide-vue-next';
 import VectorCta from '@/Components/Vectors/VectorCta.vue';
 
 const props = defineProps({
-  headline: { type: String, default: 'Ready to find your perfect sofa?' },
-  text: { type: String, default: 'Visit our showroom in Lusaka or get in touch — we will help you choose the right furniture for your home.' },
+  headline: { type: String, default: 'Ready to find your next signature?' },
+  text: { type: String, default: 'Talk to our concierge — we’ll help you choose the right watch, fragrance, or serum for your style and routine.' },
   buttonText: { type: String, default: 'CONTACT US' },
   buttonRoute: { type: String, default: 'contact' },
   hash: { type: String, default: '#quote' },
@@ -16,9 +16,9 @@ const openQuoteModal = inject('openQuoteModal', () => null);
 const useQuoteModal = () => props.buttonRoute === 'contact' && props.hash === '#quote' && openQuoteModal;
 
 const highlights = [
-  { icon: Package, label: 'Quality sofas' },
-  { icon: Palette, label: 'Showroom in Lusaka' },
-  { icon: Ship, label: 'Nationwide delivery' },
+  { icon: Package, label: 'Curated selection' },
+  { icon: Palette, label: 'Gift-ready picks' },
+  { icon: Ship, label: 'Careful delivery' },
 ];
 </script>
 

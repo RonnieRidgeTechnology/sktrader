@@ -24,11 +24,11 @@ const scatteredSlots = computed(() => {
 });
 
 const steps = [
-  { icon: 'Lightbulb', title: 'Browse or visit', text: 'Browse our collections online or visit our showroom in Lusaka.' },
-  { icon: 'Palette', title: 'Choose your piece', text: 'Select the sofas or furniture that fit your space and style.' },
-  { icon: 'FileCheck', title: 'Confirm order', text: 'Confirm your order and we will arrange payment and delivery.' },
-  { icon: 'Factory', title: 'Preparation', text: 'We prepare your order with care and quality checks.' },
-  { icon: 'Ship', title: 'Delivery', text: 'We deliver to your door across Zambia or you collect from our showroom.' },
+  { icon: 'Lightbulb', title: 'Discover', text: 'Browse watches, perfumes, and serums — curated picks with clear details.' },
+  { icon: 'Palette', title: 'Choose', text: 'Pick your style: sizes, finishes, scent profiles, or routine-focused serums.' },
+  { icon: 'FileCheck', title: 'Checkout', text: 'Confirm your order. We’ll follow up if we need any detail to dispatch.' },
+  { icon: 'Factory', title: 'Pack with care', text: 'We prepare and pack your order carefully for a premium unboxing.' },
+  { icon: 'Ship', title: 'Delivery', text: 'Delivery to your address. Contact us any time for order updates.' },
 ];
 
 function iconFor(iconName) {

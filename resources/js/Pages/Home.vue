@@ -13,8 +13,8 @@ import FinalCta from '@/Components/Home/FinalCta.vue';
 import { computed } from 'vue';
 
 const page = usePage();
-const heroHeadline = page.props.heroHeadline ?? 'Quality Sofas & Furniture for Every Home';
-const heroSubheading = page.props.heroSubheading ?? 'Comfort, Style & Value in Zambia';
+const heroHeadline = page.props.heroHeadline ?? 'Luxury essentials, curated.';
+const heroSubheading = page.props.heroSubheading ?? 'Watches, perfumes, and skin care serums — premium picks, delivered with care.';
 const heroSliderImages = page.props.heroSliderImages ?? [];
 const heroGalleryImages = page.props.heroGalleryImages ?? [];
 const featuredProducts = page.props.featuredProducts ?? [];
@@ -57,12 +57,12 @@ const regions = (homeSections.delivery_line?.regions || []).length
   : defaultRegions;
 
 const bentoImages = [...(heroSliderImages || []), ...(heroGalleryImages || [])].filter(Boolean);
-const tagline = zuaaz.tagline || 'Lusaka showroom · Nationwide delivery';
+const tagline = zuaaz.tagline || 'Watches · Perfumes · Serums';
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Sofas & Furniture Store Zambia | SK Traders Lusaka',
-  description: 'Quality sofas and furniture in Zambia. SK Traders offers living room sofas, armchairs and home furniture. Visit us in Lusaka or order nationwide.',
-  keywords: 'sofas Zambia, furniture store Lusaka, living room furniture, SK Traders, furniture delivery Zambia',
+  title: 'Watches, Perfumes & Skin Care Serums | SK Traders',
+  description: 'Shop curated watches, perfumes, and skin care serums at SK Traders. Premium picks, careful packing, and concierge-style support.',
+  keywords: 'watches, perfumes, skin care serums, skincare, fragrance, SK Traders',
 });
 </script>
 
@@ -106,7 +106,7 @@ const pageSeoProps = usePageSeo(null, {
       <!-- 3. Why us – three pillars -->
       <WhyPillars :section="homeSections.why_pillars" />
 
-      <!-- 4. Showroom reels – horizontal strip -->
+      <!-- 4. Reels – horizontal strip -->
       <ReelsStrip :videos="videoReels" />
 
       <!-- 5. One big quote -->

@@ -334,7 +334,7 @@ const sectionClass =
             <div class="mt-4 space-y-4">
               <div>
                 <label :class="labelClass">Global meta title</label>
-                <input v-model="form.meta_title_default" type="text" :class="inputClass" placeholder="e.g. SK Traders – Sofas & Furniture Zambia" maxlength="70" />
+                <input v-model="form.meta_title_default" type="text" :class="inputClass" placeholder="e.g. Watches, Perfumes & Serums | SK Traders" maxlength="70" />
                 <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Recommended under 60 characters for search results.</p>
               </div>
               <div>

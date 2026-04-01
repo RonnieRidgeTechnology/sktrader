@@ -24,9 +24,9 @@ class HomepageSectionSeeder extends Seeder
                 'title'      => 'Spotlight',
                 'sort_order' => 20,
                 'data'       => [
-                    'eyebrow' => 'In the spotlight',
-                    'heading' => 'Featured piece',
-                    'body'    => 'Our first featured product appears here. Mark a product as featured in Products to show it.',
+                    'eyebrow' => 'In focus',
+                    'heading' => 'Featured pick',
+                    'body'    => 'A featured product can appear here when enabled. Mark products as featured in Admin → Products.',
                 ],
             ],
             [
@@ -34,13 +34,13 @@ class HomepageSectionSeeder extends Seeder
                 'title'      => 'Journey strip',
                 'sort_order' => 30,
                 'data'       => [
-                    'eyebrow' => 'From idea to home',
+                    'eyebrow' => 'From discovery to delivery',
                     'steps'   => [
-                        ['title' => 'Browse or visit', 'line' => 'Online or at our Lusaka showroom.'],
-                        ['title' => 'Choose your piece', 'line' => 'Sofas and furniture for your space.'],
-                        ['title' => 'Confirm order', 'line' => 'We arrange payment and delivery.'],
-                        ['title' => 'We prepare', 'line' => 'Quality checks and careful packing.'],
-                        ['title' => 'Delivery', 'line' => 'To your door across Zambia.'],
+                        ['title' => 'Discover', 'line' => 'Browse curated watches, perfumes, and serums.'],
+                        ['title' => 'Choose', 'line' => 'Pick your style and preferences.'],
+                        ['title' => 'Checkout', 'line' => 'Confirm order and delivery details.'],
+                        ['title' => 'Pack with care', 'line' => 'Premium handling and careful packing.'],
+                        ['title' => 'Delivery', 'line' => 'Delivered with confidence.'],
                     ],
                 ],
             ],
@@ -49,11 +49,11 @@ class HomepageSectionSeeder extends Seeder
                 'title'      => 'Why us',
                 'sort_order' => 40,
                 'data'       => [
-                    'heading' => 'Quality sofas, showroom in Lusaka, nationwide delivery.',
+                    'heading' => 'Curated luxury essentials, delivered with care.',
                     'pillars' => [
-                        ['title' => 'Quality first', 'text' => 'Durable materials and solid construction. Sofas and furniture built to last in your home.'],
-                        ['title' => 'Showroom in Lusaka', 'text' => 'Try before you buy. Visit us to see and feel the pieces in person.'],
-                        ['title' => 'Nationwide delivery', 'text' => 'We deliver across Zambia. From Lusaka to your door, we get it there safely.'],
+                        ['title' => 'Curated selection', 'text' => 'Focused picks across watches, perfumes, and serums — chosen for quality and premium presentation.'],
+                        ['title' => 'Concierge support', 'text' => 'Quick help via WhatsApp — sizes, scent profiles, routine tips, and order updates.'],
+                        ['title' => 'Careful delivery', 'text' => 'Careful packing and a reliable delivery flow so your order arrives protected.'],
                     ],
                 ],
             ],
@@ -62,7 +62,7 @@ class HomepageSectionSeeder extends Seeder
                 'title'      => 'Video reels',
                 'sort_order' => 50,
                 'data'       => [
-                    'eyebrow' => 'Showroom & style',
+                    'eyebrow' => 'Reels',
                     'heading' => 'Videos are managed in Admin → Video Reels.',
                 ],
             ],
@@ -80,8 +80,8 @@ class HomepageSectionSeeder extends Seeder
                 'title'      => 'Delivery line',
                 'sort_order' => 70,
                 'data'       => [
-                    'eyebrow'  => 'We deliver across Zambia',
-                    'headline' => 'From our showroom in Lusaka to your home — nationwide.',
+                    'eyebrow'  => 'Delivery',
+                    'headline' => 'Carefully packed. Delivered with confidence.',
                     'regions'  => ['Lusaka', 'Copperbelt', 'Southern', 'Central', 'Northern', 'Nationwide'],
                     'footer'   => 'Contact us for delivery details and lead times.',
                 ],
@@ -91,9 +91,9 @@ class HomepageSectionSeeder extends Seeder
                 'title'      => 'Final CTA',
                 'sort_order' => 80,
                 'data'       => [
-                    'headline'            => 'Ready to find your piece?',
+                    'headline'            => 'Ready to find your next signature?',
                     'primary_button'      => 'Chat on WhatsApp',
-                    'secondary_button'    => 'Visit showroom',
+                    'secondary_button'    => 'Contact us',
                 ],
             ],
         ];
@@ -115,8 +115,8 @@ class HomepageSectionSeeder extends Seeder
             if ($s['key'] === 'hero' && empty($section->data['headline'])) {
                 $section->update([
                     'data' => array_merge([
-                        'headline'       => 'Quality Sofas & Furniture for Every Home',
-                        'subheading'     => 'Comfort, Style & Value in Zambia',
+                        'headline'       => 'Luxury essentials, curated.',
+                        'subheading'     => 'Watches, perfumes, and skin care serums — premium picks, delivered with care.',
                         'image_left'     => null,
                         'image_right'    => null,
                         'gallery_images' => [],

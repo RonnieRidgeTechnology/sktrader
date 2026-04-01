@@ -23,7 +23,7 @@ const heroImageUrl = computed(() => {
 const heroTitle = computed(() => c.value.hero_title || 'About Us');
 const heroSubtitle = computed(() =>
   c.value.hero_subtitle ||
-  'SK Traders is a furniture store in Zambia, specialising in sofas and living room furniture for homes and businesses.'
+  'SK Traders curates premium watches, perfumes, and skin care serums — designed for everyday confidence and elevated gifting.'
 );
 
 const ownerName = computed(() => c.value.owner_name || 'Mary Daka');
@@ -38,24 +38,24 @@ const ownerImageUrl = computed(() => {
 
 const intro = computed(() =>
   c.value.intro ||
-  'Based in **Lusaka**, we bring you a curated range of **sofas**, **armchairs**, and **living room furniture** to suit every style and budget. We focus on comfort, durability and value so you can create the home you love. Whether you are furnishing your first home or upgrading your space, we are here to help.'
+  'We curate **watches**, **perfumes**, and **skin care serums** with a quality-first lens. Our goal is simple: make it easy to discover premium picks, choose with confidence, and enjoy a smooth, modern buying experience.'
 );
 
 const heroEyebrow = computed(() => c.value.hero_eyebrow || 'Who we are');
 const storyHeading = computed(() => c.value.story_heading || 'Our story');
 const meetOwnerHeading = computed(() => c.value.meet_owner_heading || 'Meet the owner');
 const ownerTitle = computed(() => c.value.owner_title || 'Owner, SK Traders');
-const ownerBio = computed(() => c.value.owner_bio || 'SK Traders is a furniture store specialising in sofas and living room furniture. We serve customers from our Lusaka showroom and deliver nationwide across Zambia.');
-const statsShowroomTitle = computed(() => c.value.stats_showroom_title || 'Lusaka showroom');
-const statsShowroomDesc = computed(() => c.value.stats_showroom_desc || 'Visit us to see and try our furniture');
-const statsDeliveryTitle = computed(() => c.value.stats_delivery_title || 'Nationwide delivery');
-const statsDeliveryDesc = computed(() => c.value.stats_delivery_desc || 'We deliver across Zambia');
-const statsQualityTitle = computed(() => c.value.stats_quality_title || 'Quality sofas');
-const statsQualityDesc = computed(() => c.value.stats_quality_desc || 'Durable materials, solid construction');
+const ownerBio = computed(() => c.value.owner_bio || 'SK Traders curates luxury essentials — watches, perfumes, and serums — with a focus on quality, presentation, and customer support.');
+const statsShowroomTitle = computed(() => c.value.stats_showroom_title || 'Curated drops');
+const statsShowroomDesc = computed(() => c.value.stats_showroom_desc || 'Focused selection, premium presentation');
+const statsDeliveryTitle = computed(() => c.value.stats_delivery_title || 'Careful delivery');
+const statsDeliveryDesc = computed(() => c.value.stats_delivery_desc || 'Packed with care, delivered with confidence');
+const statsQualityTitle = computed(() => c.value.stats_quality_title || 'Concierge support');
+const statsQualityDesc = computed(() => c.value.stats_quality_desc || 'Fast help via WhatsApp when needed');
 const facilitiesHeading = computed(() => c.value.facilities_heading || 'What we offer');
-const facilitiesIntro = computed(() => c.value.facilities_intro || 'From our Lusaka base we serve homes and businesses across the country.');
+const facilitiesIntro = computed(() => c.value.facilities_intro || 'A premium selection built around clarity, confidence, and a smooth checkout experience.');
 const facilitiesList = computed(() => {
-  const raw = c.value.facilities_list || 'Lusaka: Showroom and main store\nNationwide: Delivery across Zambia';
+  const raw = c.value.facilities_list || 'Watches: Refined timepieces for daily and occasion wear\nPerfumes: Signature scents from fresh to deep profiles\nSerums: Routine-friendly skin care essentials\nSupport: Concierge help via WhatsApp\nDelivery: Careful packing and reliable dispatch';
   return raw.split('\n').filter(Boolean).map((line) => {
     const colon = line.indexOf(':');
     if (colon > 0) return { name: line.slice(0, colon).trim(), desc: line.slice(colon + 1).trim() };
@@ -70,10 +70,10 @@ const commitmentSubtitle = computed(() =>
 const commitmentItems = computed(() => {
   const raw = c.value.commitment_items;
   const defaults = [
-    { title: 'Quality First', body: 'We choose durable materials and solid construction so your sofas and furniture last for years and look great in your home.', icon: Award },
-    { title: 'Honest Service', body: 'Clear pricing, delivery timelines and straightforward communication. We keep you informed from order to delivery.', icon: Shield },
-    { title: 'Customer Focus', body: 'We are here to help you find the right pieces — whether you visit our showroom in Lusaka or order from home.', icon: Heart },
-    { title: 'Value for Money', body: 'Fair prices and flexible options so you can furnish your space without compromise.', icon: Sparkles },
+    { title: 'Quality-first selection', body: 'We curate products for quality and presentation so every order feels premium.', icon: Award },
+    { title: 'Clear communication', body: 'Straightforward details and responsive support — before and after purchase.', icon: Shield },
+    { title: 'Customer focus', body: 'Concierge-style help for sizes, scent profiles, and routine picks.', icon: Heart },
+    { title: 'Premium experience', body: 'A modern storefront with careful packing and smooth delivery flow.', icon: Sparkles },
   ];
   if (!Array.isArray(raw) || !raw.length) return defaults;
   return raw.slice(0, 4).map((item, i) => ({
@@ -89,7 +89,7 @@ function renderIntro(html) {
 
 const pageSeoProps = usePageSeo(null, {
   title: 'About Us | SK Traders',
-  description: (props.pageContent?.hero_subtitle || 'SK Traders – your trusted furniture store in Zambia. Quality sofas and living room furniture in Lusaka and nationwide.').slice(0, 160),
+  description: (props.pageContent?.hero_subtitle || 'SK Traders curates premium watches, perfumes, and skin care serums — luxury essentials with a modern, premium experience.').slice(0, 160),
 });
 </script>
 

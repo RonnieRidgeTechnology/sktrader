@@ -43,7 +43,7 @@
                     '@id' => rtrim(config('app.url'), '/') . '/#organization',
                     'name' => config('zuaaz.name', 'SK Traders'),
                     'url' => config('app.url'),
-                    'description' => 'Quality sofas and furniture store in Zambia. SK Traders – Lusaka showroom and nationwide delivery.',
+                    'description' => 'Curated watches, perfumes, and skin care serums. Premium picks with a modern shopping experience.',
                     'email' => config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com'),
                     'address' => [
                         '@type' => 'PostalAddress',
@@ -64,7 +64,7 @@
                     '@id' => rtrim(config('app.url'), '/') . '/#website',
                     'url' => config('app.url'),
                     'name' => config('zuaaz.name', 'SK Traders'),
-                    'description' => 'Quality sofas and furniture in Zambia. Lusaka showroom, nationwide delivery.',
+                    'description' => 'Shop watches, perfumes, and skin care serums at SK Traders.',
                     'publisher' => ['@id' => rtrim(config('app.url'), '/') . '/#organization'],
                     'potentialAction' => [
                         '@type' => 'SearchAction',

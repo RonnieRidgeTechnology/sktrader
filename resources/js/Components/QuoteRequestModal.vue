@@ -14,11 +14,10 @@ const honeypot = ref('');
 
 const interestOptions = [
   { value: '', label: 'Select an option (optional)' },
-  { value: 'Sofas & seating', label: 'Sofas & seating' },
-  { value: 'Living room furniture', label: 'Living room furniture' },
-  { value: 'Bedroom furniture', label: 'Bedroom furniture' },
-  { value: 'Dining furniture', label: 'Dining furniture' },
-  { value: 'Custom / made to order', label: 'Custom / made to order' },
+  { value: 'Watches', label: 'Watches' },
+  { value: 'Perfumes', label: 'Perfumes' },
+  { value: 'Skin care serums', label: 'Skin care serums' },
+  { value: 'Gift set / bundle', label: 'Gift set / bundle' },
   { value: 'General enquiry', label: 'General enquiry' },
 ];
 
@@ -200,7 +199,7 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
                       v-model="form.message"
                       rows="4"
                       required
-                      placeholder="Tell us about the furniture you’re looking for or any questions..."
+                      placeholder="Tell us what you’re looking for (watch / perfume / serum), your budget range, and preferences (style, scent profile, or routine goals)..."
                       :class="[inputClass, 'resize-none', form.errors.message && 'border-red-500 focus:border-red-500 focus:ring-red-500/20']"
                     />
                     <p v-if="form.errors.message" :class="errorClass">{{ form.errors.message }}</p>

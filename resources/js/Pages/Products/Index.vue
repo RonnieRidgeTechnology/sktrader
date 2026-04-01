@@ -84,7 +84,7 @@ const categoryPills = computed(() => {
 
 // Current category label for hero
 const currentCategoryLabel = computed(() => {
-  if (!props.filterCategory) return 'All furniture';
+  if (!props.filterCategory) return 'All products';
   const cat = (props.categories || []).find((c) => c.slug === props.filterCategory);
   return cat ? (cat.parent ? `${cat.parent.name} › ${cat.name}` : cat.name) : props.filterCategory;
 });
@@ -117,8 +117,8 @@ function addToCart(productId, e) {
 }
 
 const seoDefaults = computed(() => ({
-  title: props.title || 'Furniture & Sofas | SK Traders Zambia',
-  description: 'Browse our furniture and sofas. Filter by category or get in touch for any product. SK Traders – Zambia.',
+  title: props.title || 'All Products | SK Traders',
+  description: 'Shop curated watches, perfumes, and skin care serums. Filter by category and checkout in minutes with SK Traders.',
 }));
 const pageSeoProps = usePageSeo(null, seoDefaults);
 </script>

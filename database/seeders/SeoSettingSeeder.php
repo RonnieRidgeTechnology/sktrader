@@ -11,54 +11,54 @@ class SeoSettingSeeder extends Seeder
     {
         $pages = [
             'home' => [
-                'meta_title' => 'Sofas & Furniture Store Zambia | SK Traders Lusaka',
-                'meta_description' => 'Quality sofas and furniture in Zambia. SK Traders offers living room sofas, armchairs and home furniture. Visit us in Lusaka or order nationwide.',
-                'meta_keywords' => 'sofas Zambia, furniture Lusaka, garden furniture, living room furniture, SK Traders',
+                'meta_title' => 'Watches, Perfumes & Skin Care Serums | SK Traders',
+                'meta_description' => 'Shop curated watches, perfumes, and skin care serums at SK Traders. Premium picks, careful packing, and concierge-style support.',
+                'meta_keywords' => 'watches, perfumes, skin care serums, skincare, fragrance, SK Traders',
             ],
             'about' => [
-                'meta_title' => 'About Us | SK Traders Zambia',
-                'meta_description' => 'SK Traders – your trusted furniture store in Zambia. Quality sofas and living room furniture in Lusaka and nationwide delivery.',
-                'meta_keywords' => 'about SK Traders, furniture store Zambia, Lusaka showroom',
+                'meta_title' => 'About Us | SK Traders',
+                'meta_description' => 'SK Traders curates premium watches, perfumes, and skin care serums — luxury essentials with a modern, premium experience.',
+                'meta_keywords' => 'about SK Traders, watches, perfumes, skin care serums',
             ],
             'services' => [
-                'meta_title' => 'Our Collections | SK Traders',
-                'meta_description' => 'Browse our furniture collections: sofas, living room, bedroom and office furniture. Quality pieces for every home in Zambia.',
-                'meta_keywords' => 'furniture collections, sofas, living room, bedroom furniture Zambia',
+                'meta_title' => 'Collections | SK Traders',
+                'meta_description' => 'Explore SK Traders collections: watches, perfumes, and skin care serums — curated luxury essentials with premium presentation.',
+                'meta_keywords' => 'watches, perfumes, skin care serums, collections, SK Traders',
             ],
             'products' => [
-                'meta_title' => 'Furniture & Sofas | SK Traders Zambia',
-                'meta_description' => 'Shop sofas, armchairs, rattan and garden furniture. SK Traders – quality furniture in Lusaka and across Zambia.',
-                'meta_keywords' => 'buy sofas Zambia, furniture shop, garden furniture, rattan furniture Lusaka',
+                'meta_title' => 'All Products | SK Traders',
+                'meta_description' => 'Shop watches, perfumes, and skin care serums at SK Traders. Curated picks with premium presentation.',
+                'meta_keywords' => 'shop watches, buy perfumes, skin care serums, SK Traders',
             ],
             'contact' => [
                 'meta_title' => 'Contact Us | SK Traders',
-                'meta_description' => 'Contact SK Traders for sofas and furniture in Zambia. Visit our Lusaka showroom or send an enquiry.',
-                'meta_keywords' => 'contact SK Traders, Lusaka showroom, furniture enquiry Zambia',
+                'meta_description' => 'Contact SK Traders for orders and enquiries about watches, perfumes, and skin care serums. We respond as fast as possible.',
+                'meta_keywords' => 'contact SK Traders, watches, perfumes, skincare, enquiry',
             ],
             'faq' => [
                 'meta_title' => 'FAQ | SK Traders',
-                'meta_description' => 'Frequently asked questions about our furniture, delivery in Zambia, payment, warranty and nationwide shipping.',
-                'meta_keywords' => 'FAQ, furniture delivery Zambia, payment, warranty, SK Traders',
+                'meta_description' => 'Frequently asked questions about ordering watches, perfumes, and serums — delivery, payment, and support.',
+                'meta_keywords' => 'FAQ, watches, perfumes, skincare, delivery, payment, SK Traders',
             ],
             'why-choose-us' => [
                 'meta_title' => 'Why Choose Us | SK Traders Zambia',
-                'meta_description' => 'Quality sofas and furniture, showroom in Lusaka, nationwide delivery, warranty and friendly service. SK Traders Zambia.',
-                'meta_keywords' => 'why choose us, quality furniture Zambia, Lusaka showroom, nationwide delivery',
+                'meta_description' => 'Curated watches, perfumes, and serums — premium presentation, careful packing, and concierge support.',
+                'meta_keywords' => 'why choose us, curated watches, perfumes, serums, concierge support',
             ],
             'how-it-works' => [
                 'meta_title' => 'How It Works | SK Traders',
-                'meta_description' => 'From browsing to delivery: visit our showroom or order online. We deliver sofas and furniture across Zambia.',
-                'meta_keywords' => 'how to buy furniture Zambia, order process, delivery process',
+                'meta_description' => 'From discovery to delivery: browse, checkout, and receive curated watches, perfumes, and serums with care.',
+                'meta_keywords' => 'how to buy, order process, delivery process, watches, perfumes, serums',
             ],
             'quality' => [
                 'meta_title' => 'Our Quality | SK Traders',
-                'meta_description' => 'We choose durable materials and solid construction. Quality sofas and furniture for your home in Zambia.',
-                'meta_keywords' => 'quality furniture, durable sofas, materials, construction Zambia',
+                'meta_description' => 'Quality-first selection and careful handling — curated watches, perfumes, and serums with premium presentation.',
+                'meta_keywords' => 'quality, curated, watches, perfumes, serums, SK Traders',
             ],
             'private-label' => [
-                'meta_title' => 'Custom Furniture | SK Traders',
-                'meta_description' => 'Custom and made-to-order furniture in Zambia. SK Traders can help with bespoke sofas and pieces for your space.',
-                'meta_keywords' => 'custom furniture, made to order, bespoke sofas Zambia',
+                'meta_title' => 'Premium Orders & Gifting | SK Traders',
+                'meta_description' => 'Premium orders, gifting, and curated bundles — watches, perfumes, and skin care serums with a luxury experience.',
+                'meta_keywords' => 'premium orders, gifting, bundles, watches, perfumes, serums',
             ],
             'privacy-policy' => [
                 'meta_title' => 'Privacy Policy | SK Traders',
@@ -67,7 +67,7 @@ class SeoSettingSeeder extends Seeder
             ],
             'terms-and-conditions' => [
                 'meta_title' => 'Terms & Conditions | SK Traders',
-                'meta_description' => 'Terms and conditions for purchasing furniture from SK Traders Zambia.',
+                'meta_description' => 'Terms and conditions for purchasing products from SK Traders.',
                 'meta_keywords' => 'terms and conditions, purchase terms',
             ],
             'manufacturing-policy' => [

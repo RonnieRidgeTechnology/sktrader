@@ -5,8 +5,8 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({
   theme: { type: String, default: '' }, // 'editorial' = cream/ink/coral, serif, sharp
   whatsappLink: { type: String, required: true },
-  headline: { type: String, default: 'Quality Sofas & Furniture for Every Home' },
-  subheading: { type: String, default: 'Comfort, Style & Value in Zambia' },
+  headline: { type: String, default: 'Luxury essentials, curated.' },
+  subheading: { type: String, default: 'Watches, perfumes, and skin care serums — premium picks, delivered with care.' },
   sliderImages: { type: Array, default: () => [] },
 });
 const isEditorial = computed(() => props.theme === 'editorial');

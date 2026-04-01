@@ -5,8 +5,8 @@ import { Play, X } from 'lucide-vue-next';
 /** Videos: { title, youtubeId? } or { title, embedCode? } or { title, videoUrl? } */
 const props = defineProps({
   theme: { type: String, default: '' },
-  title: { type: String, default: 'Our Showroom & Collections' },
-  subtitle: { type: String, default: 'Take a look at our sofas and furniture — visit us in Lusaka or browse online.' },
+  title: { type: String, default: 'Reels & Drops' },
+  subtitle: { type: String, default: 'Quick clips to preview finishes, packaging, and what arrives at your door.' },
   videos: {
     type: Array,
     default: () => [],
