@@ -17,6 +17,9 @@ class ProductController extends Controller
         if (empty($image) || ! is_string($image)) {
             return null;
         }
+        if (str_starts_with($image, 'http://') || str_starts_with($image, 'https://')) {
+            return $image;
+        }
         $path = preg_replace('#^/?(storage/|public/|media/)?#', '', trim($image));
         $path = str_replace('\\', '/', $path);
         if ($path === '') {

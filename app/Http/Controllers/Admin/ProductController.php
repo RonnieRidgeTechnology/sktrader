@@ -21,6 +21,10 @@ class ProductController extends Controller
         if (empty($image) || ! is_string($image)) {
             return null;
         }
+        // If stored as absolute URL, keep as-is.
+        if (str_starts_with($image, 'http://') || str_starts_with($image, 'https://')) {
+            return $image;
+        }
         $path = preg_replace('#^/?(storage/|public/|media/)?#', '', trim($image));
         $path = str_replace('\\', '/', $path);
         if ($path === '') {
@@ -77,8 +81,25 @@ class ProductController extends Controller
         $validated['status'] = $request->boolean('status', true);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'media');
-            app(ImageOptimizationService::class)->optimizeFile(Storage::disk('media')->path($validated['image']));
+            $file = $request->file('image');
+            $storedPath = null;
+            $storedDisk = 'media';
+            try {
+                // Ensure base dirs exist (some hosts block implicit mkdir).
+                if (! Storage::disk('media')->exists('products')) {
+                    Storage::disk('media')->makeDirectory('products');
+                }
+                $storedPath = $file->store('products', 'media');
+            } catch (\Throwable $e) {
+                // Fallback for hosts where public/ is not writable.
+                $storedDisk = 'public';
+                $storedPath = $file->store('products', 'public');
+            }
+            if ($storedPath) {
+                $validated['image'] = $storedPath;
+                $disk = Storage::disk($storedDisk);
+                app(ImageOptimizationService::class)->optimizeFile($disk->path($storedPath));
+            }
         }
 
         $gallery = [];
@@ -88,9 +109,21 @@ class ProductController extends Controller
             $imageService = app(ImageOptimizationService::class);
             foreach ($galleryFiles as $file) {
                 if ($file) {
-                    $stored = $file->store('products/gallery', 'media');
-                    $gallery[] = $stored;
-                    $imageService->optimizeFile(Storage::disk('media')->path($stored));
+                    $stored = null;
+                    $storedDisk = 'media';
+                    try {
+                        if (! Storage::disk('media')->exists('products/gallery')) {
+                            Storage::disk('media')->makeDirectory('products/gallery');
+                        }
+                        $stored = $file->store('products/gallery', 'media');
+                    } catch (\Throwable $e) {
+                        $storedDisk = 'public';
+                        $stored = $file->store('products/gallery', 'public');
+                    }
+                    if ($stored) {
+                        $gallery[] = $stored;
+                        $imageService->optimizeFile(Storage::disk($storedDisk)->path($stored));
+                    }
                 }
             }
         }
@@ -134,8 +167,22 @@ class ProductController extends Controller
         $validated['stock'] = isset($validated['stock']) ? (int) $validated['stock'] : null;
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'media');
-            app(ImageOptimizationService::class)->optimizeFile(Storage::disk('media')->path($validated['image']));
+            $file = $request->file('image');
+            $storedPath = null;
+            $storedDisk = 'media';
+            try {
+                if (! Storage::disk('media')->exists('products')) {
+                    Storage::disk('media')->makeDirectory('products');
+                }
+                $storedPath = $file->store('products', 'media');
+            } catch (\Throwable $e) {
+                $storedDisk = 'public';
+                $storedPath = $file->store('products', 'public');
+            }
+            if ($storedPath) {
+                $validated['image'] = $storedPath;
+                app(ImageOptimizationService::class)->optimizeFile(Storage::disk($storedDisk)->path($storedPath));
+            }
         }
 
         $galleryFiles = $request->file('gallery');
@@ -145,9 +192,21 @@ class ProductController extends Controller
             $galleryFiles = is_array($galleryFiles) ? $galleryFiles : [$galleryFiles];
             foreach ($galleryFiles as $file) {
                 if ($file) {
-                    $stored = $file->store('products/gallery', 'media');
-                    $gallery[] = $stored;
-                    $imageService->optimizeFile(Storage::disk('media')->path($stored));
+                    $stored = null;
+                    $storedDisk = 'media';
+                    try {
+                        if (! Storage::disk('media')->exists('products/gallery')) {
+                            Storage::disk('media')->makeDirectory('products/gallery');
+                        }
+                        $stored = $file->store('products/gallery', 'media');
+                    } catch (\Throwable $e) {
+                        $storedDisk = 'public';
+                        $stored = $file->store('products/gallery', 'public');
+                    }
+                    if ($stored) {
+                        $gallery[] = $stored;
+                        $imageService->optimizeFile(Storage::disk($storedDisk)->path($stored));
+                    }
                 }
             }
             $validated['gallery'] = $gallery;
