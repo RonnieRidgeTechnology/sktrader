@@ -61,20 +61,20 @@ const pageSeoProps = usePageSeo(null, {
       <dl class="space-y-4">
         <template v-for="(faq, index) in list" :key="index">
           <div
-            class="border-2 border-editorial-ink/15 bg-white transition hover:border-editorial-coral/40"
+            class="luxe-surface rounded-3xl p-1 transition hover:bg-white/10"
           >
             <button
               type="button"
-              class="flex min-h-[48px] w-full min-w-0 items-center justify-between gap-3 px-4 py-4 text-left font-medium text-editorial-ink sm:px-6"
+              class="flex min-h-[56px] w-full min-w-0 items-center justify-between gap-3 rounded-[1.375rem] px-5 py-4 text-left font-semibold text-luxe-pearl sm:px-6"
               :aria-expanded="openIndex === index"
               @click="openIndex = openIndex === index ? null : index"
             >
               <span class="min-w-0 flex-1 break-words text-left">{{ faq.question }}</span>
-              <span class="shrink-0 text-editorial-coral">{{ openIndex === index ? '−' : '+' }}</span>
+              <span class="shrink-0 text-luxe-gold">{{ openIndex === index ? '−' : '+' }}</span>
             </button>
             <div
               v-show="openIndex === index"
-              class="border-t border-editorial-ink/10 px-4 py-4 text-editorial-slate sm:px-6"
+              class="border-t border-white/10 px-5 py-4 text-luxe-pearl/80 sm:px-6"
             >
               {{ faq.answer }}
             </div>

@@ -21,7 +21,7 @@ const whatsappSecondaryLink = () => {
 
 const pageSeoProps = usePageSeo(null, {
   title: 'Contact Us | SK Traders',
-  description: 'Contact SK Traders for sofas and furniture in Zambia. Visit our Lusaka showroom or send an enquiry.',
+  description: 'Contact SK Traders for watches, perfumes and skincare serums. Send an enquiry or chat via WhatsApp.',
 });
 </script>
 
@@ -29,60 +29,61 @@ const pageSeoProps = usePageSeo(null, {
   <AppLayout>
     <SeoHead v-bind="pageSeoProps" />
 
-    <!-- Hero – concept dark -->
-    <section class="relative min-w-0 overflow-hidden border-b border-[#1c1917] bg-[#0f0e0d] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+    <!-- Hero – luxe -->
+    <section class="relative min-w-0 overflow-hidden border-b border-white/10 bg-luxe-obsidian px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-70" aria-hidden="true" />
       <div class="relative mx-auto min-w-0 max-w-4xl text-center">
-        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">{{ pc.hero_eyebrow || 'Get in touch' }}</p>
-        <h1 class="mt-3 font-editorial text-2xl font-bold tracking-tight text-[#f5f2ed] sm:text-3xl lg:text-4xl">
+        <p class="luxe-kicker">{{ pc.hero_eyebrow || 'Get in touch' }}</p>
+        <h1 class="luxe-title mt-4 text-3xl sm:text-4xl lg:text-5xl">
           {{ zuaaz.contact_form_title || pc.hero_title || 'Contact Us' }}
         </h1>
-        <p class="mx-auto mt-4 max-w-xl text-lg text-[#f5f2ed]/80">
-          {{ pc.hero_subtitle || 'Visit our showroom, call us, or send a message. We respond within 24 hours.' }}
+        <p class="mx-auto mt-5 max-w-xl text-lg text-luxe-pearl/80">
+          {{ pc.hero_subtitle || 'Need help choosing a watch, fragrance, or serum? Message us — we respond quickly.' }}
         </p>
       </div>
     </section>
 
-    <!-- Main content – cream -->
-    <section class="min-w-0 bg-editorial-cream px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
+    <!-- Main content – luxe -->
+    <section class="min-w-0 bg-luxe-obsidian px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
       <div class="mx-auto min-w-0 max-w-6xl">
         <div class="grid gap-8 lg:grid-cols-5 lg:gap-14">
           <div class="min-w-0 lg:col-span-2">
-            <h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-[#44403c]">{{ pc.contact_info_heading || 'Contact information' }}</h2>
+            <h2 class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist">{{ pc.contact_info_heading || 'Contact information' }}</h2>
             <div class="mt-6 space-y-6">
               <a
                 :href="`mailto:${zuaaz.contact?.email || 'info@atlanticgardenfurniture.com'}`"
-                class="flex gap-4 border-2 border-[#1c1917]/10 bg-white p-5 transition hover:border-[#c2410c]/30"
+                class="luxe-surface rounded-3xl p-5 flex gap-4 transition hover:bg-white/10"
               >
-                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-gold">
                   <Mail class="h-5 w-5" stroke-width="2" />
                 </span>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">Email</p>
-                  <p class="mt-1 truncate text-sm font-medium text-[#1c1917]">{{ zuaaz.contact?.email || 'info@atlanticgardenfurniture.com' }}</p>
+                  <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">Email</p>
+                  <p class="mt-1 truncate text-sm font-medium text-luxe-pearl">{{ zuaaz.contact?.email || 'info@atlanticgardenfurniture.com' }}</p>
                 </div>
               </a>
               <a
                 v-if="zuaaz.contact?.phone"
                 :href="`tel:${zuaaz.contact.phone.replace(/\s/g, '')}`"
-                class="flex gap-4 border-2 border-[#1c1917]/10 bg-white p-5 transition hover:border-[#c2410c]/30"
+                class="luxe-surface rounded-3xl p-5 flex gap-4 transition hover:bg-white/10"
               >
-                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-gold">
                   <Phone class="h-5 w-5" stroke-width="2" />
                 </span>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">Phone</p>
-                  <p class="mt-1 text-sm font-medium text-editorial-ink">{{ zuaaz.contact.phone }}</p>
+                  <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">Phone</p>
+                  <p class="mt-1 text-sm font-medium text-luxe-pearl">{{ zuaaz.contact.phone }}</p>
                 </div>
               </a>
-              <div class="flex gap-4 border-2 border-[#1c1917]/10 bg-white p-5 transition hover:border-[#c2410c]/30">
-                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
+              <div class="luxe-surface rounded-3xl p-5 flex gap-4 transition hover:bg-white/10">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-gold">
                   <MessageCircle class="h-5 w-5" stroke-width="2" />
                 </span>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">WhatsApp</p>
-                  <p class="mt-1 space-y-0.5 text-sm font-medium text-[#1c1917]">
-                    <a :href="whatsappLink()" target="_blank" rel="noopener noreferrer" class="block text-[#c2410c] underline-offset-2 hover:underline">{{ zuaaz.whatsapp?.primary || '+260 97 000 0000' }}</a>
-                    <a v-if="zuaaz.whatsapp?.secondary" :href="whatsappSecondaryLink()" target="_blank" rel="noopener noreferrer" class="block text-[#c2410c] underline-offset-2 hover:underline">{{ zuaaz.whatsapp.secondary }}</a>
+                  <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">WhatsApp</p>
+                  <p class="mt-1 space-y-0.5 text-sm font-medium text-luxe-pearl">
+                    <a :href="whatsappLink()" target="_blank" rel="noopener noreferrer" class="block text-luxe-gold underline-offset-2 hover:underline">{{ zuaaz.whatsapp?.primary || '+260 97 000 0000' }}</a>
+                    <a v-if="zuaaz.whatsapp?.secondary" :href="whatsappSecondaryLink()" target="_blank" rel="noopener noreferrer" class="block text-luxe-gold underline-offset-2 hover:underline">{{ zuaaz.whatsapp.secondary }}</a>
                   </p>
                 </div>
               </div>
@@ -91,14 +92,14 @@ const pageSeoProps = usePageSeo(null, {
                 :href="zuaaz.contact.website"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex gap-4 border-2 border-[#1c1917]/10 bg-white p-5 transition hover:border-[#c2410c]/30"
+                class="luxe-surface rounded-3xl p-5 flex gap-4 transition hover:bg-white/10"
               >
-                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-gold">
                   <Globe class="h-5 w-5" stroke-width="2" />
                 </span>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">Website</p>
-                  <p class="mt-1 truncate text-sm font-medium text-[#1c1917]">{{ zuaaz.contact.website }}</p>
+                  <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">Website</p>
+                  <p class="mt-1 truncate text-sm font-medium text-luxe-pearl">{{ zuaaz.contact.website }}</p>
                 </div>
               </a>
               <a
@@ -106,14 +107,14 @@ const pageSeoProps = usePageSeo(null, {
                 :href="zuaaz.contact.instagram"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex gap-4 border-2 border-[#1c1917]/10 bg-white p-5 transition hover:border-[#c2410c]/30"
+                class="luxe-surface rounded-3xl p-5 flex gap-4 transition hover:bg-white/10"
               >
-                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-gold">
                   <Globe class="h-5 w-5" stroke-width="2" />
                 </span>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs font-medium uppercase tracking-wider text-[#44403c]">Instagram</p>
-                  <p class="mt-1 text-sm font-medium text-[#1c1917]">Follow us</p>
+                  <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">Instagram</p>
+                  <p class="mt-1 text-sm font-medium text-luxe-pearl">Follow us</p>
                 </div>
               </a>
             </div>
@@ -142,10 +143,10 @@ const pageSeoProps = usePageSeo(null, {
           </div>
 
           <div class="lg:col-span-3">
-            <h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-[#c2410c]">{{ pc.quote_heading || 'Send an enquiry' }}</h2>
-            <p class="mt-3 font-editorial text-lg font-semibold text-[#1c1917]">{{ pc.form_intro_heading || "Looking for sofas or furniture? We're here to help." }}</p>
-            <p class="mt-2 text-[#44403c]">
-              {{ pc.quote_subtitle || "Share your requirements and we’ll respond within 24 hours with pricing and next steps." }}
+            <h2 class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-gold">{{ pc.quote_heading || 'Send an enquiry' }}</h2>
+            <p class="mt-3 font-display text-xl font-semibold text-luxe-pearl">{{ pc.form_intro_heading || "Need help choosing the right product? We're here." }}</p>
+            <p class="mt-2 text-luxe-pearl/80">
+              {{ pc.quote_subtitle || "Share what you're looking for and we’ll respond with availability, pricing, and next steps." }}
             </p>
             <div class="mt-6">
               <InquiryForm :initial-product-interest="initialProductInterest" />

@@ -41,40 +41,41 @@ function firstError(key) {
 
 <template>
   <AppLayout>
-    <section class="relative border-t border-editorial-ink/10 bg-editorial-cream py-12 sm:py-16 md:py-24">
-      <div class="mx-auto min-w-0 max-w-xl px-4 sm:px-6 lg:px-8">
+    <section class="relative border-t border-white/10 bg-luxe-obsidian py-12 sm:py-16 md:py-24">
+      <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-60" aria-hidden="true" />
+      <div class="relative luxe-container max-w-xl">
         <div class="mb-8">
           <Link
             :href="route('checkout')"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-editorial-coral transition hover:text-editorial-coral/80"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-luxe-gold transition hover:opacity-90"
           >
             ← Back to checkout
           </Link>
-          <h1 class="mt-4 font-editorial text-3xl font-bold tracking-tight text-editorial-ink sm:text-4xl">
+          <h1 class="mt-5 font-display text-3xl font-semibold tracking-tight text-luxe-pearl sm:text-4xl">
             {{ title }}
           </h1>
-          <p class="mt-2 text-editorial-slate">
+          <p class="mt-2 text-luxe-pearl/80">
             Complete your order <strong>{{ order?.number }}</strong> by paying {{ isCard ? 'by card' : 'with Mobile Money' }} (ZynlePay). Amount due: <strong>{{ formatPrice(order?.total ?? 0) }}</strong>.
           </p>
         </div>
 
-        <div v-if="flashSuccess" class="mb-6 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+        <div v-if="flashSuccess" class="mb-6 rounded-3xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-sm text-emerald-200">
           {{ flashSuccess }}
         </div>
-        <div v-if="flashError" class="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+        <div v-if="flashError" class="mb-6 rounded-3xl border border-red-400/20 bg-red-400/10 p-4 text-sm text-red-200">
           {{ flashError }}
         </div>
 
-        <div class="rounded-2xl border-2 border-editorial-ink/10 bg-white p-6 shadow-premium sm:p-8">
-          <h2 class="flex items-center gap-2 font-editorial text-xl font-semibold text-editorial-ink">
-            <CreditCard v-if="isCard" class="h-5 w-5 text-editorial-coral" stroke-width="2" />
-            <Smartphone v-else class="h-5 w-5 text-editorial-coral" stroke-width="2" />
+        <div class="luxe-surface-strong rounded-3xl p-6 sm:p-8">
+          <h2 class="flex items-center gap-2 font-display text-xl font-semibold text-luxe-pearl">
+            <CreditCard v-if="isCard" class="h-5 w-5 text-luxe-gold" stroke-width="2" />
+            <Smartphone v-else class="h-5 w-5 text-luxe-gold" stroke-width="2" />
             {{ isCard ? 'Pay by card' : 'Enter your mobile number' }}
           </h2>
-          <p v-if="isCard" class="mt-2 text-sm text-editorial-slate">
+          <p v-if="isCard" class="mt-2 text-sm text-luxe-pearl/80">
             Click below to proceed to secure card payment. You will complete payment on the next step.
           </p>
-          <p v-else class="mt-2 text-sm text-editorial-slate">
+          <p v-else class="mt-2 text-sm text-luxe-pearl/80">
             You will receive a prompt on your phone to approve the payment. Use the number linked to your Mobile Money account (e.g. 09XX XXX XXX or +260 9XX XXX XXX).
           </p>
 
@@ -85,13 +86,13 @@ function firstError(key) {
           >
             <input v-model="form.order_number" type="hidden" name="order_number" />
             <div v-if="!isCard">
-              <label for="phone" class="block text-sm font-medium text-editorial-ink">Mobile number *</label>
+              <label for="phone" class="block text-sm font-medium text-luxe-pearl">Mobile number *</label>
               <input
                 id="phone"
                 v-model="form.phone"
                 type="tel"
                 required
-                class="mt-2 block w-full border-2 border-editorial-ink/15 bg-white px-4 py-3 text-editorial-ink focus:border-editorial-coral focus:ring-2 focus:ring-editorial-coral/20"
+                class="mt-2 block w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-luxe-pearl placeholder:text-luxe-mist/70 focus:border-luxe-gold/50 focus:ring-1 focus:ring-luxe-gold/50"
                 placeholder="+260 97 123 4567"
               />
               <p v-if="firstError('phone')" class="mt-1 text-sm text-red-600">{{ firstError('phone') }}</p>
@@ -99,27 +100,27 @@ function firstError(key) {
             <button
               type="submit"
               :disabled="form.processing"
-              class="w-full min-h-[52px] border-2 border-editorial-ink bg-editorial-ink px-6 py-3.5 font-semibold text-white shadow-premium transition hover:bg-editorial-ink/90 disabled:opacity-70"
+              class="w-full luxe-btn luxe-btn-primary disabled:opacity-70"
             >
               {{ form.processing ? 'Initiating…' : (isCard ? 'Proceed to pay by card' : 'Send payment request to my phone') }}
             </button>
           </form>
 
-          <div v-else class="mt-6 flex flex-col items-center gap-4 rounded-xl border border-editorial-ink/10 bg-editorial-cream/50 p-6">
-            <CheckCircle class="h-12 w-12 text-green-600" stroke-width="2" />
-            <p class="text-center text-sm font-medium text-editorial-ink">
+          <div v-else class="mt-6 flex flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/5 p-6">
+            <CheckCircle class="h-12 w-12 text-emerald-300" stroke-width="2" />
+            <p class="text-center text-sm font-medium text-luxe-pearl">
               {{ isCard ? 'Complete payment on the next screen. Once done, click below to confirm.' : 'Check your phone and approve the payment. Once done, click below to confirm.' }}
             </p>
             <Link
               :href="route('checkout.payment-status', { order: order?.number })"
-              class="inline-flex min-h-[48px] items-center justify-center rounded-xl border-2 border-editorial-coral bg-editorial-coral px-6 py-3 font-semibold text-white transition hover:bg-editorial-coral/90"
+              class="luxe-btn luxe-btn-primary"
             >
               I’ve paid — check payment status
             </Link>
           </div>
         </div>
 
-        <p class="mt-6 text-center text-xs text-editorial-slate">
+        <p class="mt-6 text-center text-xs text-luxe-mist">
           All amounts are in {{ order?.currency ?? 'ZMW' }}. Powered by ZynlePay.
         </p>
       </div>

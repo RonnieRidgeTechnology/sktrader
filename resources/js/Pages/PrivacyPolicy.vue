@@ -25,25 +25,25 @@ const pageSeoProps = usePageSeo(null, {
     <PageSection :title="pageTitle" :subtitle="content ? '' : 'How we collect, use, and protect your information.'">
       <div
         v-if="content"
-        class="prose prose-zinc max-w-none space-y-6 text-editorial-slate prose-p:leading-relaxed prose-a:text-editorial-coral prose-a:underline"
+        class="luxe-surface rounded-3xl p-6 sm:p-8 max-w-none space-y-6 text-luxe-pearl/85"
         v-html="content"
       />
-      <div v-else class="prose prose-zinc max-w-none space-y-6 text-editorial-slate">
+      <div v-else class="luxe-surface rounded-3xl p-6 sm:p-8 max-w-none space-y-6 text-luxe-pearl/85">
         <section>
-          <h2 class="font-editorial text-lg font-semibold text-editorial-ink">Information we collect</h2>
+          <h2 class="font-display text-lg font-semibold text-luxe-pearl">Information we collect</h2>
           <p>We collect information you provide when contacting us (name, email, company, phone, inquiry details). We use this to respond to quotes and partnership requests.</p>
         </section>
         <section>
-          <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">How we use it</h2>
+          <h2 class="font-display text-lg font-semibold text-luxe-pearl">How we use it</h2>
           <p>Your information is used only to process enquiries, communicate about orders and services, and improve our offerings. We do not sell your data to third parties.</p>
         </section>
         <section>
-          <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">Data security</h2>
+          <h2 class="font-display text-lg font-semibold text-luxe-pearl">Data security</h2>
           <p>We take reasonable measures to protect your data. Communications may be stored securely for the duration of our business relationship and as required by law.</p>
         </section>
         <section>
-          <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">Contact</h2>
-          <p>For privacy-related questions, contact us at <a :href="`mailto:${email}`" class="text-editorial-coral underline hover:no-underline">{{ email }}</a>.</p>
+          <h2 class="font-display text-lg font-semibold text-luxe-pearl">Contact</h2>
+          <p>For privacy-related questions, contact us at <a :href="`mailto:${email}`" class="text-luxe-gold underline hover:no-underline">{{ email }}</a>.</p>
         </section>
       </div>
     </PageSection>
