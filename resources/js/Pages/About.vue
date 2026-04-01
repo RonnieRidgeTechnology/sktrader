@@ -5,7 +5,7 @@ import { usePageSeo } from '@/composables/usePageSeo';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import CtaBanner from '@/Components/CtaBanner.vue';
 import { storageUrl } from '@/utils/storageUrl';
-import { MapPin, Truck, Award, Heart, Shield, Sparkles } from 'lucide-vue-next';
+import { MapPin, Truck, Award, Heart, Shield, Sparkles, ArrowUpRight } from 'lucide-vue-next';
 
 const props = defineProps({
   title: { type: String, default: 'About Us' },
@@ -84,7 +84,7 @@ const commitmentItems = computed(() => {
 });
 
 function renderIntro(html) {
-  return html.replace(/\*\*(.+?)\*\*/g, '<strong class="text-[#1c1917] font-semibold">$1</strong>');
+  return String(html || '').replace(/\*\*(.+?)\*\*/g, '<strong class="text-luxe-pearl font-semibold">$1</strong>');
 }
 
 const pageSeoProps = usePageSeo(null, {
@@ -98,175 +98,263 @@ const pageSeoProps = usePageSeo(null, {
     <SeoHead v-bind="pageSeoProps" />
 
     <!-- Section 1: Hero -->
-    <section class="about-hero relative min-h-[50vh] overflow-hidden border-b border-[#1c1917]/20 bg-[#0f0e0d]">
-      <div v-if="heroImageUrl" class="absolute inset-0">
-        <img
-          :src="heroImageUrl"
-          alt=""
-          class="h-full w-full object-cover opacity-40"
-          fetchpriority="high"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0e0d] via-[#0f0e0d]/80 to-[#0f0e0d]/50" aria-hidden="true" />
+    <section class="about-hero relative overflow-hidden bg-luxe-obsidian border-b border-white/10">
+      <!-- Background: cinematic + grain -->
+      <div class="absolute inset-0 bg-luxe-radial">
+        <div v-if="heroImageUrl" class="absolute inset-0">
+          <img :src="heroImageUrl" alt="" class="h-full w-full object-cover opacity-35" fetchpriority="high" />
+        </div>
+        <div v-else class="absolute inset-0 bg-gradient-to-br from-luxe-carbon via-luxe-obsidian to-black" />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/75" aria-hidden="true" />
+        <div class="absolute inset-0 opacity-[0.08] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2260%22%20height%3D%2260%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.8%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%2260%22%20height%3D%2260%22%20filter%3D%22url(%23n)%22%20opacity%3D%221%22/%3E%3C/svg%3E')]" aria-hidden="true" />
       </div>
-      <div v-else class="absolute inset-0 bg-gradient-to-br from-[#1a1918] via-[#151413] to-[#0f0e0d]" aria-hidden="true" />
-      <div class="absolute left-0 right-0 top-0 h-px bg-white/10" aria-hidden="true" />
-      <div class="relative mx-auto flex min-h-[50vh] max-w-7xl flex-col justify-end px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-32">
-        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-[#f5f2ed]/60">
-          {{ heroEyebrow }}
-        </p>
-        <h1 class="font-editorial mt-3 max-w-4xl text-3xl font-semibold tracking-tight text-[#f5f2ed] sm:text-4xl lg:text-5xl">
-          {{ heroTitle }}
-        </h1>
-        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-[#f5f2ed]/85">
-          {{ heroSubtitle }}
-        </p>
-      </div>
-    </section>
 
-    <!-- Section 2: Our Story -->
-    <section class="relative border-b border-[#1c1917]/10 bg-[#faf8f5] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24" aria-labelledby="our-story-heading">
-      <div class="mx-auto max-w-3xl">
-        <h2 id="our-story-heading" class="font-editorial text-2xl font-semibold tracking-tight text-[#1c1917] sm:text-3xl">
-          {{ storyHeading }}
-        </h2>
-        <div class="mt-2 h-1 w-16 bg-[#c2410c]" aria-hidden="true" />
-        <div
-          class="prose-editorial mt-8 text-lg leading-relaxed text-[#44403c]"
-          v-html="renderIntro(intro)"
-        />
-      </div>
-    </section>
+      <div class="relative">
+        <div class="luxe-container py-18 sm:py-22 lg:py-26">
+          <div class="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
+            <div class="lg:col-span-7">
+              <div class="luxe-surface-strong rounded-5xl p-7 sm:p-10">
+                <p class="luxe-kicker">{{ heroEyebrow }}</p>
+                <h1 class="luxe-title mt-4 text-[clamp(2.1rem,4.2vw,3.6rem)] font-semibold leading-[1.05]">
+                  {{ heroTitle }}
+                </h1>
+                <p class="mt-5 max-w-2xl text-base text-luxe-pearl/80 sm:text-lg">
+                  {{ heroSubtitle }}
+                </p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                  <a :href="route('products')" class="luxe-btn luxe-btn-primary">
+                    Shop now <span class="ml-1">→</span>
+                  </a>
+                  <a :href="route('contact')" class="luxe-btn luxe-btn-ghost">
+                    Talk to us <ArrowUpRight class="h-4 w-4" stroke-width="2" />
+                  </a>
+                </div>
+              </div>
+            </div>
 
-    <!-- Section 2b: Meet the owner -->
-    <section class="relative border-b border-[#1c1917]/10 bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24" aria-labelledby="meet-owner-heading">
-      <div class="mx-auto max-w-4xl">
-        <h2 id="meet-owner-heading" class="font-editorial text-center text-2xl font-semibold tracking-tight text-[#1c1917] sm:text-3xl">
-          {{ meetOwnerHeading }}
-        </h2>
-        <div class="mx-auto mt-4 h-1 w-16 bg-[#c2410c]" aria-hidden="true" />
-        <div class="mt-10 flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:gap-12">
-          <div class="relative h-56 w-56 shrink-0 overflow-hidden border-2 border-[#1c1917]/10 bg-[#f5f2ed] sm:h-72 sm:w-72">
-            <img
-              v-if="ownerImageUrl"
-              :src="ownerImageUrl"
-              :alt="ownerName"
-              class="h-full w-full object-cover object-top"
-              loading="lazy"
-            />
-            <div
-              v-else
-              class="flex h-full w-full items-center justify-center text-4xl font-semibold text-[#c2410c]"
-              aria-hidden="true"
-            >
-              {{ ownerName.charAt(0) }}
+            <div class="lg:col-span-5">
+              <div class="rounded-5xl border border-white/12 bg-black/30 p-6 backdrop-blur-2xl">
+                <p class="luxe-kicker">At a glance</p>
+                <div class="mt-5 grid gap-3">
+                  <div class="flex items-start gap-4 rounded-4xl border border-white/10 bg-white/5 p-5">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                      <MapPin class="h-6 w-6" stroke-width="2" />
+                    </span>
+                    <div class="min-w-0">
+                      <p class="font-display text-base font-semibold text-luxe-pearl">{{ statsShowroomTitle }}</p>
+                      <p class="mt-1 text-sm text-luxe-mist/85">{{ statsShowroomDesc }}</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4 rounded-4xl border border-white/10 bg-white/5 p-5">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                      <Truck class="h-6 w-6" stroke-width="2" />
+                    </span>
+                    <div class="min-w-0">
+                      <p class="font-display text-base font-semibold text-luxe-pearl">{{ statsDeliveryTitle }}</p>
+                      <p class="mt-1 text-sm text-luxe-mist/85">{{ statsDeliveryDesc }}</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4 rounded-4xl border border-white/10 bg-white/5 p-5">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                      <Award class="h-6 w-6" stroke-width="2" />
+                    </span>
+                    <div class="min-w-0">
+                      <p class="font-display text-base font-semibold text-luxe-pearl">{{ statsQualityTitle }}</p>
+                      <p class="mt-1 text-sm text-luxe-mist/85">{{ statsQualityDesc }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="min-w-0 flex-1 text-center sm:text-left">
-            <p class="font-editorial text-xl font-semibold text-[#1c1917] sm:text-2xl">
-              {{ ownerName }}
-            </p>
-            <p class="mt-2 text-[#c2410c] font-medium">
-              {{ ownerTitle }}
-            </p>
-            <p class="mt-4 text-[#44403c] leading-relaxed">
-              {{ ownerBio }}
-            </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Our story -->
+    <section class="border-b border-white/10 bg-luxe-obsidian">
+      <div class="luxe-container py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto max-w-4xl">
+          <p class="luxe-kicker">Our story</p>
+          <h2 id="our-story-heading" class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+            {{ storyHeading }}
+          </h2>
+          <div class="mt-8 luxe-surface rounded-5xl p-7 sm:p-10">
+            <div class="prose-luxe text-base leading-relaxed text-luxe-pearl/85 sm:text-lg" v-html="renderIntro(intro)" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 3: Stats strip -->
-    <section class="relative border-b border-[#1c1917]/10 bg-white px-4 py-10 sm:px-6 sm:py-12 lg:px-8" aria-label="Presence">
-      <div class="mx-auto max-w-5xl">
-        <div class="grid gap-6 sm:grid-cols-3">
-          <div class="flex flex-col items-center text-center">
-            <span class="flex h-14 w-14 items-center justify-center rounded-none bg-[#c2410c] text-white">
-              <MapPin class="h-7 w-7" stroke-width="2" />
-            </span>
-            <p class="mt-4 font-editorial text-lg font-semibold text-[#1c1917]">{{ statsShowroomTitle }}</p>
-            <p class="mt-1 text-sm text-[#44403c]">{{ statsShowroomDesc }}</p>
-          </div>
-          <div class="flex flex-col items-center text-center">
-            <span class="flex h-14 w-14 items-center justify-center rounded-none bg-[#c2410c] text-white">
-              <Truck class="h-7 w-7" stroke-width="2" />
-            </span>
-            <p class="mt-4 font-editorial text-lg font-semibold text-[#1c1917]">{{ statsDeliveryTitle }}</p>
-            <p class="mt-1 text-sm text-[#44403c]">{{ statsDeliveryDesc }}</p>
-          </div>
-          <div class="flex flex-col items-center text-center">
-            <span class="flex h-14 w-14 items-center justify-center rounded-none bg-[#c2410c] text-white">
-              <Award class="h-7 w-7" stroke-width="2" />
-            </span>
-            <p class="mt-4 font-editorial text-lg font-semibold text-[#1c1917]">{{ statsQualityTitle }}</p>
-            <p class="mt-1 text-sm text-[#44403c]">{{ statsQualityDesc }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: What we offer -->
-    <section class="relative border-b border-[#1c1917]/10 bg-[#f5f2ed] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24" aria-labelledby="what-we-offer-heading">
-      <div class="mx-auto max-w-5xl">
-        <h2 id="what-we-offer-heading" class="font-editorial text-center text-2xl font-semibold tracking-tight text-[#1c1917] sm:text-3xl">
-          {{ facilitiesHeading }}
-        </h2>
-        <p class="mx-auto mt-3 max-w-xl text-center text-[#44403c]">
-          {{ facilitiesIntro }}
-        </p>
-        <div class="mt-10 grid gap-6 sm:grid-cols-2">
-          <div
-            v-for="(item, i) in facilitiesList"
-            :key="i"
-            class="group relative flex gap-5 border-2 border-[#1c1917]/10 bg-white p-6 transition hover:border-[#c2410c]/30 hover:shadow-lg sm:p-8"
-          >
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-[#c2410c] text-white transition group-hover:bg-[#a83609]">
-              <MapPin v-if="item.name && item.name.toLowerCase().includes('lusaka')" class="h-6 w-6" stroke-width="2" />
-              <Truck v-else class="h-6 w-6" stroke-width="2" />
-            </span>
-            <div class="min-w-0 flex-1">
-              <h3 v-if="item.name" class="font-editorial text-lg font-semibold text-[#1c1917]">
-                {{ item.name }}
-              </h3>
-              <p class="mt-2 text-[#44403c]">
-                {{ item.desc }}
+    <!-- Section 3: Meet the owner -->
+    <section class="border-b border-white/10 bg-luxe-obsidian">
+      <div class="luxe-container py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto max-w-6xl">
+          <div class="flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end">
+            <div class="min-w-0">
+              <p class="luxe-kicker">Meet the owner</p>
+              <h2 id="meet-owner-heading" class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                {{ meetOwnerHeading }}
+              </h2>
+              <p class="mt-3 max-w-2xl text-sm text-luxe-pearl/70 sm:text-base">
+                The people behind the curation — details that make the experience feel premium.
               </p>
             </div>
           </div>
+
+          <div class="mt-10 grid gap-8 lg:grid-cols-12 lg:gap-12">
+            <div class="lg:col-span-5">
+              <div class="relative overflow-hidden rounded-5xl border border-white/10 bg-black/30">
+                <img
+                  v-if="ownerImageUrl"
+                  :src="ownerImageUrl"
+                  :alt="ownerName"
+                  class="h-[340px] w-full object-cover object-top sm:h-[420px]"
+                  loading="lazy"
+                />
+                <div v-else class="flex h-[340px] w-full items-center justify-center sm:h-[420px]">
+                  <span class="font-display text-5xl font-semibold text-luxe-gold">{{ ownerName.charAt(0) }}</span>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" aria-hidden="true" />
+              </div>
+            </div>
+            <div class="lg:col-span-7">
+              <div class="luxe-surface-strong rounded-5xl p-7 sm:p-10">
+                <p class="font-display text-2xl font-semibold text-luxe-pearl">{{ ownerName }}</p>
+                <p class="mt-2 text-sm font-semibold uppercase tracking-[0.28em] text-luxe-gold/90">
+                  {{ ownerTitle }}
+                </p>
+                <p class="mt-5 text-base leading-relaxed text-luxe-pearl/80">
+                  {{ ownerBio }}
+                </p>
+                <div class="mt-8 grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-4xl border border-white/10 bg-white/5 p-5">
+                    <p class="luxe-kicker">Focus</p>
+                    <p class="mt-2 text-sm text-luxe-pearl/80">Curated watches, perfumes, and serums — gift-ready picks.</p>
+                  </div>
+                  <div class="rounded-4xl border border-white/10 bg-white/5 p-5">
+                    <p class="luxe-kicker">Support</p>
+                    <p class="mt-2 text-sm text-luxe-pearl/80">Concierge help via WhatsApp for fast, confident choices.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: Our Commitment -->
-    <section class="relative border-b border-[#1c1917]/10 bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24" aria-labelledby="commitment-heading">
-      <div class="mx-auto max-w-6xl">
-        <div class="text-center">
-          <p class="text-xs font-semibold uppercase tracking-[0.3em] text-[#c2410c]">
-            Our values
-          </p>
-          <h2 id="commitment-heading" class="font-editorial mt-2 text-2xl font-semibold tracking-tight text-[#1c1917] sm:text-3xl lg:text-4xl">
-            {{ commitmentHeading }}
-          </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-[#44403c]">
-            {{ commitmentSubtitle }}
-          </p>
-          <div class="mx-auto mt-4 h-px w-20 bg-[#c2410c]/60" aria-hidden="true" />
+    <!-- Section 4: Stats strip -->
+    <section class="border-b border-white/10 bg-luxe-obsidian" aria-label="Presence">
+      <div class="luxe-container py-12 sm:py-14">
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="luxe-surface rounded-4xl p-6">
+            <div class="flex items-start gap-4">
+              <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                <MapPin class="h-6 w-6" stroke-width="2" />
+              </span>
+              <div class="min-w-0">
+                <p class="font-display text-base font-semibold text-luxe-pearl">{{ statsShowroomTitle }}</p>
+                <p class="mt-1 text-sm text-luxe-mist/85">{{ statsShowroomDesc }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="luxe-surface rounded-4xl p-6">
+            <div class="flex items-start gap-4">
+              <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                <Truck class="h-6 w-6" stroke-width="2" />
+              </span>
+              <div class="min-w-0">
+                <p class="font-display text-base font-semibold text-luxe-pearl">{{ statsDeliveryTitle }}</p>
+                <p class="mt-1 text-sm text-luxe-mist/85">{{ statsDeliveryDesc }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="luxe-surface rounded-4xl p-6">
+            <div class="flex items-start gap-4">
+              <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                <Award class="h-6 w-6" stroke-width="2" />
+              </span>
+              <div class="min-w-0">
+                <p class="font-display text-base font-semibold text-luxe-pearl">{{ statsQualityTitle }}</p>
+                <p class="mt-1 text-sm text-luxe-mist/85">{{ statsQualityDesc }}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div
-            v-for="(item, i) in commitmentItems"
-            :key="i"
-            class="group flex flex-col border border-[#1c1917]/10 bg-[#faf8f5] p-6 transition hover:border-[#c2410c]/25 hover:shadow-md lg:p-8"
-          >
-            <span class="flex h-12 w-12 items-center justify-center rounded-none bg-[#c2410c] text-white">
-              <component :is="item.icon" class="h-6 w-6" stroke-width="2" />
-            </span>
-            <h3 class="font-editorial mt-5 text-lg font-semibold text-[#1c1917]">
-              {{ item.title }}
-            </h3>
-            <p class="mt-3 flex-1 text-sm leading-relaxed text-[#44403c]">
-              {{ item.body }}
+      </div>
+    </section>
+
+    <!-- Section 5: What we offer -->
+    <section class="border-b border-white/10 bg-luxe-obsidian" aria-labelledby="what-we-offer-heading">
+      <div class="luxe-container py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto max-w-6xl">
+          <div class="text-center">
+            <p class="luxe-kicker">What we offer</p>
+            <h2 id="what-we-offer-heading" class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              {{ facilitiesHeading }}
+            </h2>
+            <p class="mx-auto mt-4 max-w-2xl text-sm text-luxe-pearl/75 sm:text-base">
+              {{ facilitiesIntro }}
             </p>
+          </div>
+
+          <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              v-for="(item, i) in facilitiesList"
+              :key="i"
+              class="group luxe-surface rounded-5xl p-7 transition hover:bg-white/10"
+            >
+              <div class="flex items-start gap-4">
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                  <MapPin v-if="item.name && item.name.toLowerCase().includes('lusaka')" class="h-6 w-6" stroke-width="2" />
+                  <Truck v-else class="h-6 w-6" stroke-width="2" />
+                </span>
+                <div class="min-w-0">
+                  <p v-if="item.name" class="font-display text-base font-semibold text-luxe-pearl">
+                    {{ item.name }}
+                  </p>
+                  <p class="mt-2 text-sm leading-relaxed text-luxe-pearl/75">
+                    {{ item.desc }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Our commitment -->
+    <section class="border-b border-white/10 bg-luxe-obsidian" aria-labelledby="commitment-heading">
+      <div class="luxe-container py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto max-w-6xl">
+          <div class="text-center">
+            <p class="luxe-kicker">Our values</p>
+            <h2 id="commitment-heading" class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+              {{ commitmentHeading }}
+            </h2>
+            <p class="mx-auto mt-4 max-w-2xl text-sm text-luxe-pearl/75 sm:text-base">
+              {{ commitmentSubtitle }}
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div
+              v-for="(item, i) in commitmentItems"
+              :key="i"
+              class="group luxe-surface rounded-5xl p-7 transition hover:bg-white/10"
+            >
+              <span class="flex h-12 w-12 items-center justify-center rounded-3xl border border-white/10 bg-black/30 text-luxe-gold">
+                <component :is="item.icon" class="h-6 w-6" stroke-width="2" />
+              </span>
+              <h3 class="font-display mt-5 text-base font-semibold text-luxe-pearl">
+                {{ item.title }}
+              </h3>
+              <p class="mt-3 text-sm leading-relaxed text-luxe-pearl/75">
+                {{ item.body }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -278,10 +366,7 @@ const pageSeoProps = usePageSeo(null, {
 </template>
 
 <style scoped>
-.prose-editorial :deep(strong) {
-  @apply font-semibold text-[#1c1917];
-}
 .about-hero {
-  min-height: clamp(320px, 50vh, 420px);
+  min-height: clamp(520px, 80vh, 820px);
 }
 </style>
