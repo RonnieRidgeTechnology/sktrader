@@ -113,97 +113,103 @@ const pageSeoProps = usePageSeo(null, {
       </div>
     </section>
 
-    <!-- Step 3: Custom packaging -->
-    <section class="relative border-b border-editorial-ink/10 bg-editorial-cream px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-      <div class="mx-auto max-w-7xl">
-        <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
-          <div class="order-2 lg:order-1 lg:col-span-5">
-            <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-editorial-slate/70">
-              <VectorStepPackaging />
+    <!-- Step 3 -->
+    <section class="bg-luxe-obsidian px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+      <div class="luxe-container">
+        <div class="luxe-surface rounded-3xl p-6 sm:p-8">
+          <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
+            <div class="order-2 lg:order-1 lg:col-span-5">
+              <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-white/15">
+                <VectorStepPackaging />
+              </div>
             </div>
-          </div>
-          <div class="order-1 lg:order-2 lg:col-span-7">
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-editorial-coral">Step 3</span>
-            <h2 class="mt-2 font-editorial text-2xl font-bold tracking-tight text-editorial-ink sm:text-3xl">
-              Custom packaging
-            </h2>
-            <p class="mt-4 text-editorial-slate leading-relaxed">
-              Packaging is part of the brand experience. We offer branded boxes, poly bags, and other packaging options so your products look professional when they reach your customers. You can keep it simple or go for a more premium unboxing feel — we work with you on materials and design.
-            </p>
-            <ul class="mt-5 space-y-2 text-sm text-editorial-slate">
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                <span>Branded boxes and mailers</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                <span>Poly bags and protective packaging with your logo</span>
-              </li>
-            </ul>
+            <div class="order-1 lg:order-2 lg:col-span-7">
+              <p class="luxe-kicker">Step 3</p>
+              <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                Make it gift-ready
+              </h2>
+              <p class="mt-4 text-luxe-pearl/80 leading-relaxed">
+                Presentation matters. We’ll help you choose premium picks that feel elevated at first glance — perfect for gifting, celebrations, and special moments.
+              </p>
+              <ul class="mt-5 grid gap-2 text-sm text-luxe-pearl/80 sm:grid-cols-2">
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>Premium selection and presentation</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>Bundles that feel intentional</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Step 4: Printing & embroidery -->
-    <section class="relative border-b border-editorial-ink/10 bg-editorial-paper px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-      <div class="mx-auto max-w-7xl">
-        <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
-          <div class="lg:col-span-5">
-            <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-editorial-slate/70">
-              <VectorStepPrint />
+    <!-- Step 4 -->
+    <section class="bg-luxe-obsidian px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+      <div class="luxe-container">
+        <div class="luxe-surface rounded-3xl p-6 sm:p-8">
+          <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
+            <div class="lg:col-span-5">
+              <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-white/15">
+                <VectorStepPrint />
+              </div>
             </div>
-          </div>
-          <div class="lg:col-span-7">
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-editorial-coral">Step 4</span>
-            <h2 class="mt-2 font-editorial text-2xl font-bold tracking-tight text-editorial-ink sm:text-3xl">
-              Printing &amp; embroidery
-            </h2>
-            <p class="mt-4 text-editorial-slate leading-relaxed">
-              Your logo and graphics go onto the product itself through screen printing, DTF (direct-to-film), or embroidery. We help you choose the right method for your design and fabric, and we keep quality consistent so every piece looks the same. Low minimums mean you can start small and scale as your brand grows.
-            </p>
-            <ul class="mt-5 space-y-2 text-sm text-editorial-slate">
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                <span>Screen print, DTF, and embroidery options</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                <span>Low MOQ so startups and new brands can order with confidence</span>
-              </li>
-            </ul>
+            <div class="lg:col-span-7">
+              <p class="luxe-kicker">Step 4</p>
+              <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                Confirm details fast
+              </h2>
+              <p class="mt-4 text-luxe-pearl/80 leading-relaxed">
+                We’ll confirm what matters: availability, pricing, and the exact items in your set. If you’re gifting, we’ll help you pick the best match for the occasion.
+              </p>
+              <ul class="mt-5 grid gap-2 text-sm text-luxe-pearl/80 sm:grid-cols-2">
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>Clear recommendations</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>Quick WhatsApp confirmation</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Step 5: Quality & delivery -->
-    <section class="relative border-b border-editorial-ink/10 bg-editorial-cream px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-      <div class="mx-auto max-w-7xl">
-        <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
-          <div class="order-2 lg:order-1 lg:col-span-5">
-            <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-editorial-slate/70">
-              <VectorStepQuality />
+    <!-- Step 5 -->
+    <section class="bg-luxe-obsidian px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+      <div class="luxe-container">
+        <div class="luxe-surface rounded-3xl p-6 sm:p-8">
+          <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
+            <div class="order-2 lg:order-1 lg:col-span-5">
+              <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-white/15">
+                <VectorStepQuality />
+              </div>
             </div>
-          </div>
-          <div class="order-1 lg:order-2 lg:col-span-7">
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-editorial-coral">Step 5</span>
-            <h2 class="mt-2 font-editorial text-2xl font-bold tracking-tight text-editorial-ink sm:text-3xl">
-              Quality check &amp; worldwide delivery
-            </h2>
-            <p class="mt-4 text-editorial-slate leading-relaxed">
-              Before shipment, we run quality checks so your branded products meet your standards. Once approved, we ship worldwide — to the USA, UK, Europe, Canada, Australia, GCC, and more. You get a single partner for manufacturing, branding, and logistics.
-            </p>
-            <ul class="mt-5 space-y-2 text-sm text-editorial-slate">
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                <span>In-process and final QC before dispatch</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                <span>International shipping to your door</span>
-              </li>
-            </ul>
+            <div class="order-1 lg:order-2 lg:col-span-7">
+              <p class="luxe-kicker">Step 5</p>
+              <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                Pack & deliver
+              </h2>
+              <p class="mt-4 text-luxe-pearl/80 leading-relaxed">
+                Once confirmed, we pack carefully and dispatch. Need an update? Message us anytime — we’ll keep it simple and fast.
+              </p>
+              <ul class="mt-5 grid gap-2 text-sm text-luxe-pearl/80 sm:grid-cols-2">
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>Careful packing</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                  <span>Support for delivery updates</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
