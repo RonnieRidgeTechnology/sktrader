@@ -70,7 +70,7 @@ const steps = computed(() => {
 });
 const pageSeoProps = usePageSeo(null, {
   title: 'Our Quality | SK Traders',
-  description: 'We choose durable materials and solid construction. Quality sofas and furniture for your home in Zambia.',
+  description: 'Quality-first selection and careful handling — curated watches, perfumes, and serums with premium presentation.',
 });
 </script>
 
@@ -78,20 +78,21 @@ const pageSeoProps = usePageSeo(null, {
   <AppLayout>
     <SeoHead v-bind="pageSeoProps" />
 
-    <section class="relative overflow-hidden border-b border-[#1c1917] bg-[#0f0e0d] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-      <div class="relative mx-auto max-w-7xl">
+    <section class="relative overflow-hidden border-b border-white/10 bg-luxe-obsidian">
+      <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-70" aria-hidden="true" />
+      <div class="luxe-container relative py-16 sm:py-20">
         <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div class="lg:col-span-7">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">Our commitment</p>
-            <h1 class="mt-3 font-editorial text-3xl font-bold tracking-tight text-[#f5f2ed] sm:text-4xl lg:text-5xl">
-              {{ pc.hero_title || 'Our Quality' }}
+            <p class="luxe-kicker">{{ pc.hero_eyebrow || 'Quality-first' }}</p>
+            <h1 class="luxe-title mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+              {{ pc.hero_title || 'Our quality' }}
             </h1>
-            <p class="mt-4 max-w-2xl text-lg leading-relaxed text-[#f5f2ed]/80">
-              {{ pc.hero_subtitle || 'We choose durable materials and solid construction so your sofas and furniture last for years. Quality you can see and feel.' }}
+            <p class="mt-4 max-w-2xl text-lg leading-relaxed text-luxe-pearl/80">
+              {{ pc.hero_subtitle || 'From selection to packing, we focus on quality and consistency so every order feels premium.' }}
             </p>
           </div>
           <div class="flex justify-center lg:col-span-5">
-            <div class="w-full max-w-[260px] text-[#f5f2ed]/40 lg:max-w-[300px]">
+            <div class="w-full max-w-[260px] text-white/15 lg:max-w-[300px]">
               <VectorQuality />
             </div>
           </div>
@@ -100,31 +101,30 @@ const pageSeoProps = usePageSeo(null, {
     </section>
 
     <template v-for="(step, index) in steps" :key="step.key">
-      <section
-        class="relative border-b border-editorial-ink/10 px-4 py-14 sm:px-6 lg:px-8 lg:py-20"
-        :class="index % 2 === 0 ? 'bg-editorial-cream' : 'bg-editorial-paper'"
-      >
-        <div class="mx-auto max-w-7xl">
-          <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
-            <div class="order-2 lg:col-span-5" :class="index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'">
-              <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-editorial-slate/50">
-                <component :is="step.vector" />
+      <section class="bg-luxe-obsidian px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+        <div class="luxe-container">
+          <div class="luxe-surface rounded-3xl p-6 sm:p-8">
+            <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
+              <div class="order-2 lg:col-span-5" :class="index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'">
+                <div class="aspect-[4/3] w-full max-w-sm mx-auto lg:max-w-none text-white/15">
+                  <component :is="step.vector" />
+                </div>
               </div>
-            </div>
-            <div class="order-1 lg:col-span-7" :class="index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'">
-              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-editorial-coral">{{ step.label }}</span>
-              <h2 class="mt-2 font-editorial text-2xl font-bold tracking-tight text-editorial-ink sm:text-3xl">
-                {{ step.title }}
-              </h2>
-              <p class="mt-4 text-editorial-slate leading-relaxed">
-                {{ step.body }}
-              </p>
-              <ul class="mt-5 space-y-2 text-sm text-editorial-slate">
-                <li v-for="(bullet, bi) in step.bullets" :key="bi" class="flex items-start gap-2">
-                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-editorial-ink" aria-hidden="true" />
-                  <span>{{ bullet }}</span>
-                </li>
-              </ul>
+              <div class="order-1 lg:col-span-7" :class="index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'">
+                <p class="luxe-kicker">{{ step.label }}</p>
+                <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                  {{ step.title }}
+                </h2>
+                <p class="mt-4 text-luxe-pearl/80 leading-relaxed">
+                  {{ step.body }}
+                </p>
+                <ul v-if="step.bullets?.length" class="mt-5 grid gap-2 text-sm text-luxe-pearl/80 sm:grid-cols-2">
+                  <li v-for="(bullet, bi) in step.bullets" :key="bi" class="flex items-start gap-2">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                    <span>{{ bullet }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

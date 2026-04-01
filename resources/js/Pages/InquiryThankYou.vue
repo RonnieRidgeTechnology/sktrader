@@ -13,17 +13,24 @@ const message = computed(() => pc.value.message || 'We have received your messag
 <template>
   <AppLayout>
     <SeoHead title="Thank You | SK Traders" :description="message.slice(0, 160)" :noindex="true" />
-    <div class="mx-auto max-w-2xl bg-editorial-cream px-4 py-24 text-center sm:px-6 lg:px-8">
-      <h1 class="font-editorial text-3xl font-bold tracking-tight text-editorial-ink sm:text-4xl">{{ heading }}</h1>
-      <p class="mt-4 text-lg text-editorial-slate">
-        {{ message }}
-      </p>
-      <Link
-        :href="route('home')"
-        class="mt-8 inline-flex border-2 border-editorial-coral bg-editorial-coral px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[#a83609] hover:border-[#a83609]"
-      >
-        Back to Home
-      </Link>
-    </div>
+    <section class="bg-luxe-obsidian">
+      <div class="luxe-container py-20 sm:py-24">
+        <div class="luxe-surface rounded-4xl p-8 text-center sm:p-10">
+          <p class="luxe-kicker">Message received</p>
+          <h1 class="luxe-title mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">{{ heading }}</h1>
+          <p class="mt-4 text-base text-luxe-pearl/80 sm:text-lg">
+            {{ message }}
+          </p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link :href="route('home')" class="luxe-btn luxe-btn-primary">
+              Back to home
+            </Link>
+            <Link :href="route('products')" class="luxe-btn luxe-btn-ghost">
+              Continue shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
   </AppLayout>
 </template>

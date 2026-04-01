@@ -11,7 +11,7 @@ const pc = props.pageContent || {};
 
 const pageSeoProps = usePageSeo(null, {
   title: 'How It Works | SK Traders',
-  description: 'From browsing to delivery: visit our showroom or order online. We deliver sofas and furniture across Zambia.',
+  description: 'From discovery to delivery: browse, checkout, and receive curated watches, perfumes, and serums with care.',
 });
 </script>
 
@@ -22,9 +22,9 @@ const pageSeoProps = usePageSeo(null, {
       variant="muted"
       background-pattern="steps"
       :title="pc.hero_title || 'How It Works'"
-      :subtitle="pc.hero_subtitle || 'From browsing to delivery — simple steps to get the furniture you want.'"
+      :subtitle="pc.hero_subtitle || 'From discovery to delivery — simple steps to get what you want, fast.'"
     >
-      <HowItWorksSteps theme="editorial" />
+      <HowItWorksSteps theme="luxe" />
     </PageSection>
     <CtaBanner />
   </AppLayout>

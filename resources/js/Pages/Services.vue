@@ -16,12 +16,11 @@ import VectorWorldwideShipping from '@/Components/Vectors/VectorWorldwideShippin
 const props = defineProps({ title: String, pageContent: Object });
 const pc = props.pageContent || {};
 const defaultSteps = [
-  { key: 'sofas', vector: VectorServiceMoq, label: 'Collection 1', title: 'Sofas & seating', body: 'A wide range of sofas — 2-seater, 3-seater, L-shaped and corner sofas in fabric and leather. Find the right size and style for your living room.', bullets: ['Fabric and leather options', 'Multiple sizes and styles'] },
-  { key: 'living', vector: VectorStepPrint, label: 'Collection 2', title: 'Living room', body: 'Armchairs, coffee tables, TV units and bookshelves to complete your lounge. Quality pieces that last.', bullets: ['Armchairs and occasional chairs', 'Tables and storage'] },
-  { key: 'bedroom', vector: VectorStepTags, label: 'Collection 3', title: 'Bedroom', body: 'Beds, wardrobes, bedside and dressing tables. Create a comfortable and organised bedroom.', bullets: ['Beds and headboards', 'Wardrobes and storage'] },
-  { key: 'dining', vector: VectorStepPackaging, label: 'Collection 4', title: 'Dining', body: 'Dining tables, chairs and sets for family meals and entertaining. Sturdy and stylish.', bullets: ['Tables and chairs', 'Dining sets'] },
-  { key: 'quality', vector: VectorStepDesign, label: 'Collection 5', title: 'Quality materials', body: 'We use durable fabrics and solid frames so your furniture stands up to daily use and keeps its look for years.', bullets: ['Solid construction', 'Quality fabrics'] },
-  { key: 'delivery', vector: VectorServiceSampling, label: 'Collection 6', title: 'Showroom & delivery', body: 'Visit our showroom in Lusaka to try before you buy, or order from home. We deliver across Zambia.', bullets: ['Lusaka showroom', 'Nationwide delivery'] },
+  { key: 'watches', vector: VectorServiceMoq, label: 'Collection 1', title: 'Watches', body: 'Timepieces with refined materials, clean dials, and confident silhouettes — curated for daily wear and special occasions.', bullets: ['New drops & limited pieces', 'Curated finishes and styles'] },
+  { key: 'perfumes', vector: VectorStepPrint, label: 'Collection 2', title: 'Perfumes', body: 'Signature scents with lasting presence — from fresh and bright to deep, warm, and smoky.', bullets: ['Everyday and evening profiles', 'Gift-ready selections'] },
+  { key: 'serums', vector: VectorStepTags, label: 'Collection 3', title: 'Skin care serums', body: 'Targeted serums designed to support your routine — hydration, glow, and clarity-focused picks.', bullets: ['Routine-friendly options', 'Curated for results-focused care'] },
+  { key: 'quality', vector: VectorStepDesign, label: 'Collection 4', title: 'Quality-first curation', body: 'We choose products with quality, presentation, and reliability in mind — so you can shop with confidence.', bullets: ['Selection-first approach', 'Consistent standards'] },
+  { key: 'delivery', vector: VectorWorldwideShipping, label: 'Collection 5', title: 'Delivery & support', body: 'Simple ordering, careful packing, and support when you need it — including WhatsApp concierge help.', bullets: ['Careful packing', 'Fast support via WhatsApp'] },
 ];
 const steps = computed(() => {
   const fromContent = pc.steps || [];
@@ -39,8 +38,8 @@ const steps = computed(() => {
 });
 
 const pageSeoProps = usePageSeo(null, {
-  title: 'Our Collections | SK Traders',
-  description: 'Browse our furniture collections: sofas, living room, bedroom and office furniture. Quality pieces for every home in Zambia.',
+  title: 'Collections | SK Traders',
+  description: 'Explore SK Traders collections: watches, perfumes, and skin care serums — curated luxury essentials with premium presentation.',
 });
 </script>
 
@@ -48,44 +47,49 @@ const pageSeoProps = usePageSeo(null, {
   <AppLayout>
     <SeoHead v-bind="pageSeoProps" />
 
-    <section class="relative overflow-hidden border-b border-[#1c1917] bg-[#0f0e0d] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-      <div class="relative mx-auto max-w-7xl">
+    <section class="relative overflow-hidden border-b border-white/10 bg-luxe-obsidian">
+      <div class="luxe-container py-16 sm:py-20">
         <div class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div class="lg:col-span-7">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f2ed]/60">What we offer</p>
-            <h1 class="mt-3 font-editorial text-3xl font-bold tracking-tight text-[#f5f2ed] sm:text-4xl lg:text-5xl">
-              {{ pc.hero_title || 'Our Collections' }}
+            <p class="luxe-kicker">{{ pc.hero_eyebrow || 'Explore' }}</p>
+            <h1 class="luxe-title mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+              {{ pc.hero_title || 'Collections' }}
             </h1>
-            <p class="mt-4 max-w-2xl text-lg leading-relaxed text-[#f5f2ed]/80">
-              {{ pc.hero_subtitle || 'Sofas, living room furniture and home pieces to suit every style. Visit our showroom in Lusaka or browse online — we deliver across Zambia.' }}
+            <p class="mt-4 max-w-2xl text-lg leading-relaxed text-luxe-pearl/80">
+              {{ pc.hero_subtitle || 'Watches, perfumes, and skin care serums — curated luxury essentials, delivered with care.' }}
             </p>
           </div>
           <div class="flex justify-center lg:col-span-5">
-            <VectorServices class="h-64 w-64 text-[#f5f2ed]/30 sm:h-80 sm:w-80" />
+            <VectorServices class="h-64 w-64 text-white/15 sm:h-80 sm:w-80" />
           </div>
         </div>
       </div>
+      <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-70" aria-hidden="true" />
     </section>
 
-    <section class="min-w-0 bg-editorial-cream px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-      <div class="mx-auto max-w-7xl">
-        <div class="space-y-16 sm:space-y-20">
+    <section class="bg-luxe-obsidian">
+      <div class="luxe-container py-12 sm:py-16 lg:py-24">
+        <div class="space-y-6 sm:space-y-8">
           <div
             v-for="(step, index) in steps"
             :key="step.key"
-            class="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16"
-            :class="index % 2 === 1 ? 'lg:flex-row-reverse' : ''"
+            class="luxe-surface rounded-3xl p-6 sm:p-8"
           >
-            <div class="min-w-0 lg:col-span-7" :class="index % 2 === 1 ? 'lg:order-2' : ''">
-              <span class="text-xs font-semibold uppercase tracking-wider text-editorial-coral">{{ step.label }}</span>
-              <h2 class="mt-2 font-editorial text-2xl font-bold tracking-tight text-editorial-ink sm:text-3xl">{{ step.title }}</h2>
-              <p class="mt-4 text-base leading-relaxed text-editorial-slate">{{ step.body }}</p>
-              <ul v-if="step.bullets && step.bullets.length" class="mt-4 list-inside list-disc space-y-2 text-sm text-editorial-slate">
-                <li v-for="(b, i) in step.bullets" :key="i">{{ b }}</li>
-              </ul>
-            </div>
-            <div class="flex justify-center lg:col-span-5" :class="index % 2 === 1 ? 'lg:order-1' : ''">
-              <component :is="step.vector" class="h-56 w-56 text-editorial-slate/40 sm:h-64 sm:w-64" />
+            <div class="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
+              <div class="lg:col-span-7" :class="index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'">
+                <p class="luxe-kicker">{{ step.label }}</p>
+                <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{{ step.title }}</h2>
+                <p class="mt-4 text-base leading-relaxed text-luxe-pearl/80">{{ step.body }}</p>
+                <ul v-if="step.bullets?.length" class="mt-5 grid gap-2 text-sm text-luxe-pearl/80 sm:grid-cols-2">
+                  <li v-for="(b, i) in step.bullets" :key="i" class="flex items-start gap-2">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-luxe-gold" aria-hidden="true" />
+                    <span>{{ b }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="flex justify-center lg:col-span-5" :class="index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'">
+                <component :is="step.vector" class="h-56 w-56 text-white/15 sm:h-64 sm:w-64" />
+              </div>
             </div>
           </div>
         </div>
