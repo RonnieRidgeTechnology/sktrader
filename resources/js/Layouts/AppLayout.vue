@@ -141,22 +141,22 @@ function isCategoryActive(slug) {
 </script>
 
 <template>
-  <div class="min-h-screen min-w-0 bg-luxe-obsidian text-luxe-pearl font-sans antialiased selection:bg-luxe-gold/30">
+  <div class="flex min-h-[100dvh] min-h-screen w-full min-w-0 flex-col overflow-x-hidden bg-luxe-obsidian text-luxe-pearl font-sans antialiased selection:bg-luxe-gold/30">
     <!-- Sticky Header - Luxe -->
     <header
-      class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-2xl"
+      class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 pt-[env(safe-area-inset-top,0px)] backdrop-blur-2xl"
     >
-      <div class="luxe-container flex h-16 items-center justify-between gap-3">
+      <div class="luxe-container flex h-14 items-center justify-between gap-2 sm:h-16 sm:gap-3">
         <!-- Logo -->
         <Link :href="route('home')" class="group flex min-w-0 shrink items-center gap-3" aria-label="SK Traders – Home">
           <img
             :src="zuaaz.header_logo_url || '/images/logo.png'"
             alt="SK Traders"
-            class="h-9 w-auto object-contain opacity-95 transition group-hover:opacity-100"
+            class="h-8 w-auto max-w-[7.5rem] object-contain opacity-95 transition group-hover:opacity-100 xs:max-w-none xs:h-9"
             width="130"
             height="40"
           />
-          <div class="hidden min-w-0 sm:block">
+          <div class="hidden min-w-0 xs:block">
             <p class="luxe-kicker leading-none">SK Traders</p>
             <p class="mt-1 truncate text-xs text-luxe-mist/80">Watches · Perfumes · Serums</p>
           </div>
@@ -241,10 +241,10 @@ function isCategoryActive(slug) {
       <!-- Mobile menu: scrollable, full width, touch-friendly -->
       <div
         v-show="navOpen"
-        class="max-h-[calc(100vh-4rem)] overflow-y-auto overscroll-contain border-t border-white/10 bg-black/50 backdrop-blur-2xl lg:hidden"
+        class="max-h-[min(70dvh,calc(100dvh-3.5rem))] overflow-y-auto overscroll-contain border-t border-white/10 bg-black/50 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-2xl lg:hidden"
         aria-hidden="!navOpen"
       >
-        <nav class="flex flex-col gap-2 px-4 py-4">
+        <nav class="flex flex-col gap-2 px-3 py-3 sm:px-4 sm:py-4">
           <template v-for="(link, index) in navLinks" :key="link.categorySlug ? link.categorySlug : link.route + '-' + index">
             <Link
               v-if="link.categorySlug"
@@ -303,8 +303,8 @@ function isCategoryActive(slug) {
         leave-to-class="opacity-0"
       >
         <div v-if="searchOpen" class="fixed inset-0 z-[120] bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Search" @click.self="closeSearch">
-          <div class="luxe-container pt-24">
-            <div class="luxe-surface-strong rounded-3xl p-6 sm:p-8">
+          <div class="luxe-container pt-[max(5rem,env(safe-area-inset-top,0px)+3rem)] pb-[env(safe-area-inset-bottom,0px)]">
+            <div class="luxe-surface-strong rounded-2xl p-4 sm:rounded-3xl sm:p-8">
               <div class="flex items-center justify-between gap-3">
                 <p class="luxe-kicker">Search</p>
                 <button type="button" class="luxe-btn-icon" aria-label="Close search" @click="closeSearch">✕</button>
@@ -321,7 +321,7 @@ function isCategoryActive(slug) {
       </Transition>
     </Teleport>
 
-    <main class="min-w-0 flex-1 bg-luxe-obsidian text-luxe-pearl">
+    <main class="min-w-0 flex-1 bg-luxe-obsidian pb-[max(5.5rem,env(safe-area-inset-bottom,0px)+4rem)] text-luxe-pearl lg:pb-0">
       <slot />
     </main>
 
@@ -338,7 +338,7 @@ function isCategoryActive(slug) {
     <!-- Footer – Luxe -->
     <footer class="relative overflow-hidden border-t border-white/10 bg-black/60">
       <div class="absolute inset-0 bg-luxe-radial opacity-60" aria-hidden="true" />
-      <div class="relative luxe-container py-14 sm:py-16">
+      <div class="relative luxe-container py-10 pb-[max(2.5rem,env(safe-area-inset-bottom,0px)+1.5rem)] sm:py-16 sm:pb-16">
         <div class="grid gap-10 sm:grid-cols-2 sm:gap-12 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-14">
           <!-- Brand + Social -->
           <div class="min-w-0 lg:col-span-4">

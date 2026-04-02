@@ -21,7 +21,7 @@ const list = computed(() => (Array.isArray(props.categories) ? props.categories 
           <h2 class="luxe-title mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{{ title }}</h2>
           <p class="mt-3 max-w-2xl text-sm text-luxe-pearl/75 sm:text-base">{{ subtitle }}</p>
         </div>
-        <Link :href="route('products')" class="luxe-btn luxe-btn-ghost">
+        <Link :href="route('products')" class="luxe-btn luxe-btn-ghost w-full shrink-0 justify-center sm:w-auto">
           View all
           <ArrowUpRight class="h-4 w-4" stroke-width="2" />
         </Link>

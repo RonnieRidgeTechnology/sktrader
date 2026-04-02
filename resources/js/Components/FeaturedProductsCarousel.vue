@@ -36,8 +36,9 @@ const canPrev = computed(() => currentIndex.value > 0);
 const canNext = computed(() => currentIndex.value < maxIndex.value);
 
 function getItemsPerPage(width) {
-  if (width < 640) return 1;
+  if (width < 480) return 1;
   if (width < 768) return 2;
+  if (width < 1280) return 3;
   return 4;
 }
 
@@ -164,28 +165,28 @@ onUnmounted(() => {
     aria-labelledby="featured-products-heading"
   >
     <div v-if="isLuxe" class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-60" aria-hidden="true" />
-    <div class="relative mx-auto max-w-7xl px-4 pt-16 pb-6 sm:px-6 sm:pt-20 sm:pb-8 lg:px-8 lg:pt-24 lg:pb-8">
+    <div class="relative mx-auto max-w-7xl px-3 pt-12 pb-5 sm:px-6 sm:pt-20 sm:pb-8 lg:px-8 lg:pt-24 lg:pb-8">
       <div class="mx-auto max-w-2xl text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.25em]" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-mist' : 'text-amber-600 dark:text-amber-400'">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm sm:tracking-[0.25em]" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-mist' : 'text-amber-600 dark:text-amber-400'">
           {{ eyebrow }}
         </p>
-        <h2 id="featured-products-heading" class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl" :class="isEditorial ? 'font-editorial text-editorial-ink' : isLuxe ? 'font-display text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
+        <h2 id="featured-products-heading" class="mt-2 text-2xl font-bold tracking-tight sm:mt-3 sm:text-3xl md:text-4xl" :class="isEditorial ? 'font-editorial text-editorial-ink' : isLuxe ? 'font-display text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
           {{ title }}
         </h2>
-        <p class="mt-4 text-lg" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-pearl/75' : 'text-zinc-600 dark:text-zinc-400'">
+        <p class="mt-3 text-sm sm:mt-4 sm:text-base md:text-lg" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-pearl/75' : 'text-zinc-600 dark:text-zinc-400'">
           {{ subtitle }}
         </p>
       </div>
     </div>
 
-    <!-- Carousel: full width on mobile, padded on sm+ -->
-    <div v-if="list.length" class="relative w-full px-0 pt-2 sm:px-[50px] sm:pt-4">
-      <div class="relative flex items-stretch gap-2 sm:gap-4">
-        <!-- Prev (hidden on mobile) -->
+    <!-- Carousel: arrows on all breakpoints; tighter gutters on phones -->
+    <div v-if="list.length" class="relative w-full px-2 pt-2 sm:px-[50px] sm:pt-4">
+      <div class="relative flex items-stretch gap-1.5 sm:gap-4">
+        <!-- Prev -->
         <button
             type="button"
             :disabled="!canPrev"
-            class="carousel-arrow order-1 hidden h-10 w-10 shrink-0 items-center justify-center border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:flex sm:h-12 sm:w-12"
+            class="carousel-arrow order-1 flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:h-12 sm:w-12"
             :class="isEditorial
               ? 'rounded-sm border-editorial-ink/30 bg-editorial-cream text-editorial-ink hover:border-editorial-coral hover:bg-editorial-coral/10 focus:ring-editorial-coral focus:ring-offset-editorial-paper'
               : isLuxe
@@ -308,7 +309,7 @@ onUnmounted(() => {
           <button
             type="button"
             :disabled="!canNext"
-            class="carousel-arrow order-3 hidden h-10 w-10 shrink-0 items-center justify-center border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:flex sm:h-12 sm:w-12"
+            class="carousel-arrow order-3 flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:h-12 sm:w-12"
             :class="isEditorial
               ? 'rounded-sm border-editorial-ink/30 bg-editorial-cream text-editorial-ink hover:border-editorial-coral hover:bg-editorial-coral/10 focus:ring-editorial-coral focus:ring-offset-editorial-paper'
               : isLuxe

@@ -11,8 +11,45 @@ import { Package, ChevronRight, FolderTree, X, ShoppingCart } from 'lucide-vue-n
 const props = defineProps({
   title: { type: String, default: 'Products' },
   categories: { type: Array, default: () => [] },
-  products: { type: Array, default: () => [] },
+  /** Paginator from Laravel (`data`, `links`, `meta`) or legacy plain array */
+  products: { type: [Array, Object], default: () => ({ data: [], links: [], meta: {} }) },
   filterCategory: { type: String, default: null },
+});
+
+const productList = computed(() => {
+  const p = props.products;
+  if (Array.isArray(p)) {
+    return p;
+  }
+  return p?.data ?? [];
+});
+
+const productsMeta = computed(() => {
+  const p = props.products;
+  if (Array.isArray(p) || !p || typeof p !== 'object' || p.last_page == null) {
+    return null;
+  }
+  return {
+    current_page: p.current_page,
+    last_page: p.last_page,
+    from: p.from,
+    to: p.to,
+    total: p.total,
+    per_page: p.per_page,
+  };
+});
+
+const paginationLinks = computed(() => {
+  const p = props.products;
+  if (Array.isArray(p) || !Array.isArray(p?.links)) {
+    return [];
+  }
+  return p.links;
+});
+
+const showPagination = computed(() => {
+  const m = productsMeta.value;
+  return m && m.last_page > 1;
 });
 
 // Build tree: parents (no parent_id) with their children
@@ -143,10 +180,10 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
   <AppLayout>
     <SeoHead v-bind="pageSeoProps" />
 
-    <section class="min-h-screen min-w-0 bg-luxe-obsidian">
+    <section class="min-w-0 bg-luxe-obsidian">
       <!-- Luxe header strip -->
       <div class="border-b border-white/10 bg-black/40">
-        <div class="luxe-container py-10">
+        <div class="luxe-container py-8 sm:py-10">
           <nav class="flex flex-wrap items-center gap-2 text-sm text-luxe-mist" aria-label="Breadcrumb">
             <Link :href="route('home')" class="transition hover:text-luxe-gold">Home</Link>
             <ChevronRight class="h-4 w-4 shrink-0 opacity-60" stroke-width="2" />
@@ -157,7 +194,7 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
             </template>
           </nav>
           <p class="luxe-kicker mt-4">Collection</p>
-          <h1 class="luxe-title mt-3 text-3xl sm:text-4xl lg:text-5xl">
+          <h1 class="luxe-title mt-3 break-words text-2xl sm:text-4xl lg:text-5xl">
             {{ currentCategoryLabel }}
           </h1>
           <p class="mt-4 max-w-2xl text-base text-luxe-pearl/80 sm:text-lg">
@@ -287,8 +324,19 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
           <!-- Product count + decorative line -->
           <div class="mb-8 flex min-w-0 flex-wrap items-center gap-3">
             <span class="text-sm text-luxe-mist">
-              Showing <strong class="font-semibold text-luxe-pearl">{{ products.length }}</strong>
-              {{ products.length === 1 ? 'piece' : 'pieces' }}
+              <template v-if="productsMeta">
+                Showing
+                <strong class="font-semibold text-luxe-pearl">{{ productsMeta.from ?? 0 }}</strong>
+                –
+                <strong class="font-semibold text-luxe-pearl">{{ productsMeta.to ?? 0 }}</strong>
+                of
+                <strong class="font-semibold text-luxe-pearl">{{ productsMeta.total ?? 0 }}</strong>
+                {{ (productsMeta.total ?? 0) === 1 ? 'piece' : 'pieces' }}
+              </template>
+              <template v-else>
+                Showing <strong class="font-semibold text-luxe-pearl">{{ productList.length }}</strong>
+                {{ productList.length === 1 ? 'piece' : 'pieces' }}
+              </template>
             </span>
             <span class="h-px flex-1 min-w-[60px] max-w-[160px] bg-gradient-to-r from-luxe-gold/50 to-transparent" aria-hidden="true" />
           </div>
@@ -434,7 +482,7 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
 
           <div class="product-grid grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
             <div
-              v-for="(product, index) in products"
+              v-for="(product, index) in productList"
               :key="product.id"
               class="product-card product-card-reveal group relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:bg-white/10"
               :style="{ animationDelay: `${Math.min(index * 60, 420)}ms` }"
@@ -511,9 +559,35 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
             </div>
           </div>
 
+          <nav
+            v-if="showPagination"
+            class="mt-12 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2"
+            aria-label="Product pages"
+          >
+            <template v-for="(link, i) in paginationLinks" :key="i">
+              <Link
+                v-if="link.url"
+                :href="link.url"
+                class="min-h-9 min-w-9 rounded-2xl border px-3 py-2 text-center text-xs font-semibold transition sm:text-sm"
+                :class="link.active
+                  ? 'border-luxe-gold/50 bg-luxe-gold text-black'
+                  : 'border-white/10 bg-white/5 text-luxe-mist hover:border-white/20 hover:bg-white/10 hover:text-luxe-pearl'"
+                :preserve-scroll="true"
+                :preserve-state="true"
+                :only="['products']"
+                v-html="link.label"
+              />
+              <span
+                v-else
+                class="min-h-9 min-w-9 rounded-2xl border border-white/5 px-3 py-2 text-center text-xs font-semibold text-luxe-mist/40 sm:text-sm"
+                v-html="link.label"
+              />
+            </template>
+          </nav>
+
           <!-- Empty state -->
           <div
-            v-if="products.length === 0"
+            v-if="productList.length === 0"
             class="product-empty-state mt-16 flex flex-col items-center justify-center rounded-3xl border border-dashed border-white/15 bg-white/5 px-6 py-14 text-center sm:px-12 sm:py-20"
           >
             <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 text-luxe-gold">

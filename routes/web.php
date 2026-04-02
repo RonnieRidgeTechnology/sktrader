@@ -6,13 +6,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\HomeController;
 use App\Models\Faq;
-use App\Models\HomepageSection;
 use App\Models\PageContent;
-use App\Models\Product;
-use App\Models\Testimonial;
-use App\Models\VideoReel;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -39,115 +35,7 @@ Route::get('/llms.txt', [\App\Http\Controllers\LlmsTxtController::class, 'index'
 | Public routes (SK Traders website)
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    $videoReels = collect();
-    if (class_exists(VideoReel::class)) {
-        $videoReels = VideoReel::where('status', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get()
-            ->map(fn ($r) => ['title' => $r->title, 'videoUrl' => $r->video_url]);
-    }
-    $testimonials = collect();
-    if (class_exists(Testimonial::class)) {
-        $testimonials = Testimonial::where('status', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get(['quote', 'name', 'role', 'company']);
-    }
-    $hero = class_exists(HomepageSection::class)
-        ? HomepageSection::where('key', 'hero')->first()
-        : null;
-    if ($hero) {
-        $hero->refresh();
-    }
-    $heroData = $hero && is_array($hero->data) ? $hero->data : [];
-    $normalizePath = function ($path) {
-        if (empty($path) || ! is_string($path)) {
-            return null;
-        }
-        $path = str_replace('\\', '/', trim($path));
-        $path = preg_replace('#^/+(storage/|public/|media/)?#i', '', $path);
-        return $path !== '' ? $path : null;
-    };
-    // Hero slider: background images = left + right + gallery. Use relative URLs so they work on any domain.
-    $heroSliderImages = [];
-    foreach (['image_left', 'image_right'] as $key) {
-        $p = $normalizePath($heroData[$key] ?? null);
-        if ($p) {
-            $heroSliderImages[] = '/media/' . $p;
-        }
-    }
-    foreach ($heroData['gallery_images'] ?? [] as $path) {
-        $norm = $normalizePath($path);
-        if ($norm) {
-            $heroSliderImages[] = '/media/' . $norm;
-        }
-    }
-    $heroGalleryImages = [];
-    foreach ($heroData['gallery_images'] ?? [] as $path) {
-        $norm = $normalizePath($path);
-        if ($norm) {
-            $heroGalleryImages[] = '/media/' . $norm;
-        }
-    }
-    $sectionImageTrust = null;
-    $sectionImageServices = null;
-    $trustSection = class_exists(HomepageSection::class)
-        ? HomepageSection::where('key', 'trust')->first()
-        : null;
-    if ($trustSection && ! empty($trustSection->data['section_image']) && Storage::disk('media')->exists($trustSection->data['section_image'])) {
-        $sectionImageTrust = '/media/' . str_replace('\\', '/', trim($trustSection->data['section_image']));
-    }
-    $whatWeDoSection = class_exists(HomepageSection::class)
-        ? HomepageSection::where('key', 'what_we_do')->first()
-        : null;
-    if ($whatWeDoSection && ! empty($whatWeDoSection->data['section_image']) && Storage::disk('media')->exists($whatWeDoSection->data['section_image'])) {
-        $sectionImageServices = '/media/' . str_replace('\\', '/', trim($whatWeDoSection->data['section_image']));
-    }
-    $featuredProducts = collect();
-    if (class_exists(Product::class)) {
-        $featuredProducts = Product::with('category:id,name,slug,parent_id', 'category.parent:id,name')
-            ->where('status', true)
-            ->where('is_featured', true)
-            ->orderBy('name')
-            ->get(['id', 'category_id', 'name', 'slug', 'short_description', 'image', 'price'])
-            ->map(function ($product) {
-                $path = $product->image ? preg_replace('#^/?(storage/|public/|media/)?#', '', trim(str_replace('\\', '/', $product->image))) : null;
-                $arr = $product->toArray();
-                $arr['image_url'] = $path ? '/media/' . $path : null;
-                return $arr;
-            });
-    }
-    $homeSections = [];
-    foreach (['spotlight', 'journey_strip', 'why_pillars', 'delivery_line', 'final_cta'] as $key) {
-        $sec = class_exists(HomepageSection::class)
-            ? HomepageSection::where('key', $key)->where('visible', true)->first()
-            : null;
-        if ($sec && is_array($sec->data)) {
-            $homeSections[$key] = $sec->data;
-            if ($key === 'spotlight' && ! empty($sec->data['image'])) {
-                $path = preg_replace('#^/?(storage/|public/|media/)?#', '', trim(str_replace('\\', '/', $sec->data['image'])));
-                if ($path !== '') {
-                    $homeSections[$key]['image_url'] = '/media/' . $path;
-                }
-            }
-        }
-    }
-    return Inertia::render('Home', [
-        'title'                    => 'Home',
-        'videoReels'               => $videoReels,
-        'testimonials'             => $testimonials,
-        'heroHeadline'             => $heroData['headline'] ?? 'Luxury essentials, curated.',
-        'heroSubheading'           => $heroData['subheading'] ?? 'Watches, perfumes, and skin care serums — premium picks, delivered with care.',
-        'heroSliderImages'         => $heroSliderImages,
-        'heroGalleryImages'        => $heroGalleryImages,
-        'sectionImageTrustUrl'     => $sectionImageTrust,
-        'sectionImageServicesUrl' => $sectionImageServices,
-        'featuredProducts'        => $featuredProducts,
-        'homeSections'             => $homeSections,
-    ]);
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
 Route::get('/about', fn () => Inertia::render('About', ['title' => 'About Us', 'pageContent' => PageContent::getForPage('about')]))->name('about');
 Route::get('/services', fn () => Inertia::render('Services', ['title' => 'Our Services', 'pageContent' => PageContent::getForPage('services')]))->name('services');
 Route::get('/products', [ProductController::class, 'index'])->name('products');

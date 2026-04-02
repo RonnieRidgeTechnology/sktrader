@@ -58,4 +58,22 @@ class Setting extends Model
         $path = str_replace('\\', '/', trim($path));
         return Storage::disk('media')->exists($path) ? '/media/' . $path : null;
     }
+
+    /**
+     * Public URL under /media/ without hitting the filesystem (fast path for shared Inertia props).
+     * Prefer getStorageUrl() when you must hide missing files (e.g. admin previews).
+     */
+    public static function publicMediaUrl(?string $path): ?string
+    {
+        if (! $path || ! is_string($path)) {
+            return null;
+        }
+        $path = str_replace('\\', '/', trim($path));
+        $path = preg_replace('#^/?(storage/|public/|media/)?#i', '', $path);
+        if ($path === '') {
+            return null;
+        }
+
+        return '/media/' . $path;
+    }
 }

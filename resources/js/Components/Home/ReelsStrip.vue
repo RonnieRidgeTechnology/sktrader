@@ -93,8 +93,8 @@ onUnmounted(() => {
       </div>
     <div
       ref="scrollRef"
-      class="reels-scroll mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 sm:gap-6"
-      style="scrollbar-width: none;"
+      class="reels-scroll mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-6 pl-3 pr-3 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] sm:gap-6 sm:pl-4 sm:pr-4"
+      style="scroll-padding-inline: 0.75rem;"
       @mouseenter="stopAutoSlide"
       @mouseleave="startAutoSlide"
     >
@@ -103,7 +103,7 @@ onUnmounted(() => {
           v-for="(item, index) in videos"
           :key="index"
           type="button"
-          class="reel-card group relative flex min-w-[280px] max-w-[340px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-luxe transition hover:border-white/25 hover:bg-white/10 sm:min-w-[320px]"
+          class="reel-card group relative flex w-[min(100vw-2.5rem,340px)] min-w-[min(100vw-2.5rem,280px)] max-w-[340px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-luxe transition hover:border-white/25 hover:bg-white/10 sm:min-w-[320px]"
           @click="openModal(item)"
         >
           <div class="relative w-full bg-[#1a1918] h-40 sm:h-44">

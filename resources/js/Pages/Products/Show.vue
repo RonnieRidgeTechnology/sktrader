@@ -219,7 +219,7 @@ useJsonLd(() => {
               <div v-if="allImages.length > 1" class="relative flex items-center gap-2">
                 <button
                   type="button"
-                  class="flex h-20 w-10 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-pearl transition hover:bg-white/10 disabled:opacity-40"
+                  class="flex h-16 w-9 shrink-0 touch-manipulation items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl transition hover:bg-white/10 disabled:opacity-40 sm:h-20 sm:w-10 sm:rounded-3xl"
                   :disabled="!canThumbPrev"
                   aria-label="Previous thumbnails"
                   @click="thumbPrev"
@@ -253,7 +253,7 @@ useJsonLd(() => {
                 </div>
                 <button
                   type="button"
-                  class="flex h-20 w-10 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-pearl transition hover:bg-white/10 disabled:opacity-40"
+                  class="flex h-16 w-9 shrink-0 touch-manipulation items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-luxe-pearl transition hover:bg-white/10 disabled:opacity-40 sm:h-20 sm:w-10 sm:rounded-3xl"
                   :disabled="!canThumbNext"
                   aria-label="Next thumbnails"
                   @click="thumbNext"
@@ -467,18 +467,18 @@ useJsonLd(() => {
         >
           <button
             type="button"
-            class="fixed right-4 top-4 z-[101] flex h-11 w-11 items-center justify-center rounded-3xl border border-white/10 bg-white/10 text-luxe-pearl shadow-luxe backdrop-blur-xl transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-luxe-gold/70"
+            class="fixed right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-[101] flex h-11 w-11 touch-manipulation items-center justify-center rounded-3xl border border-white/10 bg-white/10 text-luxe-pearl shadow-luxe backdrop-blur-xl transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-luxe-gold/70"
             aria-label="Close"
             @click="closeImageModal"
           >
             <X class="h-5 w-5" stroke-width="2.5" />
           </button>
-          <div class="relative max-h-[90vh] max-w-4xl">
+          <div class="relative max-h-[min(90dvh,90vh)] max-w-[calc(100vw-2rem)] sm:max-w-4xl">
             <img
               v-if="mainImageUrl"
               :src="mainImageUrl"
               :alt="product.name"
-              class="max-h-[90vh] w-auto max-w-full object-contain shadow-2xl"
+              class="max-h-[min(85dvh,85vh)] w-auto max-w-full object-contain shadow-2xl"
               @click.stop
             />
           </div>

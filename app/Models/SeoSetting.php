@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\PublicSiteCache;
 use Illuminate\Database\Eloquent\Model;
 
 class SeoSetting extends Model
@@ -20,4 +21,10 @@ class SeoSetting extends Model
     protected $casts = [
         'noindex' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(fn () => PublicSiteCache::forgetSeoByPage());
+        static::deleted(fn () => PublicSiteCache::forgetSeoByPage());
+    }
 }

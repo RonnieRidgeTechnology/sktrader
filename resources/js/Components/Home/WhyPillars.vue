@@ -26,10 +26,10 @@ const pillars = computed(() => {
     <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-70" aria-hidden="true" />
     <div class="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
 
-    <div class="luxe-container relative py-20 sm:py-28">
+    <div class="luxe-container relative py-14 sm:py-24 lg:py-28">
       <div class="text-center">
         <p class="luxe-kicker">Why choose us</p>
-        <h2 class="luxe-title mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.5rem]">
+        <h2 class="luxe-title mx-auto mt-4 max-w-4xl text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl lg:text-[2.5rem]">
           {{ heading }}
         </h2>
         <div class="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-luxe-gold/70 to-transparent" aria-hidden="true" />
@@ -39,7 +39,7 @@ const pillars = computed(() => {
         <div
           v-for="(p, i) in pillars"
           :key="i"
-          class="pillar group luxe-surface relative flex flex-col overflow-hidden rounded-3xl p-7 transition-all duration-300 hover:bg-white/10 sm:p-8"
+          class="pillar group luxe-surface relative flex flex-col overflow-hidden rounded-3xl p-5 transition-all duration-300 hover:bg-white/10 sm:p-7 md:p-8"
         >
           <span class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-luxe-gold/10 blur-2xl transition-opacity duration-300 group-hover:opacity-100 opacity-70" aria-hidden="true" />
           <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-black/30 text-luxe-pearl transition-colors duration-300 group-hover:border-luxe-gold/30">

@@ -88,16 +88,16 @@ function firstError(key) {
                 <label
                   v-for="pm in payment_methods"
                   :key="pm.id"
-                  class="flex cursor-pointer items-start gap-4 rounded-3xl border p-4 transition"
+                  class="flex cursor-pointer flex-col gap-3 rounded-3xl border p-4 transition xs:flex-row xs:items-start xs:gap-4"
                   :class="form.payment_method === pm.id ? 'border-luxe-gold/40 bg-luxe-gold/10' : 'border-white/10 hover:border-white/15 hover:bg-white/5'"
                 >
                   <input
                     v-model="form.payment_method"
                     type="radio"
                     :value="pm.id"
-                    class="mt-1 h-4 w-4 border-white/20 text-luxe-gold focus:ring-luxe-gold/60"
+                    class="h-4 w-4 shrink-0 border-white/20 text-luxe-gold focus:ring-luxe-gold/60 xs:mt-1"
                   />
-                  <div>
+                  <div class="min-w-0">
                     <span class="font-medium text-luxe-pearl">{{ pm.label }}</span>
                     <p class="mt-0.5 text-sm text-luxe-pearl/80">{{ pm.description }}</p>
                   </div>

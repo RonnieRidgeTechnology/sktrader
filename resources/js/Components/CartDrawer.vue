@@ -68,13 +68,13 @@ watch(
         <Transition name="drawer-panel">
           <aside
             v-show="open"
-            class="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-white shadow-2xl dark:bg-zinc-900 sm:max-w-[340px]"
+            class="absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-[min(100vw,24rem)] flex-col bg-white pt-[env(safe-area-inset-top,0px)] shadow-2xl dark:bg-zinc-900 sm:max-w-[340px]"
             role="dialog"
             aria-modal="true"
             aria-label="Shopping cart"
           >
             <!-- Header -->
-            <div class="flex shrink-0 items-center justify-between border-b border-editorial-ink/10 px-6 py-5">
+            <div class="flex shrink-0 items-center justify-between border-b border-editorial-ink/10 px-4 py-4 sm:px-6 sm:py-5">
               <h2 class="font-editorial text-xl font-semibold tracking-tight text-editorial-ink dark:text-white">
                 Your cart
               </h2>
@@ -175,7 +175,7 @@ watch(
                 </ul>
 
                 <!-- Footer -->
-                <div class="shrink-0 border-t border-editorial-ink/10 bg-editorial-cream/50 px-6 py-5 dark:bg-zinc-800/50">
+                <div class="shrink-0 border-t border-editorial-ink/10 bg-editorial-cream/50 px-4 py-4 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))] dark:bg-zinc-800/50 sm:px-6 sm:py-5 sm:pb-5">
                   <div class="flex items-center justify-between text-lg">
                     <span class="font-medium text-editorial-slate dark:text-zinc-400">Subtotal</span>
                     <span class="font-editorial text-xl font-bold text-editorial-ink dark:text-white">{{ formatPrice(subtotal) }}</span>

@@ -37,7 +37,7 @@ const pageSeoProps = usePageSeo(null, {
         <h1 class="luxe-title mt-4 text-3xl sm:text-4xl lg:text-5xl">
           {{ zuaaz.contact_form_title || pc.hero_title || 'Contact Us' }}
         </h1>
-        <p class="mx-auto mt-5 max-w-xl text-lg text-luxe-pearl/80">
+        <p class="mx-auto mt-5 max-w-xl text-base text-luxe-pearl/80 sm:text-lg">
           {{ pc.hero_subtitle || 'Need help choosing a watch, fragrance, or serum? Message us — we respond quickly.' }}
         </p>
       </div>
@@ -59,7 +59,7 @@ const pageSeoProps = usePageSeo(null, {
                 </span>
                 <div class="min-w-0 flex-1">
                   <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">Email</p>
-                  <p class="mt-1 truncate text-sm font-medium text-luxe-pearl">{{ zuaaz.contact?.email || 'info@sktraders.com' }}</p>
+                  <p class="mt-1 break-words text-sm font-medium text-luxe-pearl">{{ zuaaz.contact?.email || 'info@sktraders.com' }}</p>
                 </div>
               </a>
               <a

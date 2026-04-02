@@ -75,25 +75,25 @@ const topCategories = computed(() => {
 
     <!-- Content: split editorial (very different layout) -->
     <div class="relative z-40 flex flex-1 items-center">
-      <div class="luxe-container py-24 sm:py-28">
-        <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+      <div class="luxe-container py-16 sm:py-24 lg:py-28">
+        <div class="grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-12">
           <!-- Left: copy in glass panel -->
           <div class="lg:col-span-6">
-            <div class="luxe-surface-strong rounded-5xl p-7 sm:p-10">
-              <p class="luxe-kicker">Curated luxury · Limited drops · Secure checkout</p>
-              <h1 class="luxe-title mt-5 text-[clamp(2.2rem,4.6vw,4rem)] font-semibold leading-[1.03]">
+            <div class="luxe-surface-strong rounded-3xl p-5 sm:rounded-5xl sm:p-7 md:p-10">
+              <p class="luxe-kicker text-[10px] leading-snug sm:text-xs">Curated luxury · Limited drops · Secure checkout</p>
+              <h1 class="luxe-title mt-4 text-[clamp(1.65rem,6.2vw,4rem)] font-semibold leading-[1.06] sm:mt-5 sm:leading-[1.03]">
                 {{ headline }}
               </h1>
-              <p class="mt-5 max-w-xl text-base text-luxe-pearl/80 sm:text-lg">
+              <p class="mt-4 max-w-xl text-sm text-luxe-pearl/80 sm:mt-5 sm:text-base md:text-lg">
                 {{ subheading }}
               </p>
 
-              <div class="mt-8 flex flex-wrap gap-3">
-                <Link :href="route('products')" class="luxe-btn luxe-btn-primary">
+              <div class="mt-6 flex flex-col gap-3 xs:flex-row xs:flex-wrap sm:mt-8">
+                <Link :href="route('products')" class="luxe-btn luxe-btn-primary w-full justify-center xs:w-auto">
                   Shop now
                   <span class="ml-1">→</span>
                 </Link>
-                <a :href="whatsappLink" target="_blank" rel="noopener noreferrer" class="luxe-btn luxe-btn-ghost">
+                <a :href="whatsappLink" target="_blank" rel="noopener noreferrer" class="luxe-btn luxe-btn-ghost w-full justify-center xs:w-auto">
                   WhatsApp concierge
                 </a>
               </div>
@@ -130,15 +130,15 @@ const topCategories = computed(() => {
                     </div>
                   </div>
 
-                  <div class="mt-4 overflow-hidden rounded-4xl border border-white/10 bg-black/40">
+                  <div class="mt-4 overflow-hidden rounded-3xl border border-white/10 bg-black/40 sm:rounded-4xl">
                     <img
                       v-if="currentSlide"
                       :src="currentSlide"
                       alt=""
-                      class="h-[320px] w-full object-cover sm:h-[420px]"
+                      class="aspect-[4/3] max-h-[min(52vw,340px)] w-full object-cover sm:aspect-auto sm:h-[420px] sm:max-h-none"
                       loading="eager"
                     />
-                    <div v-else class="flex h-[320px] items-center justify-center sm:h-[420px]">
+                    <div v-else class="flex aspect-[4/3] max-h-[min(52vw,340px)] items-center justify-center sm:aspect-auto sm:h-[420px] sm:max-h-none">
                       <p class="text-sm text-luxe-mist/80">Add hero images in Admin to show visuals here.</p>
                     </div>
                   </div>
@@ -170,6 +170,41 @@ const topCategories = computed(() => {
 
     <!-- Slide nav (only if multiple) -->
     <template v-if="slides.length > 1">
+      <!-- Mobile: dots + arrows above safe area -->
+      <div
+        class="absolute bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-0 right-0 z-40 flex items-center justify-center gap-4 px-4 md:hidden"
+        role="tablist"
+        aria-label="Slides"
+      >
+        <button
+          type="button"
+          class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/15 bg-black/40 text-white backdrop-blur-md touch-manipulation"
+          aria-label="Previous slide"
+          @click="prev"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <div class="flex items-center gap-2">
+          <button
+            v-for="(_, i) in slides"
+            :key="'m-' + i"
+            type="button"
+            :aria-label="`Slide ${i + 1}`"
+            :aria-current="i === currentIndex ? 'true' : undefined"
+            class="h-2.5 min-w-2.5 rounded-full transition-all touch-manipulation"
+            :class="i === currentIndex ? 'w-8 bg-luxe-gold' : 'bg-white/35'"
+            @click="goTo(i)"
+          />
+        </div>
+        <button
+          type="button"
+          class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/15 bg-black/40 text-white backdrop-blur-md touch-manipulation"
+          aria-label="Next slide"
+          @click="next"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
       <div class="absolute right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-2 md:flex" role="tablist" aria-label="Slides">
         <button
           v-for="(_, i) in slides"

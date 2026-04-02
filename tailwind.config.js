@@ -13,6 +13,9 @@ export default {
 
     theme: {
         extend: {
+            screens: {
+                xs: '400px',
+            },
             fontFamily: {
                 sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
                 editorial: ['Fraunces', 'Georgia', 'serif'],

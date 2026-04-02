@@ -51,18 +51,21 @@ class ProductController extends Controller
             $query->whereHas('category', fn ($q) => $q->where('slug', $categorySlug));
         }
 
-        $products = $query->orderBy('name')
-            ->get(['id', 'category_id', 'name', 'slug', 'short_description', 'image', 'price'])
-            ->map(function ($product) {
-                $arr = $product->toArray();
-                $arr['image_url'] = $this->resolveProductImageUrl($product->image);
-                return $arr;
-            });
+        $perPage = 24;
+        $paginator = $query->orderBy('name')
+            ->paginate($perPage, ['id', 'category_id', 'name', 'slug', 'short_description', 'image', 'price'])
+            ->withQueryString();
+        $paginator->getCollection()->transform(function (Product $product) {
+            $arr = $product->toArray();
+            $arr['image_url'] = $this->resolveProductImageUrl($product->image);
+
+            return $arr;
+        });
 
         return Inertia::render('Products/Index', [
             'title'      => 'Products',
             'categories' => $categories,
-            'products'   => $products,
+            'products'   => $paginator,
             'filterCategory' => $categorySlug,
         ]);
     }

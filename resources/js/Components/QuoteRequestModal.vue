@@ -94,8 +94,8 @@ const errorClass = 'mt-1.5 text-sm text-red-400';
         >
           <div
             v-if="show"
-            class="relative flex w-full max-w-lg flex-col overflow-hidden rounded-5xl border border-white/12 bg-luxe-obsidian shadow-luxe-lg"
-            style="max-height: min(90vh, 640px);"
+            class="relative flex w-full max-w-lg flex-col overflow-hidden rounded-t-3xl border border-white/12 bg-luxe-obsidian shadow-luxe-lg sm:rounded-5xl"
+            style="max-height: min(92dvh, calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 1rem), 640px);"
           >
             <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-70" aria-hidden="true" />
             <div class="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2260%22%20height%3D%2260%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.8%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%2260%22%20height%3D%2260%22%20filter%3D%22url(%23n)%22%20opacity%3D%221%22/%3E%3C/svg%3E')]" aria-hidden="true" />

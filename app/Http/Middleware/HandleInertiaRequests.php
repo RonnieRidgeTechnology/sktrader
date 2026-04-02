@@ -6,10 +6,11 @@ use App\Models\Category;
 use App\Models\SeoSetting;
 use App\Models\Setting;
 use App\Services\CartService;
+use App\Support\PublicSiteCache;
 use App\Support\StoreCurrency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -30,32 +31,36 @@ class HandleInertiaRequests extends Middleware
 
         $navCategories = [];
         if (Schema::hasTable('categories')) {
-            $all = Category::where('status', true)
-                ->orderBy('sort_order')
-                ->orderBy('name')
-                ->get(['id', 'name', 'slug', 'parent_id', 'image']);
-            $byParent = $all->groupBy('parent_id');
-            $topLevel = $byParent->get(null, collect())->values();
-            $flat = collect();
-            foreach ($topLevel as $parent) {
-                $flat->push($parent);
-                $flat = $flat->merge($byParent->get($parent->id, collect()));
-            }
-            $navCategories = $flat->values()->map(function ($c) {
-                $img = $c->image;
-                $url = null;
-                if ($img && is_string($img)) {
-                    $img = str_replace('\\', '/', trim($img));
-                    if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://') || str_starts_with($img, '/')) {
-                        $url = $img;
-                    } elseif (str_starts_with($img, 'storage/')) {
-                        $url = '/' . ltrim($img, '/');
-                    } else {
-                        $url = '/media/' . ltrim(preg_replace('#^/?(public/|media/)?#', '', $img), '/');
-                    }
+            $navCategories = Cache::remember(PublicSiteCache::navCategoriesKey(), 600, function () {
+                $all = Category::where('status', true)
+                    ->orderBy('sort_order')
+                    ->orderBy('name')
+                    ->get(['id', 'name', 'slug', 'parent_id', 'image']);
+                $byParent = $all->groupBy('parent_id');
+                $topLevel = $byParent->get(null, collect())->values();
+                $flat = collect();
+                foreach ($topLevel as $parent) {
+                    $flat->push($parent);
+                    $flat = $flat->merge($byParent->get($parent->id, collect()));
                 }
-                return array_merge($c->toArray(), ['image_url' => $url]);
-            })->all();
+
+                return $flat->values()->map(function ($c) {
+                    $img = $c->image;
+                    $url = null;
+                    if ($img && is_string($img)) {
+                        $img = str_replace('\\', '/', trim($img));
+                        if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://') || str_starts_with($img, '/')) {
+                            $url = $img;
+                        } elseif (str_starts_with($img, 'storage/')) {
+                            $url = '/' . ltrim($img, '/');
+                        } else {
+                            $url = '/media/' . ltrim(preg_replace('#^/?(public/|media/)?#', '', $img), '/');
+                        }
+                    }
+
+                    return array_merge($c->toArray(), ['image_url' => $url]);
+                })->all();
+            });
         }
 
         $appUrl = rtrim(config('app.url'), '/');
@@ -66,24 +71,40 @@ class HandleInertiaRequests extends Middleware
 
         $seoByPage = [];
         if (Schema::hasTable('seo_settings')) {
-            $seoByPage = SeoSetting::all()->keyBy('page_key')->map(function (SeoSetting $s) use ($appUrl) {
-                $ogImageUrl = null;
-                if ($s->og_image && Storage::disk('media')->exists($s->og_image)) {
-                    $ogImageUrl = $appUrl . '/media/' . ltrim(str_replace('\\', '/', $s->og_image), '/');
-                }
-                return [
-                    'meta_title' => $s->meta_title,
-                    'meta_description' => $s->meta_description,
-                    'meta_keywords' => $s->meta_keywords,
-                    'canonical_url' => $s->canonical_url,
-                    'og_image' => $ogImageUrl,
-                    'og_type' => $s->og_type ?? 'website',
-                    'noindex' => (bool) $s->noindex,
-                ];
-            })->all();
+            $seoByPage = Cache::remember(PublicSiteCache::seoByPageKey(), 3600, function () use ($appUrl) {
+                return SeoSetting::all()->keyBy('page_key')->map(function (SeoSetting $s) use ($appUrl) {
+                    $ogImageUrl = null;
+                    $rel = $s->og_image ? Setting::publicMediaUrl($s->og_image) : null;
+                    if ($rel) {
+                        $ogImageUrl = preg_match('#^https?://#', $rel) ? $rel : $appUrl . ($rel[0] === '/' ? '' : '/') . $rel;
+                    }
+
+                    return [
+                        'meta_title' => $s->meta_title,
+                        'meta_description' => $s->meta_description,
+                        'meta_keywords' => $s->meta_keywords,
+                        'canonical_url' => $s->canonical_url,
+                        'og_image' => $ogImageUrl,
+                        'og_type' => $s->og_type ?? 'website',
+                        'noindex' => (bool) $s->noindex,
+                    ];
+                })->all();
+            });
         }
 
         $pageKey = $this->resolvePageKey($request);
+
+        $cartItems = [];
+        $cartCount = 0;
+        $cartSubtotal = 0.0;
+        if ($request->hasSession()) {
+            $cartItems = app(CartService::class)->getItems();
+            foreach ($cartItems as $item) {
+                $cartCount += $item['quantity'];
+                $cartSubtotal += $item['price'] * $item['quantity'];
+            }
+            $cartSubtotal = round($cartSubtotal, 2);
+        }
 
         return [
             ...parent::share($request),
@@ -104,10 +125,10 @@ class HandleInertiaRequests extends Middleware
             'seoDefaultMetaDescription' => $zuaaz['meta_description_default'] ?? '',
             'seoByPage' => $seoByPage,
             'pageKey' => $pageKey,
-            'cartCount' => $request->hasSession() ? app(CartService::class)->getCount() : 0,
+            'cartCount' => $cartCount,
             'cartDrawer' => $request->hasSession() ? [
-                'items' => app(CartService::class)->getItems(),
-                'subtotal' => round(app(CartService::class)->getSubtotal(), 2),
+                'items' => $cartItems,
+                'subtotal' => $cartSubtotal,
             ] : ['items' => [], 'subtotal' => 0],
         ];
     }
@@ -178,9 +199,9 @@ class HandleInertiaRequests extends Middleware
             'office'        => $all['address_office'] ?? $zuaaz['address']['office'] ?? '',
             'manufacturing' => $all['address_manufacturing'] ?? $zuaaz['address']['manufacturing'] ?? '',
         ];
-        $zuaaz['header_logo_url'] = Setting::getStorageUrl($all['header_logo'] ?? null);
-        $zuaaz['footer_logo_url'] = Setting::getStorageUrl($all['footer_logo'] ?? null);
-        $zuaaz['favicon_url'] = Setting::getStorageUrl($all['favicon'] ?? null);
+        $zuaaz['header_logo_url'] = Setting::publicMediaUrl($all['header_logo'] ?? null);
+        $zuaaz['footer_logo_url'] = Setting::publicMediaUrl($all['footer_logo'] ?? null);
+        $zuaaz['favicon_url'] = Setting::publicMediaUrl($all['favicon'] ?? null);
         $zuaaz['primary_color'] = !empty($all['primary_color']) ? $all['primary_color'] : null;
         $zuaaz['secondary_color'] = !empty($all['secondary_color']) ? $all['secondary_color'] : null;
         $zuaaz['map_embed_code'] = !empty($all['map_embed_code']) ? $all['map_embed_code'] : null;
@@ -191,7 +212,7 @@ class HandleInertiaRequests extends Middleware
         $zuaaz['newsletter_enabled'] = ($all['newsletter_enabled'] ?? '1') !== '0';
         $zuaaz['meta_title_default'] = isset($all['meta_title_default']) ? (string) $all['meta_title_default'] : '';
         $zuaaz['meta_description_default'] = isset($all['meta_description_default']) ? (string) $all['meta_description_default'] : '';
-        $zuaaz['og_image_url'] = Setting::getStorageUrl($all['og_image'] ?? null);
+        $zuaaz['og_image_url'] = Setting::publicMediaUrl($all['og_image'] ?? null);
         $zuaaz['store_currency'] = StoreCurrency::code();
         return $zuaaz;
     }
