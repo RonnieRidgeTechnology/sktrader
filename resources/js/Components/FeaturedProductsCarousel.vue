@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
-import { Package, ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { Package, ChevronLeft, ChevronRight, CircleDollarSign, ShoppingCart } from 'lucide-vue-next';
 import { storageUrl } from '@/utils/storageUrl';
 import { inject } from 'vue';
 
@@ -66,6 +66,16 @@ function formatPrice(value) {
   } catch (_) {
     return `ZMW ${n.toFixed(2)}`;
   }
+}
+
+/** Keep titles to ~2 lines: word cap + line-clamp-2 in template */
+const TITLE_MAX_WORDS = 12;
+function productTitleDisplay(name) {
+  const s = String(name || '').trim();
+  if (!s) return '';
+  const words = s.split(/\s+/).filter(Boolean);
+  if (words.length <= TITLE_MAX_WORDS) return s;
+  return `${words.slice(0, TITLE_MAX_WORDS).join(' ')}…`;
 }
 
 function addToCart(productId, e) {
@@ -206,7 +216,7 @@ onUnmounted(() => {
               >
                 <Link
                   :href="route('products.show', product.slug)"
-                  class="group relative flex h-full min-h-[320px] w-full flex-col overflow-hidden bg-white transition-all duration-300 sm:min-h-[360px]"
+                  class="group relative flex h-full min-h-[280px] w-full flex-col overflow-hidden bg-white transition-all duration-300 sm:min-h-[300px]"
                   :class="isEditorial
                     ? 'rounded-sm border-2 border-editorial-ink/20 hover:-translate-y-1 hover:border-editorial-coral hover:shadow-lg'
                     : isLuxe
@@ -247,8 +257,8 @@ onUnmounted(() => {
                     >
                       {{ product.category.parent ? `${product.category.parent.name} › ${product.category.name}` : product.category.name }}
                     </span>
-                    <h3 class="mt-1.5 text-base font-semibold leading-snug tracking-tight sm:mt-2 sm:text-lg" :class="isEditorial ? 'font-editorial text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
-                      {{ product.name }}
+                    <h3 class="mt-1.5 line-clamp-2 min-h-0 text-base font-semibold leading-snug tracking-tight sm:mt-2 sm:text-lg" :class="isEditorial ? 'font-editorial text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
+                      {{ productTitleDisplay(product.name) }}
                     </h3>
                     <p
                       v-if="product.short_description"
@@ -260,33 +270,32 @@ onUnmounted(() => {
 
                     <div class="mt-auto pt-4">
                       <div class="flex items-end justify-between gap-3">
-                        <div class="min-w-0">
-                          <p class="text-xs font-semibold uppercase tracking-[0.22em]" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-mist' : 'text-zinc-500 dark:text-zinc-400'">
-                            Price
-                          </p>
-                          <p class="mt-1 truncate text-base font-semibold" :class="isEditorial ? 'text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
-                            {{ formatPrice(product.price) || '—' }}
-                          </p>
+                        <div class="flex min-w-0 items-start gap-2">
+                          <span class="mt-0.5 shrink-0" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-gold' : 'text-amber-600 dark:text-amber-400'" aria-hidden="true">
+                            <CircleDollarSign class="h-5 w-5" stroke-width="2" />
+                          </span>
+                          <div class="min-w-0">
+                            <p class="text-xs font-semibold uppercase tracking-[0.22em]" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-mist' : 'text-zinc-500 dark:text-zinc-400'">
+                              Price
+                            </p>
+                            <p class="mt-0.5 truncate text-base font-semibold" :class="isEditorial ? 'text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
+                              {{ formatPrice(product.price) || '—' }}
+                            </p>
+                          </div>
                         </div>
 
                         <button
                           type="button"
-                          class="shrink-0"
-                          :class="isLuxe ? 'luxe-btn luxe-btn-primary min-h-[44px] px-4 py-2.5 text-sm' : 'inline-flex min-h-[44px] items-center justify-center rounded-2xl bg-black px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-900'"
+                          class="inline-flex shrink-0 items-center justify-center gap-2"
+                          :class="isLuxe ? 'luxe-btn luxe-btn-primary min-h-[44px] px-4 py-2.5 text-sm' : 'inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl bg-black px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-900'"
                           :disabled="addingProductId === product.id"
                           @click="(e) => addToCart(product.id, e)"
                         >
+                          <ShoppingCart class="h-4 w-4 shrink-0" stroke-width="2" />
                           <span v-if="addingProductId === product.id">Adding…</span>
                           <span v-else>Add to cart</span>
                         </button>
                       </div>
-
-                      <span class="mt-4 inline-flex items-center gap-2 text-sm font-semibold" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-gold' : 'text-amber-700 dark:text-amber-300'">
-                        View product
-                        <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </span>
                     </div>
                   </div>
                 </Link>

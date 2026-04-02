@@ -5,7 +5,7 @@ import SeoHead from '@/Components/SeoHead.vue';
 import { usePageSeo } from '@/composables/usePageSeo';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { storageUrl } from '@/utils/storageUrl';
-import { Package, ChevronRight, FolderTree, X, ShoppingCart } from 'lucide-vue-next';
+import { Package, ChevronRight, FolderTree, X, ShoppingCart, CircleDollarSign } from 'lucide-vue-next';
 
 const props = defineProps({
   title: { type: String, default: 'Products' },
@@ -118,6 +118,15 @@ function addToCart(productId, e) {
     onFinish: () => { addingProductId.value = null; },
     onSuccess: () => { openCartDrawer?.(); },
   });
+}
+
+const TITLE_MAX_WORDS = 12;
+function productTitleDisplay(name) {
+  const s = String(name || '').trim();
+  if (!s) return '';
+  const words = s.split(/\s+/).filter(Boolean);
+  if (words.length <= TITLE_MAX_WORDS) return s;
+  return `${words.slice(0, TITLE_MAX_WORDS).join(' ')}…`;
 }
 
 const seoDefaults = computed(() => ({
@@ -463,26 +472,28 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
                   >
                     {{ product.category.parent ? `${product.category.parent.name} › ${product.category.name}` : product.category.name }}
                   </span>
-                  <h2 class="mt-3 font-display text-lg font-semibold leading-snug tracking-tight text-luxe-pearl">
-                    {{ product.name }}
+                  <h2 class="mt-3 line-clamp-2 min-h-0 font-display text-lg font-semibold leading-snug tracking-tight text-luxe-pearl">
+                    {{ productTitleDisplay(product.name) }}
                   </h2>
                   <p class="mt-3 flex-1 text-sm leading-relaxed text-luxe-mist/90 line-clamp-2">
                     {{ product.short_description }}
                   </p>
-                  <p v-if="product.price != null && Number(product.price) > 0" class="mt-4 font-display text-lg font-semibold text-luxe-pearl">
-                    {{ new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(Number(product.price)) }}
-                  </p>
-                  <span class="product-card-cta mt-5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-luxe-gold/90">
-                    View
-                    <ChevronRight class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" stroke-width="2.5" />
-                  </span>
+                  <div
+                    v-if="product.price != null && Number(product.price) > 0"
+                    class="mt-4 flex items-center gap-2"
+                  >
+                    <CircleDollarSign class="h-5 w-5 shrink-0 text-luxe-gold" stroke-width="2" aria-hidden="true" />
+                    <p class="font-display text-lg font-semibold text-luxe-pearl">
+                      {{ new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(Number(product.price)) }}
+                    </p>
+                  </div>
                 </div>
               </Link>
               <div class="border-t border-white/10 px-5 pb-5 pt-4">
                 <button
                   type="button"
                   :disabled="addingProductId === product.id"
-                  class="luxe-btn luxe-btn-ghost w-full justify-center"
+                  class="luxe-btn luxe-btn-primary inline-flex w-full items-center justify-center gap-2"
                   @click="addToCart(product.id, $event)"
                 >
                   <ShoppingCart class="h-4 w-4 shrink-0" stroke-width="2" />
@@ -584,12 +595,6 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
 }
 .product-card:hover .product-card-img {
   transform: scale(1.08);
-}
-.product-card-cta {
-  letter-spacing: 0.02em;
-}
-.product-card:hover .product-card-cta {
-  color: #c7a45d;
 }
 
 .products-sidebar-nav {
