@@ -166,6 +166,13 @@ class ProductController extends Controller
         $validated['price'] = (float) $validated['price'];
         $validated['stock'] = isset($validated['stock']) ? (int) $validated['stock'] : null;
 
+        // IMPORTANT: When editing a product, the admin form always includes `image: null`
+        // (because we use forceFormData). If we pass `image => null` into update(),
+        // the existing product image is cleared. Only update the image when a new file is uploaded.
+        if (! $request->hasFile('image')) {
+            unset($validated['image']);
+        }
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $storedPath = null;
