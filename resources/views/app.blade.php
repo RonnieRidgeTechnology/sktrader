@@ -44,7 +44,7 @@
                     'name' => config('zuaaz.name', 'SK Traders'),
                     'url' => config('app.url'),
                     'description' => 'Curated watches, perfumes, and skin care serums. Premium picks with a modern shopping experience.',
-                    'email' => config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com'),
+                    'email' => config('zuaaz.contact.email', 'info@sktraders.com'),
                     'address' => [
                         '@type' => 'PostalAddress',
                         'streetAddress' => config('zuaaz.address.office'),

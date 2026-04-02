@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ShoppingBag, Minus, Plus, Trash2 } from 'lucide-vue-next';
+import { useStoreCurrency } from '@/composables/useStoreCurrency';
 
 const props = defineProps({
   title: { type: String, default: 'Shopping Cart' },
@@ -15,13 +16,10 @@ const props = defineProps({
 const items = computed(() => props.cart?.items || []);
 const subtotal = computed(() => props.cart?.subtotal ?? 0);
 const isEmpty = computed(() => items.value.length === 0);
+const { formatMoney } = useStoreCurrency();
 
 function formatPrice(value) {
-  return new Intl.NumberFormat('en-ZM', {
-    style: 'currency',
-    currency: 'ZMW',
-    minimumFractionDigits: 2,
-  }).format(value);
+  return formatMoney(value);
 }
 
 function updateQuantity(productId, newQty) {

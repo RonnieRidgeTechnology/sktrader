@@ -5,6 +5,7 @@ import SeoHead from '@/Components/SeoHead.vue';
 import { useJsonLd } from '@/composables/useJsonLd';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { storageUrl } from '@/utils/storageUrl';
+import { useStoreCurrency } from '@/composables/useStoreCurrency';
 import { ShoppingCart, Minus, Plus, ChevronRight, Truck, Package, MessageCircle, X, ShieldCheck, Sparkles, Droplets } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -12,6 +13,7 @@ const props = defineProps({
   product: { type: Object, required: true },
 });
 
+const { formatMoney } = useStoreCurrency();
 const price = computed(() => Number(props.product?.price) ?? 0);
 const hasPrice = computed(() => price.value > 0);
 
@@ -48,7 +50,7 @@ function clampQty(n) {
 }
 
 function formatPrice(value) {
-  return new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(value);
+  return formatMoney(value);
 }
 
 const page = usePage();

@@ -5,6 +5,7 @@ import { router, usePage } from '@inertiajs/vue3';
 const route = inject('route');
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import DataCard from '@/Components/Admin/DataCard.vue';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 import {
   Inbox,
   Mail,
@@ -52,7 +53,7 @@ const statCards = [
   { key: 'products', label: 'Products', icon: Package, route: 'admin.products.index', color: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400', desc: 'Product catalog' },
   { key: 'categories', label: 'Categories', icon: FolderTree, route: 'admin.categories.index', color: 'bg-amber-500/15 text-amber-600 dark:text-amber-400', desc: 'Product categories' },
   { key: 'testimonials', label: 'Testimonials', icon: MessageSquareQuote, route: 'admin.testimonials.index', color: 'bg-violet-500/15 text-violet-600 dark:text-violet-400', desc: 'Customer quotes' },
-  { key: 'video_reels', label: 'Video Reels', icon: Film, route: 'admin.video-reels.index', color: 'bg-rose-500/15 text-rose-600 dark:text-rose-400', desc: 'Factory & promo videos' },
+  { key: 'video_reels', label: 'Video Reels', icon: Film, route: 'admin.video-reels.index', color: 'bg-rose-500/15 text-rose-600 dark:text-rose-400', desc: 'Product & brand videos' },
   { key: 'faqs', label: 'FAQs', icon: HelpCircle, route: 'admin.faqs.index', color: 'bg-zinc-500/15 text-zinc-600 dark:text-zinc-400', desc: 'Frequently asked questions' },
 ];
 
@@ -70,6 +71,11 @@ function go(routeName) {
 
 function goOrder(id) {
   router.visit(route('admin.orders.show', id), { preserveState: false });
+}
+
+function formatOrderMoney(ord) {
+  const cur = ord.currency || page.props.zuaaz?.store_currency || 'USD';
+  return new Intl.NumberFormat(localeForIsoCurrency(cur), { style: 'currency', currency: cur, minimumFractionDigits: 2 }).format(ord.total);
 }
 </script>
 
@@ -132,7 +138,7 @@ function goOrder(id) {
               </p>
             </div>
             <span class="ml-4 shrink-0 text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              {{ new Intl.NumberFormat('en-ZM', { style: 'currency', currency: ord.currency || 'ZMW' }).format(ord.total) }}
+              {{ formatOrderMoney(ord) }}
             </span>
           </button>
         </div>

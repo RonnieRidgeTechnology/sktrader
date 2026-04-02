@@ -51,7 +51,7 @@ const pageSeoProps = usePageSeo(null, {
             <h2 class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist">{{ pc.contact_info_heading || 'Contact information' }}</h2>
             <div class="mt-6 space-y-6">
               <a
-                :href="`mailto:${zuaaz.contact?.email || 'info@atlanticgardenfurniture.com'}`"
+                :href="`mailto:${zuaaz.contact?.email || 'info@sktraders.com'}`"
                 class="luxe-surface rounded-3xl p-5 flex gap-4 transition hover:bg-white/10"
               >
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-luxe-gold">
@@ -59,7 +59,7 @@ const pageSeoProps = usePageSeo(null, {
                 </span>
                 <div class="min-w-0 flex-1">
                   <p class="text-xs font-medium uppercase tracking-[0.25em] text-luxe-mist">Email</p>
-                  <p class="mt-1 truncate text-sm font-medium text-luxe-pearl">{{ zuaaz.contact?.email || 'info@atlanticgardenfurniture.com' }}</p>
+                  <p class="mt-1 truncate text-sm font-medium text-luxe-pearl">{{ zuaaz.contact?.email || 'info@sktraders.com' }}</p>
                 </div>
               </a>
               <a

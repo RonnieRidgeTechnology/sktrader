@@ -184,6 +184,9 @@ function submitProduct() {
                   placeholder="0"
                 />
                 <p v-if="firstError(form.errors, 'price')" class="mt-1 text-sm text-red-500">{{ firstError(form.errors, 'price') }}</p>
+                <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                  Amount in {{ page.props.zuaaz?.store_currency || 'USD' }} (set under Settings → Payments).
+                </p>
               </div>
               <div>
                 <label for="stock" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Stock</label>

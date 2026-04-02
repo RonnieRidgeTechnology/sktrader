@@ -7,6 +7,7 @@ import PaginationBar from '@/Components/Admin/PaginationBar.vue';
 import EmptyState from '@/Components/Admin/EmptyState.vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { ShoppingBag, Eye } from 'lucide-vue-next';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 
 function fallbackRoute(name, ...params) {
   if (typeof window !== 'undefined' && typeof window.route === 'function') {
@@ -79,8 +80,9 @@ const filterHidesOrders = computed(
   () => !!statusFilterVal.value && rows.value.length === 0 && totalAllInDb.value > 0
 );
 
-function formatPrice(value, currency = 'ZMW') {
-  return new Intl.NumberFormat('en-ZM', { style: 'currency', currency, minimumFractionDigits: 2 }).format(value);
+function formatPrice(value, currency) {
+  const cur = currency || page.props.zuaaz?.store_currency || 'USD';
+  return new Intl.NumberFormat(localeForIsoCurrency(cur), { style: 'currency', currency: cur, minimumFractionDigits: 2 }).format(value);
 }
 
 function formatDate(value) {
@@ -209,7 +211,7 @@ function setStatusFilter(status) {
                     <span :class="['status-badge', statusClass(order.status)]">{{ statusOpts[order.status] || order.status || '—' }}</span>
                   </td>
                   <td class="admin-td font-semibold text-zinc-900 dark:text-white">
-                    {{ formatPrice(order.total ?? 0, order.currency ?? 'ZMW') }}
+                    {{ formatPrice(order.total ?? 0, order.currency) }}
                   </td>
                   <td class="admin-td admin-td-last text-right">
                     <Link

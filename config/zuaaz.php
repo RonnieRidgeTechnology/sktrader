@@ -12,8 +12,8 @@ return [
     ],
 
     'contact' => [
-        'email'     => env('CONTACT_EMAIL', 'info@atlanticgardenfurniture.com'),
-        'website'   => env('CONTACT_WEBSITE', 'www.atlanticgardenfurniture.com'),
+        'email'     => env('CONTACT_EMAIL', 'info@sktraders.com'),
+        'website'   => env('CONTACT_WEBSITE', 'www.sktraders.com'),
         'instagram' => env('INSTAGRAM_URL', ''),
         'facebook'  => env('FACEBOOK_URL', ''),
         'linkedin'  => env('LINKEDIN_URL', ''),

@@ -8,6 +8,7 @@ use App\Models\Faq;
 use App\Models\Inquiry;
 use App\Models\NewsletterSubscriber;
 use App\Models\Order;
+use App\Support\StoreCurrency;
 use App\Models\Product;
 use App\Models\Testimonial;
 use App\Models\VideoReel;
@@ -69,7 +70,7 @@ class DashboardController extends Controller
                     'guest_name' => $o->guest_name ?? '',
                     'status' => $o->status,
                     'total' => (float) $o->total,
-                    'currency' => $o->currency ?? 'ZMW',
+                    'currency' => $o->currency ?? StoreCurrency::code(),
                     'items_count' => $o->items_count,
                     'created_at' => $o->created_at?->toIso8601String(),
                 ])

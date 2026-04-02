@@ -72,7 +72,7 @@ const form = useForm({
 
         <FormCard
           title="Author"
-          description="Name is required. Role and company add credibility (e.g. Founder, Fitness Apparel Co.)."
+          description="Name is required. Role and company add credibility (e.g. Founder, Luxury Watches Co.)."
         >
           <template #vector>
             <User class="h-12 w-12" stroke-width="1.5" />
@@ -107,7 +107,7 @@ const form = useForm({
                 v-model="form.company"
                 type="text"
                 class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-zinc-900 shadow-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
-                placeholder="e.g. Fitness Apparel Co."
+                placeholder="e.g. Luxury Watches Co."
               />
             </div>
           </div>

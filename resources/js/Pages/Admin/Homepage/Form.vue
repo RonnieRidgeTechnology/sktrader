@@ -111,7 +111,14 @@ const form = useForm({
 });
 
 const hasSectionImage = computed(() => ['trust', 'what_we_do'].includes(sectionKey.value));
-const whoWeWorkWithLabels = ['Fitness Startups', 'Gym Owners', 'Personal Trainers', 'Online Fitness Brands', 'Amazon & Shopify Sellers', 'Distributors & Wholesalers'];
+const whoWeWorkWithLabels = [
+  'Watch collectors',
+  'Fragrance lovers',
+  'Skincare routines',
+  'Gift buyers',
+  'Retail partners',
+  'Wholesale & corporate',
+];
 const whoWeWorkWithImageUrl = (index) => {
   const item = whoWeWorkWithData.value[index];
   const path = item?.image;
@@ -727,7 +734,7 @@ const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
           <FormCard
             v-if="isWhoWeWorkWith"
             title="Card images & descriptions"
-            description="Upload one image per card. Each image is shown on the homepage in the “Who We Work With” section instead of the default icon. Order: 1 = Fitness Startups, 2 = Gym Owners, 3 = Personal Trainers, 4 = Online Fitness Brands, 5 = Amazon & Shopify Sellers, 6 = Distributors & Wholesalers."
+            description="Upload one image per card. Each image is shown on the homepage in the “Who We Work With” section instead of the default icon. Order: 1 = Watch collectors, 2 = Fragrance lovers, 3 = Skincare routines, 4 = Gift buyers, 5 = Retail partners, 6 = Wholesale & corporate."
           >
             <template #vector>
               <Image class="h-12 w-12" stroke-width="1.5" />

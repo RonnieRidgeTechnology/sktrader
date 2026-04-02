@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Setting;
 use App\Models\OrderItem;
 use App\Services\CartService;
+use App\Support\StoreCurrency;
 use Illuminate\Support\Facades\DB;
 use App\Services\PayPalService;
 use App\Services\ZynlePayService;
@@ -48,7 +49,7 @@ class CheckoutController extends Controller
                 'subtotal' => round($subtotal, 2),
             ],
             'payment_methods' => $paymentMethods,
-            'currency' => 'ZMW',
+            'currency' => StoreCurrency::code(),
             'user' => $user ? ['name' => $user->name, 'email' => $user->email] : null,
         ]);
     }
@@ -109,7 +110,7 @@ class CheckoutController extends Controller
                 'shipping_address' => $shippingAddress,
                 'subtotal' => $subtotal,
                 'total' => $total,
-                'currency' => 'ZMW',
+                'currency' => StoreCurrency::code(),
                 'order_notes' => $validated['order_notes'] ?? null,
             ]);
 

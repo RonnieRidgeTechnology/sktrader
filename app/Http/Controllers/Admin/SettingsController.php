@@ -64,6 +64,7 @@ class SettingsController extends Controller
             'paypal_client_id',
             'paypal_client_secret',
             'paypal_currency',
+            'store_currency',
         ];
     }
 
@@ -91,6 +92,7 @@ class SettingsController extends Controller
             'whatsapp_primary' => config('zuaaz.whatsapp.primary', ''),
             'whatsapp_secondary' => config('zuaaz.whatsapp.secondary', ''),
             'whatsapp_enabled' => config('zuaaz.whatsapp.enabled', true),
+            'store_currency' => 'USD',
         ];
         foreach ($defaults as $key => $default) {
             $current = $settings[$key] ?? '';
@@ -164,6 +166,7 @@ class SettingsController extends Controller
             'paypal_client_id' => 'nullable|string|max:255',
             'paypal_client_secret' => 'nullable|string|max:255',
             'paypal_currency' => 'nullable|string|max:3',
+            'store_currency' => 'required|in:USD,PKR',
         ];
 
         $validated = $request->validate($rules);
@@ -184,6 +187,12 @@ class SettingsController extends Controller
             }
             if ($key === 'paypal_currency' && is_string($value) && $value !== '') {
                 $value = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $value), 0, 3));
+            }
+            if ($key === 'store_currency' && is_string($value)) {
+                $value = strtoupper($value);
+                if (! in_array($value, ['USD', 'PKR'], true)) {
+                    $value = 'USD';
+                }
             }
             Setting::set($key, $value === null ? '' : (is_string($value) ? $value : (string) $value));
         }

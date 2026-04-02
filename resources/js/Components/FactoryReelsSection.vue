@@ -88,7 +88,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               <img
                 v-if="item.youtubeId"
                 :src="`https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`"
-                :alt="(item.title ? item.title + ' – ' : '') + 'Gym gear and sportswear manufacturer factory video'"
+                :alt="(item.title ? item.title + ' – ' : '') + 'SK Traders product and brand video'"
                 class="h-full w-full object-cover"
                 loading="lazy"
                 @error="($event.target).src = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`"

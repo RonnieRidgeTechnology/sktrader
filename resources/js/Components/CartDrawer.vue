@@ -1,6 +1,7 @@
 <script setup>
 import { computed, watch } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
+import { useStoreCurrency } from '@/composables/useStoreCurrency';
 import { X, ShoppingBag, Minus, Plus, Trash2 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -14,9 +15,10 @@ const cart = computed(() => page.props.cartDrawer || { items: [], subtotal: 0 })
 const items = computed(() => cart.value.items || []);
 const subtotal = computed(() => cart.value.subtotal ?? 0);
 const isEmpty = computed(() => items.value.length === 0);
+const { formatMoney } = useStoreCurrency();
 
 function formatPrice(value) {
-  return new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(value);
+  return formatMoney(value);
 }
 
 function close() {

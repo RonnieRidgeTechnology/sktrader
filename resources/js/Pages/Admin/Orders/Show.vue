@@ -1,5 +1,6 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import PageHeader from '@/Components/Admin/PageHeader.vue';
 import DataCard from '@/Components/Admin/DataCard.vue';
@@ -12,8 +13,11 @@ const props = defineProps({
   statusOptions: { type: Object, default: () => ({}) },
 });
 
-function formatPrice(value, currency = 'ZMW') {
-  return new Intl.NumberFormat('en-ZM', { style: 'currency', currency, minimumFractionDigits: 2 }).format(value);
+const page = usePage();
+
+function formatPrice(value, currency) {
+  const cur = currency || page.props.zuaaz?.store_currency || 'USD';
+  return new Intl.NumberFormat(localeForIsoCurrency(cur), { style: 'currency', currency: cur, minimumFractionDigits: 2 }).format(value);
 }
 
 function formatDate(value) {

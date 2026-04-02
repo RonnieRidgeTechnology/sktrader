@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\SeoSetting;
 use App\Models\Setting;
 use App\Services\CartService;
+use App\Support\StoreCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -140,6 +141,7 @@ class HandleInertiaRequests extends Middleware
             'whatsapp' => config('zuaaz.whatsapp'),
             'contact'  => config('zuaaz.contact'),
             'address'  => config('zuaaz.address'),
+            'store_currency' => 'USD',
             'header_logo_url' => null,
             'footer_logo_url' => null,
             'favicon_url' => null,
@@ -190,6 +192,7 @@ class HandleInertiaRequests extends Middleware
         $zuaaz['meta_title_default'] = isset($all['meta_title_default']) ? (string) $all['meta_title_default'] : '';
         $zuaaz['meta_description_default'] = isset($all['meta_description_default']) ? (string) $all['meta_description_default'] : '';
         $zuaaz['og_image_url'] = Setting::getStorageUrl($all['og_image'] ?? null);
+        $zuaaz['store_currency'] = StoreCurrency::code();
         return $zuaaz;
     }
 }

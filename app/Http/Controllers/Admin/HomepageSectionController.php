@@ -447,14 +447,14 @@ class HomepageSectionController extends Controller
             }
             $data = $section->data ?? [];
             $items = $data['items'] ?? [
-                ['label' => 'Fitness Startups', 'image' => null],
-                ['label' => 'Gym Owners', 'image' => null],
-                ['label' => 'Personal Trainers', 'image' => null],
-                ['label' => 'Online Fitness Brands', 'image' => null],
-                ['label' => 'Amazon & Shopify Sellers', 'image' => null],
-                ['label' => 'Distributors & Wholesalers', 'image' => null],
+                ['label' => 'Watch collectors', 'image' => null],
+                ['label' => 'Fragrance lovers', 'image' => null],
+                ['label' => 'Skincare routines', 'image' => null],
+                ['label' => 'Gift buyers', 'image' => null],
+                ['label' => 'Retail partners', 'image' => null],
+                ['label' => 'Wholesale & corporate', 'image' => null],
             ];
-            $labels = ['Fitness Startups', 'Gym Owners', 'Personal Trainers', 'Online Fitness Brands', 'Amazon & Shopify Sellers', 'Distributors & Wholesalers'];
+            $labels = ['Watch collectors', 'Fragrance lovers', 'Skincare routines', 'Gift buyers', 'Retail partners', 'Wholesale & corporate'];
             for ($i = 0; $i < 6; $i++) {
                 if (! isset($items[$i]) || ! is_array($items[$i])) {
                     $items[$i] = ['label' => $labels[$i] ?? 'Item ' . ($i + 1), 'image' => null];

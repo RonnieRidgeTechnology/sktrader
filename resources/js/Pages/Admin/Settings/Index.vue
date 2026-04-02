@@ -68,6 +68,7 @@ const form = useForm({
   paypal_client_id: props.settings?.paypal_client_id ?? '',
   paypal_client_secret: props.settings?.paypal_client_secret ?? '',
   paypal_currency: props.settings?.paypal_currency ?? '',
+  store_currency: props.settings?.store_currency === 'PKR' ? 'PKR' : 'USD',
 });
 
 const testEmail = useForm({ test_email: '' });
@@ -194,7 +195,7 @@ const sectionClass =
               </div>
               <div>
                 <label :class="labelClass">Manufacturing address</label>
-                <input v-model="form.address_manufacturing" type="text" :class="inputClass" placeholder="e.g. Sialkot, Punjab" />
+                <input v-model="form.address_manufacturing" type="text" :class="inputClass" placeholder="e.g. City, country (warehouse or dispatch)" />
               </div>
             </div>
           </section>
@@ -355,6 +356,20 @@ const sectionClass =
         <!-- Tab: Payments -->
         <div v-show="activeTab === 'payments'" class="space-y-6">
           <section :class="sectionClass">
+            <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">Store currency</h2>
+            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+              Product prices, cart totals, checkout, and new orders use this currency site-wide. PayPal and other gateways must support it for your account.
+            </p>
+            <div class="mt-4">
+              <label :class="labelClass">Currency</label>
+              <select v-model="form.store_currency" :class="inputClass">
+                <option value="USD">USD — US Dollar</option>
+                <option value="PKR">PKR — Pakistani Rupee</option>
+              </select>
+            </div>
+          </section>
+
+          <section :class="sectionClass">
             <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">PayPal</h2>
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
               Enable PayPal checkout. Create a REST API app in the
@@ -379,7 +394,7 @@ const sectionClass =
                 </div>
                 <div>
                   <label :class="labelClass">Charge currency (ISO 4217)</label>
-                  <input v-model="form.paypal_currency" type="text" :class="inputClass" placeholder="e.g. ZMW, USD (empty = order currency)" maxlength="3" autocomplete="off" />
+                  <input v-model="form.paypal_currency" type="text" :class="inputClass" placeholder="e.g. USD, PKR (empty = order currency)" maxlength="3" autocomplete="off" />
                   <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">PayPal must support this currency for your account. Leave empty to use the order currency.</p>
                 </div>
                 <div class="sm:col-span-2">

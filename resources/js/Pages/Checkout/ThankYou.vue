@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { CheckCircle, Package } from 'lucide-vue-next';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 
 const props = defineProps({
   title: { type: String, default: 'Thank You' },
@@ -12,9 +13,10 @@ const props = defineProps({
 });
 
 function formatPrice(value) {
-  return new Intl.NumberFormat('en-ZM', {
+  const cur = props.order?.currency || 'USD';
+  return new Intl.NumberFormat(localeForIsoCurrency(cur), {
     style: 'currency',
-    currency: props.order?.currency || 'ZMW',
+    currency: cur,
     minimumFractionDigits: 2,
   }).format(value);
 }

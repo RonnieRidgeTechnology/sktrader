@@ -11,7 +11,7 @@ const page = usePage();
 const pc = computed(() => props.pageContent || {});
 const pageTitle = computed(() => pc.value.title || 'Privacy Policy');
 const content = computed(() => (pc.value.content || '').trim());
-const email = page.props.zuaaz?.contact?.email || 'info@atlanticgardenfurniture.com';
+const email = page.props.zuaaz?.contact?.email || 'info@sktraders.com';
 
 const pageSeoProps = usePageSeo(null, {
   title: 'Privacy Policy | SK Traders',

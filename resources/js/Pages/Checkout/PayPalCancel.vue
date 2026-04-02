@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { CreditCard } from 'lucide-vue-next';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 
 const page = usePage();
 const flashError = computed(() => page.props.flash?.error ?? null);
@@ -16,9 +17,9 @@ const props = defineProps({
 });
 
 function formatPrice(value) {
-  const cur = props.order?.currency || 'ZMW';
+  const cur = props.order?.currency || 'USD';
   try {
-    return new Intl.NumberFormat('en-ZM', {
+    return new Intl.NumberFormat(localeForIsoCurrency(cur), {
       style: 'currency',
       currency: cur,
       minimumFractionDigits: 2,

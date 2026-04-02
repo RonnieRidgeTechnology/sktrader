@@ -4,6 +4,7 @@ import { Link, router } from '@inertiajs/vue3';
 import { Package, ChevronLeft, ChevronRight, CircleDollarSign, ShoppingCart } from 'lucide-vue-next';
 import { storageUrl } from '@/utils/storageUrl';
 import { inject } from 'vue';
+import { useStoreCurrency } from '@/composables/useStoreCurrency';
 
 const props = defineProps({
   theme: { type: String, default: '' },
@@ -20,6 +21,7 @@ const itemsPerPage = ref(4);
 const currentIndex = ref(0);
 const addingProductId = ref(null);
 const openCartDrawer = inject('openCartDrawer', null);
+const { formatMoney } = useStoreCurrency();
 
 const list = computed(() => (Array.isArray(props.products) ? props.products : []));
 
@@ -61,11 +63,7 @@ function updateResponsive() {
 function formatPrice(value) {
   const n = Number(value);
   if (!Number.isFinite(n) || n <= 0) return null;
-  try {
-    return new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(n);
-  } catch (_) {
-    return `ZMW ${n.toFixed(2)}`;
-  }
+  return formatMoney(n);
 }
 
 /** Keep titles to ~2 lines: word cap + line-clamp-2 in template */

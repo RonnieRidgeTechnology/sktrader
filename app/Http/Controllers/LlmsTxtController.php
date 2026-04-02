@@ -15,8 +15,8 @@ class LlmsTxtController extends Controller
         $base = rtrim(config('app.url'), '/');
         $name = config('zuaaz.name', 'SK Traders');
         $tagline = config('zuaaz.tagline', 'Curated Watches · Perfumes · Skin Care Serums');
-        $email = config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com');
-        $website = config('zuaaz.contact.website', 'www.atlanticgardenfurniture.com');
+        $email = config('zuaaz.contact.email', 'info@sktraders.com');
+        $website = config('zuaaz.contact.website', 'www.sktraders.com');
 
         $body = "# {$name}\n\n"
             . "{$tagline}\n\n"

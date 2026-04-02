@@ -2,6 +2,7 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import AccountLayout from '@/Layouts/AccountLayout.vue';
 import { ShoppingBag, ChevronRight } from 'lucide-vue-next';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 
 const props = defineProps({
   orders: { type: Object, required: true },
@@ -21,8 +22,9 @@ function formatDate(iso) {
   if (!iso) return '—';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
-function formatCurrency(amount, currency = 'ZMW') {
-  return new Intl.NumberFormat('en-ZM', { style: 'currency', currency, minimumFractionDigits: 2 }).format(amount);
+function formatCurrency(amount, currency = 'USD') {
+  const cur = currency || 'USD';
+  return new Intl.NumberFormat(localeForIsoCurrency(cur), { style: 'currency', currency: cur, minimumFractionDigits: 2 }).format(amount);
 }
 function statusLabel(status) {
   return props.statusOptions[status] || status;

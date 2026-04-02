@@ -5,7 +5,7 @@ import { Quote, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 const props = defineProps({
   theme: { type: String, default: '' },
   title: { type: String, default: 'What Our Partners Say' },
-  subtitle: { type: String, default: 'Trusted by fitness brands and retailers worldwide.' },
+  subtitle: { type: String, default: 'Trusted by customers who shop watches, perfumes, and skincare with us.' },
   testimonials: {
     type: Array,
     default: () => [],

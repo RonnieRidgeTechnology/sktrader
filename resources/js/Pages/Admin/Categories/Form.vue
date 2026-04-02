@@ -104,7 +104,7 @@ const parentOptions = computed(() => [
                 type="text"
                 required
                 class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-zinc-900 shadow-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
-                placeholder="e.g. Gym Gear"
+                placeholder="e.g. Watches, Perfumes, Serums"
               />
               <p v-if="form.errors.name" class="mt-1 text-sm text-red-500">{{ form.errors.name }}</p>
             </div>

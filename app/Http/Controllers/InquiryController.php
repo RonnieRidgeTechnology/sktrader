@@ -35,7 +35,7 @@ class InquiryController extends Controller
         ]);
 
         try {
-            Mail::to(Setting::get('contact_email') ?: config('zuaaz.contact.email', 'info@atlanticgardenfurniture.com'))
+            Mail::to(Setting::get('contact_email') ?: config('zuaaz.contact.email', 'info@sktraders.com'))
                 ->queue(new InquiryReceivedNotification($inquiry));
 
             Mail::to($inquiry->email)

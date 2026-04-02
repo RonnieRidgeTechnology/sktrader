@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Support\StoreCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
@@ -48,7 +49,7 @@ class OrderController extends Controller
             'guest_email' => $order->guest_email ?? '',
             'status' => $order->status ?? 'pending',
             'total' => (float) $order->total,
-            'currency' => $order->currency ?? 'ZMW',
+            'currency' => $order->currency ?? StoreCurrency::code(),
             'items_count' => $order->items_count,
             'created_at' => $order->created_at?->toIso8601String(),
         ])->values()->all();

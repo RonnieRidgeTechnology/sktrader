@@ -5,6 +5,7 @@ import SeoHead from '@/Components/SeoHead.vue';
 import { usePageSeo } from '@/composables/usePageSeo';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { storageUrl } from '@/utils/storageUrl';
+import { useStoreCurrency } from '@/composables/useStoreCurrency';
 import { Package, ChevronRight, FolderTree, X, ShoppingCart, CircleDollarSign } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -108,6 +109,7 @@ function setFilterAndClose(slug) {
 
 const openCartDrawer = inject('openCartDrawer', null);
 const addingProductId = ref(null);
+const { formatMoney } = useStoreCurrency();
 function addToCart(productId, e) {
   if (e) e.preventDefault();
   if (e) e.stopPropagation();
@@ -484,7 +486,7 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
                   >
                     <CircleDollarSign class="h-5 w-5 shrink-0 text-luxe-gold" stroke-width="2" aria-hidden="true" />
                     <p class="font-display text-lg font-semibold text-luxe-pearl">
-                      {{ new Intl.NumberFormat('en-ZM', { style: 'currency', currency: 'ZMW', minimumFractionDigits: 2 }).format(Number(product.price)) }}
+                      {{ formatMoney(product.price) }}
                     </p>
                   </div>
                 </div>

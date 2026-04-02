@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ShoppingBag, MapPin, CreditCard } from 'lucide-vue-next';
+import { localeForIsoCurrency } from '@/composables/useStoreCurrency';
 
 const props = defineProps({
   title: { type: String, default: 'Checkout' },
@@ -11,7 +12,7 @@ const props = defineProps({
     default: () => ({ items: [], count: 0, subtotal: 0 }),
   },
   payment_methods: { type: Array, default: () => [] },
-  currency: { type: String, default: 'ZMW' },
+  currency: { type: String, default: 'USD' },
   user: { type: Object, default: null },
 });
 
@@ -19,9 +20,10 @@ const items = computed(() => props.cart?.items || []);
 const subtotal = computed(() => props.cart?.subtotal ?? 0);
 
 function formatPrice(value) {
-  return new Intl.NumberFormat('en-ZM', {
+  const cur = props.currency || 'USD';
+  return new Intl.NumberFormat(localeForIsoCurrency(cur), {
     style: 'currency',
-    currency: 'ZMW',
+    currency: cur,
     minimumFractionDigits: 2,
   }).format(value);
 }
