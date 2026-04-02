@@ -267,16 +267,16 @@ onUnmounted(() => {
                     </p>
 
                     <div class="mt-auto pt-4">
-                      <div class="flex items-end justify-between gap-3">
-                        <div class="flex min-w-0 items-start gap-2">
+                      <div class="flex items-end justify-between gap-2 sm:gap-3">
+                        <div class="flex min-w-0 flex-1 items-start gap-1.5 sm:gap-2">
                           <span class="mt-0.5 shrink-0" :class="isEditorial ? 'text-editorial-coral' : isLuxe ? 'text-luxe-gold' : 'text-amber-600 dark:text-amber-400'" aria-hidden="true">
-                            <CircleDollarSign class="h-5 w-5" stroke-width="2" />
+                            <CircleDollarSign class="h-4 w-4 sm:h-5 sm:w-5" stroke-width="2" />
                           </span>
-                          <div class="min-w-0">
-                            <p class="text-xs font-semibold uppercase tracking-[0.22em]" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-mist' : 'text-zinc-500 dark:text-zinc-400'">
+                          <div class="min-w-0 flex-1">
+                            <p class="text-[10px] font-semibold uppercase tracking-[0.18em] sm:text-xs sm:tracking-[0.22em]" :class="isEditorial ? 'text-editorial-slate' : isLuxe ? 'text-luxe-mist' : 'text-zinc-500 dark:text-zinc-400'">
                               Price
                             </p>
-                            <p class="mt-0.5 truncate text-base font-semibold" :class="isEditorial ? 'text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
+                            <p class="mt-0.5 break-words text-sm font-semibold leading-snug tabular-nums sm:text-base" :class="isEditorial ? 'text-editorial-ink' : isLuxe ? 'text-luxe-pearl' : 'text-zinc-900 dark:text-white'">
                               {{ formatPrice(product.price) || '—' }}
                             </p>
                           </div>
@@ -284,14 +284,17 @@ onUnmounted(() => {
 
                         <button
                           type="button"
-                          class="inline-flex shrink-0 items-center justify-center gap-2"
-                          :class="isLuxe ? 'luxe-btn luxe-btn-primary min-h-[44px] px-4 py-2.5 text-sm' : 'inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl bg-black px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-900'"
+                          class="inline-flex shrink-0 items-center justify-center !min-h-9 !h-9 !gap-1 !rounded-xl !px-2.5 !py-0 !text-[11px] sm:!min-h-10 sm:!h-10 sm:!gap-1.5 sm:!px-3 sm:!text-xs"
+                          :class="isLuxe ? 'luxe-btn luxe-btn-primary' : 'rounded-xl bg-black font-semibold text-white transition hover:bg-zinc-900'"
+                          :aria-label="addingProductId === product.id ? 'Adding to cart' : 'Add to cart'"
                           :disabled="addingProductId === product.id"
                           @click="(e) => addToCart(product.id, e)"
                         >
-                          <ShoppingCart class="h-4 w-4 shrink-0" stroke-width="2" />
-                          <span v-if="addingProductId === product.id">Adding…</span>
-                          <span v-else>Add to cart</span>
+                          <ShoppingCart class="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" stroke-width="2" />
+                          <span v-if="addingProductId === product.id" class="hidden min-[360px]:inline">Adding…</span>
+                          <span v-else class="hidden min-[360px]:inline">Add to cart</span>
+                          <span v-if="addingProductId === product.id" class="inline min-[360px]:hidden">…</span>
+                          <span v-else class="inline min-[360px]:hidden">Add</span>
                         </button>
                       </div>
                     </div>

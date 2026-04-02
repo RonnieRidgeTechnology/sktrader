@@ -6,7 +6,7 @@ import { usePageSeo } from '@/composables/usePageSeo';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { storageUrl } from '@/utils/storageUrl';
 import { useStoreCurrency } from '@/composables/useStoreCurrency';
-import { Package, ChevronRight, FolderTree, X, ShoppingCart, CircleDollarSign } from 'lucide-vue-next';
+import { Package, ChevronRight, FolderTree, X, ShoppingCart } from 'lucide-vue-next';
 
 const props = defineProps({
   title: { type: String, default: 'Products' },
@@ -480,27 +480,33 @@ const pageSeoProps = usePageSeo(null, seoDefaults);
                   <p class="mt-3 flex-1 text-sm leading-relaxed text-luxe-mist/90 line-clamp-2">
                     {{ product.short_description }}
                   </p>
+                </div>
+              </Link>
+              <div class="border-t border-white/10 px-5 pb-4 pt-3">
+                <div class="flex items-center justify-between gap-3">
                   <div
                     v-if="product.price != null && Number(product.price) > 0"
-                    class="mt-4 flex items-center gap-2"
+                    class="min-w-0 flex-1"
                   >
-                    <CircleDollarSign class="h-5 w-5 shrink-0 text-luxe-gold" stroke-width="2" aria-hidden="true" />
-                    <p class="font-display text-lg font-semibold text-luxe-pearl">
+                    <p class="break-words font-display text-base font-semibold leading-snug tabular-nums text-luxe-pearl sm:text-lg">
                       {{ formatMoney(product.price) }}
                     </p>
                   </div>
+                  <button
+                    type="button"
+                    :disabled="addingProductId === product.id"
+                    :class="[
+                      'luxe-btn luxe-btn-primary inline-flex shrink-0 items-center justify-center !min-h-9 !h-9 !gap-1 !rounded-xl !px-3 !py-0 !text-[11px] sm:!text-xs',
+                      !(product.price != null && Number(product.price) > 0) ? 'ml-auto' : '',
+                    ]"
+                    :aria-label="addingProductId === product.id ? 'Adding to cart' : 'Add to cart'"
+                    @click="addToCart(product.id, $event)"
+                  >
+                    <ShoppingCart class="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" stroke-width="2" />
+                    <span class="max-[380px]:hidden">{{ addingProductId === product.id ? 'Adding…' : 'Add to cart' }}</span>
+                    <span class="hidden max-[380px]:inline">{{ addingProductId === product.id ? '…' : 'Add' }}</span>
+                  </button>
                 </div>
-              </Link>
-              <div class="border-t border-white/10 px-5 pb-5 pt-4">
-                <button
-                  type="button"
-                  :disabled="addingProductId === product.id"
-                  class="luxe-btn luxe-btn-primary inline-flex w-full items-center justify-center gap-2"
-                  @click="addToCart(product.id, $event)"
-                >
-                  <ShoppingCart class="h-4 w-4 shrink-0" stroke-width="2" />
-                  {{ addingProductId === product.id ? 'Adding…' : 'Add to cart' }}
-                </button>
               </div>
             </div>
           </div>
