@@ -110,26 +110,12 @@ function submitNewsletter() {
   newsletterForm.post(route('newsletter.subscribe'), { preserveScroll: true });
 }
 
-// All categories flattened for nav (parents then their children, in order)
+// Nav should show ONLY main categories (top-level).
 const navCategories = computed(() => usePage().props.navCategories || []);
 const categoryNavItems = computed(() => {
   const list = navCategories.value;
   const parents = list.filter((c) => !c.parent_id);
-  const childrenByParent = {};
-  list.forEach((c) => {
-    if (c.parent_id) {
-      if (!childrenByParent[c.parent_id]) childrenByParent[c.parent_id] = [];
-      childrenByParent[c.parent_id].push(c);
-    }
-  });
-  const flat = [];
-  parents.forEach((p) => {
-    flat.push({ label: p.name, categorySlug: p.slug });
-    (childrenByParent[p.id] || []).forEach((child) => {
-      flat.push({ label: child.name, categorySlug: child.slug });
-    });
-  });
-  return flat;
+  return parents.map((p) => ({ label: p.name, categorySlug: p.slug }));
 });
 
 // Nav: Home, About, each category as its own link, Contact

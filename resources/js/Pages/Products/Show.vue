@@ -79,14 +79,9 @@ const mainImageUrl = computed(() => allImages.value[selectedIndex.value] || null
 
 const hasImages = computed(() => allImages.value.length > 0);
 
-const activeInfoTab = ref('overview'); // overview | details | care
+const activeInfoTab = ref('details'); // details
 const infoTabs = computed(() => {
-  const base = [
-    { key: 'overview', label: 'Overview' },
-    { key: 'details', label: productKind.value === 'watch' ? 'Specs' : productKind.value === 'perfume' ? 'Notes' : productKind.value === 'serum' ? 'Ingredients' : 'Details' },
-    { key: 'care', label: productKind.value === 'serum' ? 'Routine' : 'Shipping & returns' },
-  ];
-  return base;
+  return [{ key: 'details', label: 'Full Details' }];
 });
 
 const imageModalOpen = ref(false);
@@ -353,7 +348,7 @@ useJsonLd(() => {
             </div>
           </div>
 
-          <!-- Full-width: Overview / Ingredients / Routine -->
+          <!-- Full-width: Full Details -->
           <div class="min-w-0 lg:col-span-12">
             <div class="mt-8 luxe-surface rounded-3xl p-6 sm:p-8">
               <div class="flex flex-wrap gap-2">
@@ -370,7 +365,7 @@ useJsonLd(() => {
               </div>
 
               <div class="mt-6">
-                <div v-show="activeInfoTab === 'overview'" class="space-y-4">
+                <div v-show="activeInfoTab === 'details'" class="space-y-4">
                   <p class="text-sm leading-relaxed text-luxe-pearl/80">
                     {{ product.short_description || 'A premium item selected by SK Traders.' }}
                   </p>
@@ -390,9 +385,7 @@ useJsonLd(() => {
                       <p class="mt-2 text-sm text-luxe-pearl/85">Concierge help via WhatsApp.</p>
                     </div>
                   </div>
-                </div>
 
-                <div v-show="activeInfoTab === 'details'" class="space-y-4">
                   <div v-if="productKind === 'perfume'" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     <div class="luxe-surface rounded-3xl p-4">
                       <p class="luxe-kicker">Top notes</p>
@@ -443,23 +436,6 @@ useJsonLd(() => {
                       <p class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist">Full description</p>
                     </div>
                     <div class="product-description-content mt-4 max-w-none" v-html="product.description" />
-                  </div>
-                </div>
-
-                <div v-show="activeInfoTab === 'care'" class="space-y-3">
-                  <div class="grid gap-3 lg:grid-cols-3">
-                    <div class="luxe-surface rounded-3xl p-5">
-                      <p class="luxe-kicker">Shipping</p>
-                      <p class="mt-2 text-sm leading-relaxed text-luxe-pearl/80">We aim to dispatch quickly. Delivery times vary by location.</p>
-                    </div>
-                    <div class="luxe-surface rounded-3xl p-5">
-                      <p class="luxe-kicker">Returns</p>
-                      <p class="mt-2 text-sm leading-relaxed text-luxe-pearl/80">If there’s an issue, contact us and we’ll make it right in line with our policy.</p>
-                    </div>
-                    <div v-if="productKind === 'serum'" class="luxe-surface rounded-3xl p-5">
-                      <p class="luxe-kicker">Routine</p>
-                      <p class="mt-2 text-sm leading-relaxed text-luxe-pearl/80">Apply as directed. Patch-test and discontinue use if irritation occurs.</p>
-                    </div>
                   </div>
                 </div>
               </div>
