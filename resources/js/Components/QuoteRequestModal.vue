@@ -57,9 +57,9 @@ function onBackdropClick(e) {
   if (e.target === e.currentTarget) close();
 }
 
-const inputClass = 'mt-2 block w-full border-2 border-[#1c1917]/15 bg-white px-4 py-3.5 text-[#1c1917] placeholder:text-[#44403c]/50 transition focus:border-[#c2410c] focus:outline-none focus:ring-2 focus:ring-[#c2410c]/20';
-const labelClass = 'flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-[#1c1917]';
-const errorClass = 'mt-1.5 text-sm text-red-600';
+const inputClass = 'mt-2 block w-full rounded-3xl border border-white/10 bg-black/30 px-4 py-3 text-luxe-pearl placeholder:text-luxe-mist/60 shadow-luxe-sm transition focus:border-luxe-gold/50 focus:outline-none focus:ring-2 focus:ring-luxe-gold/30';
+const labelClass = 'flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-luxe-mist';
+const errorClass = 'mt-1.5 text-sm text-red-400';
 </script>
 
 <template>
@@ -80,7 +80,7 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
         aria-labelledby="quote-modal-title"
       >
         <div
-          class="absolute inset-0 bg-[#0f0e0d]/75 backdrop-blur-sm"
+          class="absolute inset-0 bg-black/75 backdrop-blur-md"
           @click="onBackdropClick"
         />
 
@@ -94,23 +94,25 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
         >
           <div
             v-if="show"
-            class="relative flex w-full max-w-lg flex-col overflow-hidden border-2 border-[#1c1917]/15 bg-[#faf8f5] shadow-2xl"
+            class="relative flex w-full max-w-lg flex-col overflow-hidden rounded-5xl border border-white/12 bg-luxe-obsidian shadow-luxe-lg"
             style="max-height: min(90vh, 640px);"
           >
-            <div class="h-1 w-full bg-[#c2410c]" aria-hidden="true" />
+            <div class="pointer-events-none absolute inset-0 bg-luxe-radial opacity-70" aria-hidden="true" />
+            <div class="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2260%22%20height%3D%2260%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.8%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect%20width%3D%2260%22%20height%3D%2260%22%20filter%3D%22url(%23n)%22%20opacity%3D%221%22/%3E%3C/svg%3E')]" aria-hidden="true" />
 
-            <div class="flex shrink-0 items-start justify-between gap-4 border-b border-[#1c1917]/10 bg-white px-4 py-4 sm:px-6 sm:py-5">
+            <div class="relative flex shrink-0 items-start justify-between gap-4 border-b border-white/10 bg-black/35 px-4 py-4 backdrop-blur-2xl sm:px-6 sm:py-5">
               <div class="min-w-0">
-                <h2 id="quote-modal-title" class="font-editorial text-xl font-semibold tracking-tight text-[#1c1917] sm:text-2xl">
+                <p class="luxe-kicker">Enquiry</p>
+                <h2 id="quote-modal-title" class="luxe-title mt-2 text-xl font-semibold tracking-tight sm:text-2xl">
                   Enquire
                 </h2>
-                <p class="mt-1 text-sm text-[#44403c]">
+                <p class="mt-2 text-sm text-luxe-pearl/75">
                   Tell us what you’re looking for. We’ll respond within 24 hours.
                 </p>
               </div>
               <button
                 type="button"
-                class="shrink-0 p-2.5 text-[#44403c] transition hover:bg-[#f5f2ed] hover:text-[#1c1917]"
+                class="luxe-btn-icon shrink-0"
                 aria-label="Close"
                 @click="close"
               >
@@ -119,20 +121,20 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
             </div>
 
             <form class="flex min-h-0 flex-1 flex-col" @submit.prevent="submit">
-              <div class="flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-6 sm:py-6" style="-webkit-overflow-scrolling: touch;">
+              <div class="relative flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-6 sm:py-6" style="-webkit-overflow-scrolling: touch;">
                 <div class="absolute -left-[9999px]" aria-hidden="true">
                   <input v-model="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" />
                 </div>
 
-                <p v-if="Object.keys(form.errors).length > 0" class="mb-4 rounded border-2 border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                <p v-if="Object.keys(form.errors).length > 0" class="mb-4 rounded-3xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                   Please fix the errors below and try again.
                 </p>
 
                 <div class="space-y-5">
                   <div>
                     <label for="quote-name" :class="labelClass">
-                      <User class="h-4 w-4 text-[#c2410c]" stroke-width="2" />
-                      Full name <span class="text-[#c2410c]">*</span>
+                      <User class="h-4 w-4 text-luxe-gold" stroke-width="2" />
+                      Full name <span class="text-luxe-gold">*</span>
                     </label>
                     <input
                       id="quote-name"
@@ -140,15 +142,15 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
                       type="text"
                       required
                       placeholder="Your name"
-                      :class="[inputClass, form.errors.name && 'border-red-500 focus:border-red-500 focus:ring-red-500/20']"
+                      :class="[inputClass, form.errors.name && 'border-red-500/60 focus:border-red-500 focus:ring-red-500/30']"
                     />
                     <p v-if="form.errors.name" :class="errorClass">{{ form.errors.name }}</p>
                   </div>
 
                   <div>
                     <label for="quote-email" :class="labelClass">
-                      <Mail class="h-4 w-4 text-[#c2410c]" stroke-width="2" />
-                      Email <span class="text-[#c2410c]">*</span>
+                      <Mail class="h-4 w-4 text-luxe-gold" stroke-width="2" />
+                      Email <span class="text-luxe-gold">*</span>
                     </label>
                     <input
                       id="quote-email"
@@ -156,14 +158,14 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
                       type="email"
                       required
                       placeholder="you@example.com"
-                      :class="[inputClass, form.errors.email && 'border-red-500 focus:border-red-500 focus:ring-red-500/20']"
+                      :class="[inputClass, form.errors.email && 'border-red-500/60 focus:border-red-500 focus:ring-red-500/30']"
                     />
                     <p v-if="form.errors.email" :class="errorClass">{{ form.errors.email }}</p>
                   </div>
 
                   <div>
                     <label for="quote-whatsapp" :class="labelClass">
-                      <Phone class="h-4 w-4 text-[#c2410c]" stroke-width="2" />
+                      <Phone class="h-4 w-4 text-luxe-gold" stroke-width="2" />
                       Phone or WhatsApp
                     </label>
                     <input
@@ -177,7 +179,7 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
 
                   <div>
                     <label for="quote-product" :class="labelClass">
-                      <Package class="h-4 w-4 text-[#c2410c]" stroke-width="2" />
+                      <Package class="h-4 w-4 text-luxe-gold" stroke-width="2" />
                       What are you interested in?
                     </label>
                     <select
@@ -191,8 +193,8 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
 
                   <div>
                     <label for="quote-message" :class="labelClass">
-                      <MessageSquare class="h-4 w-4 text-[#c2410c]" stroke-width="2" />
-                      Your message <span class="text-[#c2410c]">*</span>
+                      <MessageSquare class="h-4 w-4 text-luxe-gold" stroke-width="2" />
+                      Your message <span class="text-luxe-gold">*</span>
                     </label>
                     <textarea
                       id="quote-message"
@@ -200,18 +202,18 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
                       rows="4"
                       required
                       placeholder="Tell us what you’re looking for (watch / perfume / serum), your budget range, and preferences (style, scent profile, or routine goals)..."
-                      :class="[inputClass, 'resize-none', form.errors.message && 'border-red-500 focus:border-red-500 focus:ring-red-500/20']"
+                      :class="[inputClass, 'resize-none', form.errors.message && 'border-red-500/60 focus:border-red-500 focus:ring-red-500/30']"
                     />
                     <p v-if="form.errors.message" :class="errorClass">{{ form.errors.message }}</p>
                   </div>
                 </div>
               </div>
 
-              <div class="shrink-0 border-t border-[#1c1917]/10 bg-white px-4 py-4 sm:px-6">
+              <div class="relative shrink-0 border-t border-white/10 bg-black/35 px-4 py-4 backdrop-blur-2xl sm:px-6">
                 <div class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-end">
                   <button
                     type="button"
-                    class="border-2 border-[#1c1917]/20 bg-white px-5 py-3 text-sm font-semibold uppercase tracking-wider text-[#1c1917] transition hover:bg-[#f5f2ed]"
+                    class="luxe-btn luxe-btn-ghost"
                     @click="close"
                   >
                     Cancel
@@ -219,7 +221,7 @@ const errorClass = 'mt-1.5 text-sm text-red-600';
                   <button
                     type="submit"
                     :disabled="form.processing"
-                    class="inline-flex items-center justify-center gap-2 border-2 border-[#c2410c] bg-[#c2410c] px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-[#a83609] hover:border-[#a83609] focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:ring-offset-2 disabled:opacity-70"
+                    class="luxe-btn luxe-btn-primary"
                   >
                     <Send class="h-4 w-4" stroke-width="2" />
                     {{ form.processing ? 'Sending…' : 'Send enquiry' }}

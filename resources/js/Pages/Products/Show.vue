@@ -350,84 +350,104 @@ useJsonLd(() => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <!-- Structured info -->
-              <div class="mt-6 luxe-surface rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="t in infoTabs"
-                    :key="t.key"
-                    type="button"
-                    class="rounded-3xl border px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] transition"
-                    :class="activeInfoTab === t.key ? 'border-luxe-gold/40 bg-luxe-gold text-black' : 'border-white/10 bg-white/5 text-luxe-mist hover:bg-white/10 hover:text-luxe-pearl'"
-                    @click="activeInfoTab = t.key"
-                  >
-                    {{ t.label }}
-                  </button>
+          <!-- Full-width: Overview / Ingredients / Routine -->
+          <div class="min-w-0 lg:col-span-12">
+            <div class="mt-8 luxe-surface rounded-3xl p-6 sm:p-8">
+              <div class="flex flex-wrap gap-2">
+                <button
+                  v-for="t in infoTabs"
+                  :key="t.key"
+                  type="button"
+                  class="rounded-3xl border px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] transition"
+                  :class="activeInfoTab === t.key ? 'border-luxe-gold/40 bg-luxe-gold text-black' : 'border-white/10 bg-white/5 text-luxe-mist hover:bg-white/10 hover:text-luxe-pearl'"
+                  @click="activeInfoTab = t.key"
+                >
+                  {{ t.label }}
+                </button>
+              </div>
+
+              <div class="mt-6">
+                <div v-show="activeInfoTab === 'overview'" class="space-y-4">
+                  <p class="text-sm leading-relaxed text-luxe-pearl/80">
+                    {{ product.short_description || 'A premium item selected by SK Traders.' }}
+                  </p>
+                  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Category</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">{{ product.category?.name || '—' }}</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Type</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">
+                        {{ productKind === 'watch' ? 'Watch' : productKind === 'perfume' ? 'Perfume' : productKind === 'serum' ? 'Skincare serum' : 'Product' }}
+                      </p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Support</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Concierge help via WhatsApp.</p>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="mt-6">
-                  <div v-show="activeInfoTab === 'overview'" class="space-y-4">
-                    <p class="text-sm leading-relaxed text-luxe-pearl/80">
-                      {{ product.short_description || 'A premium item selected by SK Traders.' }}
-                    </p>
-                    <div class="grid gap-3 sm:grid-cols-2">
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Category</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">{{ product.category?.name || '—' }}</p>
-                      </div>
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Type</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">
-                          {{ productKind === 'watch' ? 'Watch' : productKind === 'perfume' ? 'Perfume' : productKind === 'serum' ? 'Skincare serum' : 'Product' }}
-                        </p>
-                      </div>
+                <div v-show="activeInfoTab === 'details'" class="space-y-4">
+                  <div v-if="productKind === 'perfume'" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Top notes</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Citrus, fresh, aromatic (if specified).</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Base</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Amber, woods, musk (if specified).</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Wear</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Day-to-night profile (if specified).</p>
+                    </div>
+                  </div>
+                  <div v-else-if="productKind === 'watch'" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Materials</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Case, strap, and finish details (if specified).</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Warranty</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Warranty information (if specified).</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Fit</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Sizing guidance (if specified).</p>
+                    </div>
+                  </div>
+                  <div v-else-if="productKind === 'serum'" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Key ingredients</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Actives and concentrations (if specified).</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Skin type</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Recommended skin types (if specified).</p>
+                    </div>
+                    <div class="luxe-surface rounded-3xl p-4">
+                      <p class="luxe-kicker">Texture</p>
+                      <p class="mt-2 text-sm text-luxe-pearl/85">Lightweight finish (if specified).</p>
                     </div>
                   </div>
 
-                  <div v-show="activeInfoTab === 'details'" class="space-y-4">
-                    <div v-if="productKind === 'perfume'" class="grid gap-3 sm:grid-cols-2">
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Top notes</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">Citrus, fresh, aromatic (if specified).</p>
-                      </div>
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Base</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">Amber, woods, musk (if specified).</p>
-                      </div>
+                  <div v-if="product.description" class="luxe-surface rounded-3xl p-5">
+                    <div class="flex items-center gap-2 text-luxe-gold">
+                      <Droplets v-if="productKind === 'serum'" class="h-4 w-4" stroke-width="2" />
+                      <Package v-else class="h-4 w-4" stroke-width="2" />
+                      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist">Full description</p>
                     </div>
-                    <div v-else-if="productKind === 'watch'" class="grid gap-3 sm:grid-cols-2">
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Materials</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">Case, strap, and finish details (if specified).</p>
-                      </div>
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Warranty</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">Warranty information (if specified).</p>
-                      </div>
-                    </div>
-                    <div v-else-if="productKind === 'serum'" class="grid gap-3 sm:grid-cols-2">
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Key ingredients</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">Actives and concentrations (if specified).</p>
-                      </div>
-                      <div class="luxe-surface rounded-3xl p-4">
-                        <p class="luxe-kicker">Skin type</p>
-                        <p class="mt-2 text-sm text-luxe-pearl/85">Recommended skin types (if specified).</p>
-                      </div>
-                    </div>
-
-                    <div v-if="product.description" class="luxe-surface rounded-3xl p-5">
-                      <div class="flex items-center gap-2 text-luxe-gold">
-                        <Droplets v-if="productKind === 'serum'" class="h-4 w-4" stroke-width="2" />
-                        <Package v-else class="h-4 w-4" stroke-width="2" />
-                        <p class="text-xs font-semibold uppercase tracking-[0.25em] text-luxe-mist">Full description</p>
-                      </div>
-                      <div class="product-description-content mt-4 max-w-none" v-html="product.description" />
-                    </div>
+                    <div class="product-description-content mt-4 max-w-none" v-html="product.description" />
                   </div>
+                </div>
 
-                  <div v-show="activeInfoTab === 'care'" class="space-y-3">
+                <div v-show="activeInfoTab === 'care'" class="space-y-3">
+                  <div class="grid gap-3 lg:grid-cols-3">
                     <div class="luxe-surface rounded-3xl p-5">
                       <p class="luxe-kicker">Shipping</p>
                       <p class="mt-2 text-sm leading-relaxed text-luxe-pearl/80">We aim to dispatch quickly. Delivery times vary by location.</p>
