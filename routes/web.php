@@ -53,13 +53,8 @@ Route::delete('/cart/remove/{productId}', [\App\Http\Controllers\CartController:
 Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'show'])->name('checkout');
 Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/checkout/thank-you/{order}', [\App\Http\Controllers\CheckoutController::class, 'thankYou'])->name('checkout.thank-you');
-Route::get('/checkout/pay/{order}', [\App\Http\Controllers\CheckoutController::class, 'pay'])->name('checkout.pay');
-Route::post('/checkout/initiate-payment', [\App\Http\Controllers\CheckoutController::class, 'initiatePayment'])->name('checkout.initiate-payment');
-Route::get('/checkout/payment-status/{order}', [\App\Http\Controllers\CheckoutController::class, 'paymentStatus'])->name('checkout.payment-status');
-Route::get('/checkout/paypal/start/{order}', [\App\Http\Controllers\CheckoutController::class, 'paypalStart'])->name('checkout.paypal.start');
-Route::get('/checkout/paypal/return', [\App\Http\Controllers\CheckoutController::class, 'paypalReturn'])->name('checkout.paypal.return');
-Route::get('/checkout/paypal/cancel/{order}', [\App\Http\Controllers\CheckoutController::class, 'paypalCancel'])->name('checkout.paypal.cancel');
-Route::post('/zynlepay/webhook', [\App\Http\Controllers\ZynlePayWebhookController::class, 'handle'])->name('zynlepay.webhook');
+Route::get('/checkout/jazzcash/pay/{order}', [\App\Http\Controllers\CheckoutController::class, 'jazzcashPay'])->name('checkout.jazzcash.pay');
+Route::post('/checkout/jazzcash/return/{order}', [\App\Http\Controllers\CheckoutController::class, 'jazzcashReturn'])->name('checkout.jazzcash.return');
 Route::get('/private-label', fn () => Inertia::render('PrivateLabel', ['title' => 'Private Label', 'pageContent' => PageContent::getForPage('private-label')]))->name('private-label');
 Route::get('/how-it-works', fn () => Inertia::render('HowItWorks', ['title' => 'How It Works', 'pageContent' => PageContent::getForPage('how-it-works')]))->name('how-it-works');
 Route::get('/why-choose-us', fn () => Inertia::render('WhyChooseUs', ['title' => 'Why Choose Us', 'pageContent' => PageContent::getForPage('why-choose-us')]))->name('why-choose-us');

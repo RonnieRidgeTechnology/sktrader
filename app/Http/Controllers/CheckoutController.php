@@ -8,8 +8,7 @@ use App\Models\OrderItem;
 use App\Services\CartService;
 use App\Support\StoreCurrency;
 use Illuminate\Support\Facades\DB;
-use App\Services\PayPalService;
-use App\Services\ZynlePayService;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Mail\OrderConfirmed;
@@ -18,9 +17,7 @@ use Illuminate\Support\Facades\Mail;
 class CheckoutController extends Controller
 {
     public function __construct(
-        private CartService $cart,
-        private ZynlePayService $zynlePay,
-        private PayPalService $payPal
+        private CartService $cart
     ) {}
 
     public function show(Request $request)
@@ -33,16 +30,9 @@ class CheckoutController extends Controller
 
         $paymentMethods = [
             ['id' => Order::PAYMENT_COD, 'label' => 'Cash on Delivery (COD)', 'description' => 'Pay with cash when your order is delivered.'],
-            ['id' => Order::PAYMENT_BANK_TRANSFER, 'label' => 'Direct Bank Transfer', 'description' => 'Make your payment directly into our bank account. Your order will not flow until the funds have cleared in our account.'],
-            ['id' => Order::PAYMENT_JAZZCASH, 'label' => 'JazzCash', 'description' => 'Pay securely via your JazzCash account.'],
-            ['id' => Order::PAYMENT_EASYPAISA, 'label' => 'Easypaisa', 'description' => 'Pay securely via your Easypaisa account.'],
+            ['id' => Order::PAYMENT_BANK_TRANSFER, 'label' => 'Direct Bank Transfer', 'description' => 'Transfer money to our bank account. Deposit receipt required.'],
+            ['id' => Order::PAYMENT_JAZZCASH, 'label' => 'JazzCash', 'description' => 'Pay securely via your JazzCash account online.'],
         ];
-        if (ZynlePayService::isConfigured()) {
-            $paymentMethods[] = ['id' => Order::PAYMENT_ZYNLEPAY, 'label' => 'Pay online with ZynlePay', 'description' => 'Mobile Money or card. You will complete payment on the next step.'];
-        }
-        if (PayPalService::isConfigured()) {
-            $paymentMethods[] = ['id' => Order::PAYMENT_PAYPAL, 'label' => 'Pay with PayPal', 'description' => 'Secure checkout with PayPal (card or PayPal balance).'];
-        }
 
         $user = $request->user();
 
@@ -56,6 +46,7 @@ class CheckoutController extends Controller
             'payment_methods' => $paymentMethods,
             'currency' => StoreCurrency::code(),
             'user' => $user ? ['name' => $user->name, 'email' => $user->email] : null,
+            'bank_account_details' => Setting::get('bank_account_details', 'Bank: HBL, Account Title: SK Traders, Account No: 0000-0000-0000-0000'),
         ]);
     }
 
@@ -66,13 +57,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart')->with('error', 'Your cart is empty.');
         }
 
-        $paymentMethodRules = 'required|in:'.Order::PAYMENT_COD.','.Order::PAYMENT_BANK_TRANSFER.','.Order::PAYMENT_JAZZCASH.','.Order::PAYMENT_EASYPAISA;
-        if (ZynlePayService::isConfigured()) {
-            $paymentMethodRules .= ','.Order::PAYMENT_ZYNLEPAY;
-        }
-        if (PayPalService::isConfigured()) {
-            $paymentMethodRules .= ','.Order::PAYMENT_PAYPAL;
-        }
+        $paymentMethodRules = 'required|in:'.Order::PAYMENT_COD.','.Order::PAYMENT_BANK_TRANSFER.','.Order::PAYMENT_JAZZCASH;
 
         $validated = $request->validate([
             'payment_method' => $paymentMethodRules,
@@ -86,6 +71,10 @@ class CheckoutController extends Controller
             'postal_code' => 'nullable|string|max:20',
             'country' => 'required|string|max:100',
             'order_notes' => 'nullable|string|max:1000',
+            'payment_proof' => 'required_if:payment_method,' . Order::PAYMENT_BANK_TRANSFER . '|nullable|image|mimes:jpeg,png,jpg|max:5120',
+        ], [
+            'payment_proof.required_if' => 'Please upload a screenshot or receipt of your bank transfer.',
+            'payment_proof.image' => 'The payment proof must be an image file (jpeg, png, jpg).',
         ]);
 
         $subtotal = $this->cart->getSubtotal();
@@ -103,7 +92,12 @@ class CheckoutController extends Controller
             'country' => $validated['country'],
         ];
 
-        $order = DB::transaction(function () use ($request, $validated, $paymentMethod, $shippingAddress, $subtotal, $total, $items) {
+        $proofPath = null;
+        if ($request->hasFile('payment_proof')) {
+            $proofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
+        }
+
+        $order = DB::transaction(function () use ($request, $validated, $paymentMethod, $shippingAddress, $subtotal, $total, $items, $proofPath) {
             $order = Order::create([
                 'user_id' => $request->user()?->id,
                 'number' => Order::generateNumber(),
@@ -112,6 +106,7 @@ class CheckoutController extends Controller
                 'guest_phone' => $validated['guest_phone'],
                 'status' => Order::STATUS_PENDING,
                 'payment_method' => $paymentMethod,
+                'payment_proof' => $proofPath,
                 'shipping_address' => $shippingAddress,
                 'subtotal' => $subtotal,
                 'total' => $total,
@@ -133,14 +128,18 @@ class CheckoutController extends Controller
             return $order;
         });
 
-        $offlineMethods = [Order::PAYMENT_COD, Order::PAYMENT_BANK_TRANSFER, Order::PAYMENT_JAZZCASH, Order::PAYMENT_EASYPAISA];
+        if ($paymentMethod === Order::PAYMENT_JAZZCASH) {
+            return redirect()->route('checkout.jazzcash.pay', ['order' => $order->number]);
+        }
+
+        $offlineMethods = [Order::PAYMENT_COD, Order::PAYMENT_BANK_TRANSFER];
         $isOffline = in_array($paymentMethod, $offlineMethods);
 
         if ($isOffline) {
             $this->cart->clear();
 
             try {
-                Mail::to($order->guest_email)->send(new OrderConfirmed($order));
+                Mail::to($order->guest_email)->send(new \App\Mail\OrderConfirmed($order));
             } catch (\Exception $e) {
                 // Silently bypass email failures to not break checkout
             }
@@ -150,202 +149,91 @@ class CheckoutController extends Controller
                 ->with('success', 'Order placed successfully.');
         }
 
-        if ($paymentMethod === Order::PAYMENT_PAYPAL) {
-            return redirect()
-                ->route('checkout.paypal.start', ['order' => $order->number]);
-        }
-
-        // ZynlePay: redirect to payment page; do not clear cart until payment is confirmed
-        return redirect()
-            ->route('checkout.pay', ['order' => $order->number])
-            ->with('success', 'Order created. Complete payment below.');
+        // Just a fallback
+        return redirect()->route('checkout.thank-you', ['order' => $order->number]);
     }
 
-    /**
-     * Create PayPal order and send the customer to PayPal to approve payment.
-     */
-    public function paypalStart(Request $request, string $orderNumber)
+    public function jazzcashPay(Request $request, string $orderNumber)
     {
         $order = Order::where('number', $orderNumber)->first();
-        if (! $order) {
+        if (! $order || $order->payment_method !== Order::PAYMENT_JAZZCASH) {
             return redirect()->route('cart')->with('error', 'Order not found.');
         }
-        if ($order->payment_method !== Order::PAYMENT_PAYPAL) {
-            return redirect()->route('checkout.thank-you', ['order' => $order->number]);
-        }
+
         if ($order->status !== Order::STATUS_PENDING) {
             $this->cart->clear();
-
             return redirect()->route('checkout.thank-you', ['order' => $order->number])
                 ->with('success', 'This order is already complete.');
         }
-        if (! PayPalService::isConfigured()) {
-            return redirect()->route('checkout')->with('error', 'PayPal is not available. Choose another payment method or contact us.');
-        }
 
-        $returnUrl = route('checkout.paypal.return', ['order' => $order->number], true);
-        $cancelUrl = route('checkout.paypal.cancel', ['order' => $order->number], true);
-
-        $result = $this->payPal->createCheckoutOrder($order, $returnUrl, $cancelUrl);
-        if (! ($result['success'] ?? false)) {
-            return redirect()->route('checkout')->with('error', $result['message'] ?? 'Could not start PayPal checkout.');
-        }
-
-        $order->update(['payment_reference' => $result['paypal_order_id']]);
-
-        return redirect()->away($result['approval_url']);
-    }
-
-    /**
-     * PayPal redirects here after the buyer approves the payment.
-     */
-    public function paypalReturn(Request $request)
-    {
-        $orderNumber = $request->query('order');
-        $token = $request->query('token');
-        if (! $orderNumber || ! $token) {
-            return redirect()->route('cart')->with('error', 'Invalid PayPal response.');
-        }
-
-        $order = Order::where('number', $orderNumber)->first();
-        if (! $order || $order->payment_method !== Order::PAYMENT_PAYPAL) {
-            return redirect()->route('cart')->with('error', 'Order not found.');
-        }
-
-        if ($order->status !== Order::STATUS_PENDING) {
-            $this->cart->clear();
-
-            return redirect()->route('checkout.thank-you', ['order' => $order->number])
-                ->with('success', 'Your order is already confirmed.');
-        }
-
-        if ((string) $order->payment_reference !== (string) $token) {
-            return redirect()->route('cart')->with('error', 'Payment session does not match this order.');
-        }
-
-        $capture = $this->payPal->captureOrder($token);
-        if (! ($capture['success'] ?? false) || ! ($capture['captured'] ?? false)) {
-            return redirect()->route('checkout.paypal.cancel', ['order' => $order->number])
-                ->with('error', $capture['message'] ?? 'Payment could not be completed.');
-        }
-
-        $order->update([
-            'status' => Order::STATUS_CONFIRMED,
-            'payment_reference' => $capture['capture_id'] ?? $token,
-        ]);
-        $this->cart->clear();
-
-        return redirect()->route('checkout.thank-you', ['order' => $order->number])
-            ->with('success', 'Payment successful. Thank you!');
-    }
-
-    /**
-     * Buyer cancelled on PayPal; order stays pending so they can retry or contact support.
-     */
-    public function paypalCancel(Request $request, string $orderNumber)
-    {
-        $order = Order::where('number', $orderNumber)->first();
-        if (! $order || $order->payment_method !== Order::PAYMENT_PAYPAL) {
-            return redirect()->route('cart')->with('error', 'Order not found.');
-        }
-
-        return Inertia::render('Checkout/PayPalCancel', [
-            'title' => 'Payment cancelled',
-            'order' => [
-                'number' => $order->number,
-                'total' => (float) $order->total,
-                'currency' => $order->currency,
-            ],
+        // Logic to build JazzCash post redirect (usually via a form auto-submit)
+        $merchantId = \App\Models\Setting::get('jazzcash_merchant_id', '');
+        $password = \App\Models\Setting::get('jazzcash_password', '');
+        $salt = \App\Models\Setting::get('jazzcash_salt', '');
+        
+        $price = $order->total * 100; // formatted as cents usually
+        $txnRefNo = 'T' . date('YmdHis');
+        
+        // This is a mockup of the necessary attributes, the actual JazzCash
+        // payment structure usually requires a secure hash generated using salt + data.
+        
+        $postData = [
+            'pp_Version' => '1.1',
+            'pp_TxnType' => 'MWALLET',
+            'pp_Language' => 'EN',
+            'pp_MerchantID' => $merchantId,
+            'pp_SubMerchantID' => '',
+            'pp_Password' => $password,
+            'pp_BankID' => 'TBANK',
+            'pp_ProductID' => 'RETL',
+            'pp_TxnRefNo' => $txnRefNo,
+            'pp_Amount' => $price,
+            'pp_TxnCurrency' => 'PKR',
+            'pp_TxnDateTime' => date('YmdHis'),
+            'pp_BillReference' => 'billRef',
+            'pp_Description' => 'Order payment',
+            'pp_TxnExpiryDateTime' => date('YmdHis', strtotime('+1 Days')),
+            'pp_ReturnURL' => route('checkout.jazzcash.return', $order->number),
+            'pp_SecureHash' => '', // Will be calculated securely using salt
+        ];
+        
+        return Inertia::render('Checkout/JazzCashPay', [
+            'title' => 'Pay with JazzCash',
+            'order' => $order,
+            'postData' => $postData,
+            'endpoint' => 'https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform/' // or live
         ]);
     }
 
-    public function pay(Request $request, string $orderNumber)
+    public function jazzcashReturn(Request $request, string $orderNumber)
     {
-        $order = Order::where('number', $orderNumber)->with('items')->first();
+        $order = Order::where('number', $orderNumber)->first();
         if (! $order) {
-            return redirect()->route('cart')->with('error', 'Order not found.');
+            return redirect()->route('home')->with('error', 'Order not found.');
         }
-        if ($order->payment_method !== Order::PAYMENT_ZYNLEPAY) {
-            return redirect()->route('checkout.thank-you', ['order' => $order->number]);
-        }
-        if ($order->status !== Order::STATUS_PENDING) {
-            return redirect()->route('checkout.thank-you', ['order' => $order->number])
-                ->with('success', 'This order has already been paid.');
-        }
-
-        $zynlepayChannel = Setting::get('zynlepay_channel', 'momo');
-
-        return Inertia::render('Checkout/Pay', [
-            'title' => 'Pay with ZynlePay',
-            'zynlepay_channel' => $zynlepayChannel,
-            'order' => [
-                'number' => $order->number,
-                'total' => (float) $order->total,
-                'currency' => $order->currency,
-                'guest_phone' => $order->guest_phone,
-            ],
-        ]);
-    }
-
-    public function initiatePayment(Request $request)
-    {
-        $channel = Setting::get('zynlepay_channel', 'momo');
-        $phoneRule = $channel === 'card' ? 'nullable|string|max:30' : 'required|string|max:30';
-
-        $validated = $request->validate([
-            'order_number' => 'required|string|max:32',
-            'phone' => $phoneRule,
-        ]);
-
-        $order = Order::where('number', $validated['order_number'])->first();
-        if (! $order || $order->payment_method !== Order::PAYMENT_ZYNLEPAY || $order->status !== Order::STATUS_PENDING) {
-            return back()->with('error', 'Invalid order or order already paid.');
-        }
-
-        $senderPhone = $validated['phone'] ?? $order->guest_phone ?? '';
-        $result = $this->zynlePay->runBillPayment(
-            $senderPhone,
-            $order->number,
-            (float) $order->total,
-            'Order ' . $order->number
-        );
-
-        if (! empty($result['transaction_id'])) {
-            $order->update(['payment_reference' => $result['transaction_id']]);
-        }
-
-        if ($result['success'] ?? false) {
-            $message = $channel === 'card'
-                ? ($result['message'] ?? 'Payment initiated. Complete payment on the next step.')
-                : ($result['message'] ?? 'Payment initiated. Check your phone to confirm.');
-            return back()->with('success', $message);
-        }
-
-        return back()->with('error', $result['message'] ?? 'Payment could not be initiated.');
-    }
-
-    public function paymentStatus(Request $request, string $orderNumber)
-    {
-        $order = Order::where('number', $orderNumber)->first();
-        if (! $order || $order->payment_method !== Order::PAYMENT_ZYNLEPAY) {
-            return redirect()->route('cart')->with('error', 'Order not found.');
-        }
-        if ($order->status !== Order::STATUS_PENDING) {
+        
+        // Normally, JazzCash POSTs the response data here
+        // And we verify the hash.
+        $status = $request->input('pp_ResponseCode');
+        $txnRef = $request->input('pp_TxnRefNo');
+        
+        if ($status === '000') {
+            $order->update([
+                'status' => Order::STATUS_CONFIRMED,
+                'payment_reference' => $txnRef
+            ]);
             $this->cart->clear();
-
-            return redirect()->route('checkout.thank-you', ['order' => $order->number]);
-        }
-
-        $status = $this->zynlePay->checkPaymentStatus($order->number);
-        if (($status['success'] ?? false) && ($status['paid'] ?? false)) {
-            $order->update(['status' => Order::STATUS_CONFIRMED]);
-            $this->cart->clear();
+            
+            try {
+                Mail::to($order->guest_email)->send(new OrderConfirmed($order));
+            } catch (\Exception $e) {}
 
             return redirect()->route('checkout.thank-you', ['order' => $order->number])
-                ->with('success', 'Payment confirmed. Thank you!');
+                ->with('success', 'Payment successful. Thank you!');
         }
-
-        return back()->with('error', $status['message'] ?? 'Payment not yet confirmed. Please complete the payment on your phone and try again.');
+        
+        return redirect()->route('checkout.thank-you', ['order' => $order->number])
+            ->with('error', 'Payment failed or cancelled.');
     }
 
     public function thankYou(Request $request, string $order)

@@ -18,9 +18,6 @@ class Order extends Model
     public const PAYMENT_COD = 'cod';
     public const PAYMENT_BANK_TRANSFER = 'bank_transfer';
     public const PAYMENT_JAZZCASH = 'jazzcash';
-    public const PAYMENT_EASYPAISA = 'easypaisa';
-    public const PAYMENT_ZYNLEPAY = 'zynlepay';
-    public const PAYMENT_PAYPAL = 'paypal';
 
     protected $table = 'orders';
 
@@ -32,6 +29,7 @@ class Order extends Model
         'guest_phone',
         'status',
         'payment_method',
+        'payment_proof',
         'payment_reference',
         'courier_name',
         'tracking_number',

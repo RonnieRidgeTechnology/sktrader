@@ -53,17 +53,12 @@ class SettingsController extends Controller
             'meta_title_default',
             'meta_description_default',
             'og_image',
-            'zynlepay_merchant_id',
-            'zynlepay_api_id',
-            'zynlepay_api_key',
-            'zynlepay_channel',
-            'zynlepay_service_id',
-            'zynlepay_sandbox',
-            'paypal_enabled',
-            'paypal_sandbox',
-            'paypal_client_id',
-            'paypal_client_secret',
-            'paypal_currency',
+            'bank_account_details',
+            'jazzcash_enabled',
+            'jazzcash_sandbox',
+            'jazzcash_merchant_id',
+            'jazzcash_password',
+            'jazzcash_salt',
             'store_currency',
         ];
     }
@@ -105,9 +100,10 @@ class SettingsController extends Controller
         $settings['footer_logo_url'] = Setting::getStorageUrl($settings['footer_logo']);
         $settings['favicon_url'] = Setting::getStorageUrl($settings['favicon']);
         $settings['og_image_url'] = Setting::getStorageUrl($settings['og_image']);
-        // Never send PayPal secret to the browser (leave blank in form = keep existing).
-        $settings['paypal_client_secret'] = '';
-        foreach (['maintenance_mode', 'newsletter_enabled'] as $boolKey) {
+        // Never send JazzCash sensitive values to browser unless needed
+        $settings['jazzcash_password'] = '';
+        $settings['jazzcash_salt'] = '';
+        foreach (['maintenance_mode', 'newsletter_enabled', 'jazzcash_enabled', 'jazzcash_sandbox'] as $boolKey) {
             $v = $settings[$boolKey] ?? '';
             $settings[$boolKey] = ($v === '1' || $v === true || $v === 'true');
         }
@@ -155,25 +151,20 @@ class SettingsController extends Controller
             'meta_title_default' => 'nullable|string|max:70',
             'meta_description_default' => 'nullable|string|max:320',
             'og_image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
-            'zynlepay_merchant_id' => 'nullable|string|max:255',
-            'zynlepay_api_id' => 'nullable|string|max:255',
-            'zynlepay_api_key' => 'nullable|string|max:255',
-            'zynlepay_channel' => 'nullable|string|max:50',
-            'zynlepay_service_id' => 'nullable|string|max:50',
-            'zynlepay_sandbox' => 'nullable|boolean',
-            'paypal_enabled' => 'nullable|boolean',
-            'paypal_sandbox' => 'nullable|boolean',
-            'paypal_client_id' => 'nullable|string|max:255',
-            'paypal_client_secret' => 'nullable|string|max:255',
-            'paypal_currency' => 'nullable|string|max:3',
+            'bank_account_details' => 'nullable|string|max:1000',
+            'jazzcash_enabled' => 'nullable|boolean',
+            'jazzcash_sandbox' => 'nullable|boolean',
+            'jazzcash_merchant_id' => 'nullable|string|max:255',
+            'jazzcash_password' => 'nullable|string|max:255',
+            'jazzcash_salt' => 'nullable|string|max:255',
             'store_currency' => 'required|in:USD,PKR',
         ];
 
         $validated = $request->validate($rules);
 
-        $booleanKeys = ['whatsapp_enabled', 'maintenance_mode', 'newsletter_enabled', 'zynlepay_sandbox', 'paypal_enabled', 'paypal_sandbox'];
+        $booleanKeys = ['whatsapp_enabled', 'maintenance_mode', 'newsletter_enabled', 'jazzcash_enabled', 'jazzcash_sandbox'];
         $fileKeys = ['header_logo', 'footer_logo', 'favicon', 'og_image'];
-        $leaveBlankToKeep = ['zynlepay_merchant_id', 'zynlepay_api_id', 'zynlepay_api_key', 'paypal_client_id', 'paypal_client_secret'];
+        $leaveBlankToKeep = ['jazzcash_password', 'jazzcash_salt'];
         foreach (self::keys() as $key) {
             if (in_array($key, $fileKeys, true)) {
                 continue;
@@ -184,9 +175,6 @@ class SettingsController extends Controller
             }
             if (in_array($key, $leaveBlankToKeep, true) && ($value === null || $value === '')) {
                 continue; // do not overwrite credentials with empty
-            }
-            if ($key === 'paypal_currency' && is_string($value) && $value !== '') {
-                $value = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $value), 0, 3));
             }
             if ($key === 'store_currency' && is_string($value)) {
                 $value = strtoupper($value);

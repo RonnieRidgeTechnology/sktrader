@@ -14,6 +14,7 @@ const props = defineProps({
   payment_methods: { type: Array, default: () => [] },
   currency: { type: String, default: 'USD' },
   user: { type: Object, default: null },
+  bank_account_details: { type: String, default: '' },
 });
 
 const items = computed(() => props.cart?.items || []);
@@ -40,6 +41,7 @@ const form = useForm({
   postal_code: '',
   country: 'Zambia',
   order_notes: '',
+  payment_proof: null,
 });
 
 const paymentHint = computed(() => {
@@ -102,6 +104,19 @@ function firstError(key) {
                     <p class="mt-0.5 text-sm text-luxe-pearl/80">{{ pm.description }}</p>
                   </div>
                 </label>
+              </div>
+              <div v-if="form.payment_method === 'bank_transfer'" class="mt-6 p-5 rounded-2xl bg-black/40 border border-white/10">
+                   <h3 class="font-semibold text-luxe-pearl mb-2 text-sm">Bank Transfer Instructions</h3>
+                   <div class="text-sm text-luxe-pearl/80 mb-4 whitespace-pre-wrap">{{ bank_account_details }}</div>
+                   <label for="payment_proof" class="block text-sm font-medium text-luxe-pearl">Upload Payment Proof (Required)</label>
+                   <input
+                        id="payment_proof"
+                        type="file"
+                        accept="image/*"
+                        @change="e => form.payment_proof = e.target.files[0]"
+                        class="mt-2 block w-full text-sm text-luxe-pearl file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-luxe-gold file:text-black hover:file:bg-luxe-gold/90"
+                   />
+                   <p v-if="firstError('payment_proof')" class="mt-2 text-sm text-red-600">{{ firstError('payment_proof') }}</p>
               </div>
               <p v-if="firstError('payment_method')" class="mt-2 text-sm text-red-600">{{ firstError('payment_method') }}</p>
             </div>

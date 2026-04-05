@@ -39,8 +39,8 @@ function statusClass(status) {
 
 function paymentMethodLabel(method) {
   if (method === 'cod') return 'Cash on Delivery (COD)';
-  if (method === 'zynlepay') return 'ZynlePay (online)';
-  if (method === 'paypal') return 'PayPal';
+  if (method === 'bank_transfer') return 'Bank Transfer';
+  if (method === 'jazzcash') return 'JazzCash';
   return method || '—';
 }
 
@@ -128,6 +128,12 @@ function submitTracking() {
               <div v-if="order.order_notes" class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:gap-4">
                 <dt class="min-w-0 shrink-0 text-sm font-medium text-zinc-500 dark:text-zinc-400 sm:w-36">Order notes</dt>
                 <dd class="whitespace-pre-wrap text-zinc-900 dark:text-white">{{ order.order_notes }}</dd>
+              </div>
+              <div v-if="order.payment_proof" class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:gap-4">
+                <dt class="min-w-0 shrink-0 text-sm font-medium text-zinc-500 dark:text-zinc-400 sm:w-36">Payment Proof</dt>
+                <dd>
+                     <a :href="`/storage/${order.payment_proof}`" target="_blank" class="text-amber-600 hover:text-amber-700 dark:text-amber-400 hover:underline">View File / Receipt</a>
+                </dd>
               </div>
             </dl>
           </DataCard>

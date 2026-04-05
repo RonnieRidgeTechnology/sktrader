@@ -57,17 +57,12 @@ const form = useForm({
   meta_title_default: props.settings?.meta_title_default ?? '',
   meta_description_default: props.settings?.meta_description_default ?? '',
   og_image: null,
-  zynlepay_merchant_id: props.settings?.zynlepay_merchant_id ?? '',
-  zynlepay_api_id: props.settings?.zynlepay_api_id ?? '',
-  zynlepay_api_key: props.settings?.zynlepay_api_key ?? '',
-  zynlepay_channel: props.settings?.zynlepay_channel ?? 'momo',
-  zynlepay_service_id: props.settings?.zynlepay_service_id ?? '1002',
-  zynlepay_sandbox: props.settings?.zynlepay_sandbox === true || props.settings?.zynlepay_sandbox === '1',
-  paypal_enabled: props.settings?.paypal_enabled === true || props.settings?.paypal_enabled === '1',
-  paypal_sandbox: props.settings?.paypal_sandbox === true || props.settings?.paypal_sandbox === '1',
-  paypal_client_id: props.settings?.paypal_client_id ?? '',
-  paypal_client_secret: props.settings?.paypal_client_secret ?? '',
-  paypal_currency: props.settings?.paypal_currency ?? '',
+  bank_account_details: props.settings?.bank_account_details ?? 'Bank: HBL, Account Title: SK Traders, Account No: 0000 0000 0000 0000',
+  jazzcash_enabled: props.settings?.jazzcash_enabled === true || props.settings?.jazzcash_enabled === '1',
+  jazzcash_sandbox: props.settings?.jazzcash_sandbox === true || props.settings?.jazzcash_sandbox === '1',
+  jazzcash_merchant_id: props.settings?.jazzcash_merchant_id ?? '',
+  jazzcash_password: props.settings?.jazzcash_password ?? '',
+  jazzcash_salt: props.settings?.jazzcash_salt ?? '',
   store_currency: props.settings?.store_currency === 'PKR' ? 'PKR' : 'USD',
 });
 
@@ -81,9 +76,8 @@ function submit() {
       whatsapp_enabled: data.whatsapp_enabled ? '1' : '0',
       maintenance_mode: data.maintenance_mode ? '1' : '0',
       newsletter_enabled: data.newsletter_enabled ? '1' : '0',
-      zynlepay_sandbox: data.zynlepay_sandbox ? '1' : '0',
-      paypal_enabled: data.paypal_enabled ? '1' : '0',
-      paypal_sandbox: data.paypal_sandbox ? '1' : '0',
+      jazzcash_enabled: data.jazzcash_enabled ? '1' : '0',
+      jazzcash_sandbox: data.jazzcash_sandbox ? '1' : '0',
     }))
     .post(route('admin.settings.update'), { forceFormData: true });
 }
@@ -370,80 +364,45 @@ const sectionClass =
           </section>
 
           <section :class="sectionClass">
-            <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">PayPal</h2>
+            <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">Bank Transfer Details</h2>
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              Enable PayPal checkout. Create a REST API app in the
-              <a href="https://developer.paypal.com/dashboard/" target="_blank" rel="noopener" class="text-amber-600 hover:underline dark:text-amber-400">PayPal Developer Dashboard</a>
-              (Sandbox for testing, Live for production). You must save <strong>both</strong> Client ID and Secret — checkout only shows PayPal when both are stored (paste the Secret on first save; it is never shown again). Return URL is handled automatically (
-              <code class="rounded bg-zinc-200 px-1 dark:bg-zinc-700">/checkout/paypal/return</code>
-              with your site domain).
+              Provide the instructions and your bank account details for customers to transfer to.
             </p>
-            <div class="mt-4 space-y-4">
-              <label class="flex cursor-pointer items-center gap-3">
-                <input v-model="form.paypal_enabled" type="checkbox" class="h-4 w-4 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800" />
-                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Enable PayPal on checkout</span>
-              </label>
-              <div class="grid gap-4 sm:grid-cols-2">
-                <div class="sm:col-span-2">
-                  <label :class="labelClass">Client ID</label>
-                  <input v-model="form.paypal_client_id" type="text" :class="inputClass" placeholder="PayPal REST API Client ID" autocomplete="off" />
-                </div>
-                <div class="sm:col-span-2">
-                  <label :class="labelClass">Secret</label>
-                  <input v-model="form.paypal_client_secret" type="password" :class="inputClass" placeholder="Leave blank to keep current secret" autocomplete="new-password" />
-                </div>
-                <div>
-                  <label :class="labelClass">Charge currency (ISO 4217)</label>
-                  <input v-model="form.paypal_currency" type="text" :class="inputClass" placeholder="e.g. USD, PKR (empty = order currency)" maxlength="3" autocomplete="off" />
-                  <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">PayPal must support this currency for your account. Leave empty to use the order currency.</p>
-                </div>
-                <div class="sm:col-span-2">
-                  <label class="flex cursor-pointer items-center gap-3">
-                    <input v-model="form.paypal_sandbox" type="checkbox" class="h-4 w-4 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800" />
-                    <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Use PayPal Sandbox (testing)</span>
-                  </label>
-                </div>
-              </div>
+            <div class="mt-4">
+              <label :class="labelClass">Bank details & instructions</label>
+              <textarea v-model="form.bank_account_details" rows="5" :class="inputClass" placeholder="Bank: HBL&#13;&#10;Account Name: SK Traders..." />
             </div>
           </section>
 
           <section :class="sectionClass">
-            <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">ZynlePay (online payments)</h2>
+            <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">JazzCash Gateway</h2>
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              Configure ZynlePay so customers can pay online (Mobile Money / card). Leave blank to disable. Get credentials from <a href="https://sandbox.zynlepay.com" target="_blank" rel="noopener" class="text-amber-600 hover:underline dark:text-amber-400">ZynlePay Sandbox</a> or production. In your ZynlePay dashboard, set the webhook URL to your full site URL + <code class="rounded bg-zinc-200 px-1 dark:bg-zinc-700">/zynlepay/webhook</code> (e.g. <code class="rounded bg-zinc-200 px-1 dark:bg-zinc-700">https://yoursite.com/zynlepay/webhook</code>).
+              Configure JazzCash for automated payment processing.
             </p>
-            <div class="mt-4 grid gap-4 sm:grid-cols-2">
-              <div>
-                <label :class="labelClass">Merchant ID</label>
-                <input v-model="form.zynlepay_merchant_id" type="text" :class="inputClass" placeholder="Your ZynlePay merchant ID" autocomplete="off" />
-              </div>
-              <div>
-                <label :class="labelClass">API ID</label>
-                <input v-model="form.zynlepay_api_id" type="text" :class="inputClass" placeholder="API ID" autocomplete="off" />
-              </div>
-              <div class="sm:col-span-2">
-                <label :class="labelClass">API Key</label>
-                <input v-model="form.zynlepay_api_key" type="password" :class="inputClass" placeholder="API key (leave blank to keep current)" autocomplete="new-password" />
-                <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Enter a new value to change; submitting the form will overwrite the stored key.</p>
-              </div>
-              <div>
-                <label :class="labelClass">Channel</label>
-                <select v-model="form.zynlepay_channel" :class="inputClass">
-                  <option value="momo">Mobile Money (MOMO)</option>
-                  <option value="card">Card</option>
-                  <option value="bank">Bank</option>
-                </select>
-              </div>
-              <div>
-                <label :class="labelClass">Service ID</label>
-                <input v-model="form.zynlepay_service_id" type="text" :class="inputClass" placeholder="1002" />
-              </div>
-              <div class="sm:col-span-2">
-                <label class="flex cursor-pointer items-center gap-3">
-                  <input v-model="form.zynlepay_sandbox" type="checkbox" class="h-4 w-4 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800" />
-                  <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Use sandbox (testing)</span>
-                </label>
-                <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Enable for testing; disable for live payments.</p>
+            <div class="mt-4 space-y-4">
+              <label class="flex cursor-pointer items-center gap-3">
+                <input v-model="form.jazzcash_enabled" type="checkbox" class="h-4 w-4 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800" />
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Enable JazzCash at checkout</span>
+              </label>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label :class="labelClass">Merchant ID</label>
+                  <input v-model="form.jazzcash_merchant_id" type="text" :class="inputClass" placeholder="Your JazzCash Merchant ID" autocomplete="off" />
+                </div>
+                <div>
+                  <label :class="labelClass">Password</label>
+                  <input v-model="form.jazzcash_password" type="password" :class="inputClass" placeholder="Leave blank to keep existing password" autocomplete="new-password" />
+                </div>
+                <div>
+                  <label :class="labelClass">Integrity Salt</label>
+                  <input v-model="form.jazzcash_salt" type="password" :class="inputClass" placeholder="Leave blank to keep existing salt" autocomplete="new-password" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="flex cursor-pointer items-center gap-3">
+                    <input v-model="form.jazzcash_sandbox" type="checkbox" class="h-4 w-4 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800" />
+                    <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Use JazzCash Sandbox (testing)</span>
+                  </label>
+                </div>
               </div>
             </div>
           </section>
