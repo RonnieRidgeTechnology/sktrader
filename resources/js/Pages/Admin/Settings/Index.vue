@@ -88,7 +88,7 @@ function sendTestEmail() {
 }
 
 const inputClass =
-  'mt-1 block w-full rounded-xl border border-zinc-300 px-3 py-2 shadow-sm transition focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white dark:focus:border-amber-400 dark:focus:ring-amber-400';
+  'mt-1 block w-full rounded-xl border border-zinc-300 px-3 py-2 text-zinc-900 shadow-sm transition focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white dark:focus:border-amber-400 dark:focus:ring-amber-400';
 const labelClass = 'block text-sm font-medium text-zinc-700 dark:text-zinc-300';
 const sectionClass =
   'rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:border-zinc-700/80 dark:bg-zinc-800/50';

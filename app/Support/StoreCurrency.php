@@ -11,9 +11,9 @@ final class StoreCurrency
     /** ISO 4217 code used for storefront, cart, checkout, and new orders. */
     public static function code(): string
     {
-        $v = strtoupper(trim((string) Setting::get('store_currency', 'USD')));
+        $v = strtoupper(trim((string) Setting::get('store_currency', 'PKR')));
 
-        return in_array($v, self::ALLOWED, true) ? $v : 'USD';
+        return in_array($v, self::ALLOWED, true) ? $v : 'PKR';
     }
 
     /** BCP 47 locale for Intl formatting. */

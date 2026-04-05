@@ -87,7 +87,7 @@ class SettingsController extends Controller
             'whatsapp_primary' => config('zuaaz.whatsapp.primary', ''),
             'whatsapp_secondary' => config('zuaaz.whatsapp.secondary', ''),
             'whatsapp_enabled' => config('zuaaz.whatsapp.enabled', true),
-            'store_currency' => 'USD',
+            'store_currency' => 'PKR',
         ];
         foreach ($defaults as $key => $default) {
             $current = $settings[$key] ?? '';
@@ -179,7 +179,7 @@ class SettingsController extends Controller
             if ($key === 'store_currency' && is_string($value)) {
                 $value = strtoupper($value);
                 if (! in_array($value, ['USD', 'PKR'], true)) {
-                    $value = 'USD';
+                    $value = 'PKR';
                 }
             }
             Setting::set($key, $value === null ? '' : (is_string($value) ? $value : (string) $value));
