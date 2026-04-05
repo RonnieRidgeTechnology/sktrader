@@ -62,6 +62,34 @@ function formatPrice(value) {
           <p v-if="order.payment_method === 'cod'" class="mt-4 text-sm text-luxe-pearl/80">
             Cash on Delivery (COD). You will pay when your order is delivered.
           </p>
+          <div v-else-if="order.payment_method === 'bank_transfer'" class="mt-4 border-t border-white/10 pt-4 text-left text-sm text-luxe-pearl/80">
+            <p class="font-medium text-luxe-perl mb-2">Direct Bank Transfer Instructions:</p>
+            <p>Please transfer the total amount into our bank account. Your order will be processed once the funds have cleared.</p>
+            <ul class="mt-3 list-inside list-disc space-y-1 bg-black/20 p-4 rounded-xl">
+               <li><strong>Bank:</strong> Habib Bank Limited (HBL)</li>
+               <li><strong>Account Title:</strong> SK Traders</li>
+               <li><strong>Account No:</strong> 0000 0000 0000 0000</li>
+               <li><strong>Reference:</strong> Please use your Order Number ({{ order.number }}) as the payment reference.</li>
+            </ul>
+          </div>
+          <div v-else-if="order.payment_method === 'jazzcash'" class="mt-4 border-t border-white/10 pt-4 text-left text-sm text-luxe-pearl/80">
+            <p class="font-medium text-luxe-perl mb-2">JazzCash Payment Instructions:</p>
+            <p>Please send the total amount via JazzCash app or agent to:</p>
+            <ul class="mt-3 list-inside list-disc space-y-1 bg-black/20 p-4 rounded-xl">
+               <li><strong>JazzCash Mobile No:</strong> 0300 1234567</li>
+               <li><strong>Account Name:</strong> SK Traders</li>
+               <li><strong>Reference:</strong> Provide your Order Number ({{ order.number }}) as reference.</li>
+            </ul>
+          </div>
+          <div v-else-if="order.payment_method === 'easypaisa'" class="mt-4 border-t border-white/10 pt-4 text-left text-sm text-luxe-pearl/80">
+            <p class="font-medium text-luxe-perl mb-2">Easypaisa Payment Instructions:</p>
+            <p>Please send the total amount via Easypaisa app or agent to:</p>
+            <ul class="mt-3 list-inside list-disc space-y-1 bg-black/20 p-4 rounded-xl">
+               <li><strong>Easypaisa Mobile No:</strong> 0345 1234567</li>
+               <li><strong>Account Name:</strong> SK Traders</li>
+               <li><strong>Reference:</strong> Provide your Order Number ({{ order.number }}) as reference.</li>
+            </ul>
+          </div>
           <p v-else-if="order.payment_method === 'zynlepay'" class="mt-4 text-sm text-luxe-pearl/80">
             Paid online with ZynlePay. Thank you for your payment.
           </p>

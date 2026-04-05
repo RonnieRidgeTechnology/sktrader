@@ -57,6 +57,16 @@ const statusForm = useForm({ status: props.order.status });
 function submitStatus() {
   statusForm.patch(route('admin.orders.update-status', props.order.id));
 }
+
+const trackingForm = useForm({
+  courier_name: props.order.courier_name || '',
+  tracking_number: props.order.tracking_number || '',
+  tracking_url: props.order.tracking_url || '',
+  notify_customer: true,
+});
+function submitTracking() {
+  trackingForm.patch(route('admin.orders.update-tracking', props.order.id));
+}
 </script>
 
 <template>
@@ -188,6 +198,53 @@ function submitStatus() {
                 class="w-full rounded-xl bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
               >
                 {{ statusForm.processing ? 'Saving…' : 'Update status' }}
+              </button>
+            </form>
+          </FormCard>
+          
+          <div class="mt-6"></div>
+
+          <FormCard title="Tracking details" description="Add or update courier and tracking information.">
+            <form @submit.prevent="submitTracking" class="space-y-4">
+              <div>
+                <label for="courier_name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Courier Name</label>
+                <input
+                  id="courier_name"
+                  v-model="trackingForm.courier_name"
+                  type="text"
+                  placeholder="e.g. TCS, Leopard, DHL"
+                  class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-zinc-900 shadow-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
+                />
+              </div>
+              <div>
+                <label for="tracking_number" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Tracking Number</label>
+                <input
+                  id="tracking_number"
+                  v-model="trackingForm.tracking_number"
+                  type="text"
+                  class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-zinc-900 shadow-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
+                />
+              </div>
+              <div>
+                <label for="tracking_url" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Tracking URL <span class="text-zinc-400 font-normal">(optional)</span></label>
+                <input
+                  id="tracking_url"
+                  v-model="trackingForm.tracking_url"
+                  type="url"
+                  placeholder="https://"
+                  class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-zinc-900 shadow-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
+                />
+              </div>
+              <div class="flex items-center gap-2 mt-4">
+                   <input type="checkbox" id="notify_customer" v-model="trackingForm.notify_customer" class="rounded border-zinc-300 text-amber-600 focus:ring-amber-500" />
+                   <label for="notify_customer" class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Notify customer via email</label>
+              </div>
+              <button
+                type="submit"
+                :disabled="trackingForm.processing"
+                class="w-full mt-2 rounded-xl bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
+              >
+                {{ trackingForm.processing ? 'Saving…' : 'Update Tracking' }}
               </button>
             </form>
           </FormCard>

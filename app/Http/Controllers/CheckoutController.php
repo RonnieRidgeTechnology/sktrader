@@ -12,6 +12,8 @@ use App\Services\PayPalService;
 use App\Services\ZynlePayService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Mail\OrderConfirmed;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -31,6 +33,9 @@ class CheckoutController extends Controller
 
         $paymentMethods = [
             ['id' => Order::PAYMENT_COD, 'label' => 'Cash on Delivery (COD)', 'description' => 'Pay with cash when your order is delivered.'],
+            ['id' => Order::PAYMENT_BANK_TRANSFER, 'label' => 'Direct Bank Transfer', 'description' => 'Make your payment directly into our bank account. Your order will not flow until the funds have cleared in our account.'],
+            ['id' => Order::PAYMENT_JAZZCASH, 'label' => 'JazzCash', 'description' => 'Pay securely via your JazzCash account.'],
+            ['id' => Order::PAYMENT_EASYPAISA, 'label' => 'Easypaisa', 'description' => 'Pay securely via your Easypaisa account.'],
         ];
         if (ZynlePayService::isConfigured()) {
             $paymentMethods[] = ['id' => Order::PAYMENT_ZYNLEPAY, 'label' => 'Pay online with ZynlePay', 'description' => 'Mobile Money or card. You will complete payment on the next step.'];
@@ -61,7 +66,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart')->with('error', 'Your cart is empty.');
         }
 
-        $paymentMethodRules = 'required|in:'.Order::PAYMENT_COD;
+        $paymentMethodRules = 'required|in:'.Order::PAYMENT_COD.','.Order::PAYMENT_BANK_TRANSFER.','.Order::PAYMENT_JAZZCASH.','.Order::PAYMENT_EASYPAISA;
         if (ZynlePayService::isConfigured()) {
             $paymentMethodRules .= ','.Order::PAYMENT_ZYNLEPAY;
         }
@@ -128,8 +133,17 @@ class CheckoutController extends Controller
             return $order;
         });
 
-        if ($paymentMethod === Order::PAYMENT_COD) {
+        $offlineMethods = [Order::PAYMENT_COD, Order::PAYMENT_BANK_TRANSFER, Order::PAYMENT_JAZZCASH, Order::PAYMENT_EASYPAISA];
+        $isOffline = in_array($paymentMethod, $offlineMethods);
+
+        if ($isOffline) {
             $this->cart->clear();
+
+            try {
+                Mail::to($order->guest_email)->send(new OrderConfirmed($order));
+            } catch (\Exception $e) {
+                // Silently bypass email failures to not break checkout
+            }
 
             return redirect()
                 ->route('checkout.thank-you', ['order' => $order->number])

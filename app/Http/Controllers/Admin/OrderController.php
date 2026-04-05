@@ -118,6 +118,34 @@ class OrderController extends Controller
         ]);
         $order->update(['status' => $validated['status']]);
 
+        try {
+            \Illuminate\Support\Facades\Mail::to($order->guest_email)->send(new \App\Mail\OrderTrackingUpdated($order));
+        } catch (\Exception $e) { }
+
         return redirect()->back()->with('success', 'Order status updated.');
+    }
+
+    public function updateTracking(Request $request, Order $order)
+    {
+        $validated = $request->validate([
+            'courier_name' => 'nullable|string|max:255',
+            'tracking_number' => 'nullable|string|max:255',
+            'tracking_url' => 'nullable|url|max:255',
+            'notify_customer' => 'nullable|boolean',
+        ]);
+
+        $order->update([
+            'courier_name' => $validated['courier_name'],
+            'tracking_number' => $validated['tracking_number'],
+            'tracking_url' => $validated['tracking_url'],
+        ]);
+
+        if (!empty($validated['notify_customer'])) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($order->guest_email)->send(new \App\Mail\OrderTrackingUpdated($order));
+            } catch (\Exception $e) { }
+        }
+
+        return redirect()->back()->with('success', 'Tracking details updated successfully.');
     }
 }

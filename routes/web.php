@@ -42,6 +42,9 @@ Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/category/{slug}', [ProductController::class, 'category'])->name('category.show');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
+Route::get('/track', [\App\Http\Controllers\TrackOrderController::class, 'index'])->name('track.index');
+Route::post('/track', [\App\Http\Controllers\TrackOrderController::class, 'track'])->name('track.track');
+
 Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 Route::patch('/cart/update', [\App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
@@ -112,12 +115,14 @@ Route::middleware('auth')->group(function () {
 */
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     Route::get('/settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('settings.update');
     Route::post('/settings/test-smtp', [\App\Http\Controllers\Admin\SettingsController::class, 'testSmtp'])->name('settings.test-smtp');
     Route::get('/orders', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.update-status');
+    Route::patch('/orders/{order}/tracking', [\App\Http\Controllers\Admin\OrderController::class, 'updateTracking'])->name('orders.update-tracking');
     Route::get('/inquiries', [\App\Http\Controllers\Admin\InquiryController::class, 'index'])->name('inquiries.index');
     Route::get('/inquiries/export/csv', [\App\Http\Controllers\Admin\InquiryController::class, 'exportCsv'])->name('inquiries.export.csv');
     Route::get('/inquiries/{inquiry}', [\App\Http\Controllers\Admin\InquiryController::class, 'show'])->name('inquiries.show');

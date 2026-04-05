@@ -29,6 +29,7 @@ import {
   ChevronRight,
   User,
   ShoppingBag,
+  TrendingUp,
 } from 'lucide-vue-next';
 
 const page = usePage();
@@ -41,6 +42,7 @@ const navGroups = [
     label: 'Overview',
     items: [
       { route: 'admin.dashboard', label: 'Dashboard', icon: LayoutDashboard },
+      { route: 'admin.reports.index', label: 'Reports', icon: TrendingUp },
     ],
   },
   {

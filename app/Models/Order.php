@@ -16,6 +16,9 @@ class Order extends Model
     public const STATUS_CANCELLED = 'cancelled';
 
     public const PAYMENT_COD = 'cod';
+    public const PAYMENT_BANK_TRANSFER = 'bank_transfer';
+    public const PAYMENT_JAZZCASH = 'jazzcash';
+    public const PAYMENT_EASYPAISA = 'easypaisa';
     public const PAYMENT_ZYNLEPAY = 'zynlepay';
     public const PAYMENT_PAYPAL = 'paypal';
 
@@ -30,6 +33,9 @@ class Order extends Model
         'status',
         'payment_method',
         'payment_reference',
+        'courier_name',
+        'tracking_number',
+        'tracking_url',
         'shipping_address',
         'subtotal',
         'total',
